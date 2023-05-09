@@ -1,0 +1,1 @@
+from .cliente_repository_interface import ClienteRepositoryInterface
