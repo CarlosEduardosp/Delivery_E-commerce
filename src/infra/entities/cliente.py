@@ -11,7 +11,7 @@ class Cliente(Base):
     apelido = Column(String, nullable=False, unique=True)
     email = Column(String, nullable=False, unique=True)
     senha = Column(String, nullable=False)
-    cep_cliente = Column(Integer, nullable=False)
+    cep_cliente = Column(String, nullable=False)
 
     def __rep__(self):
         return f"Usr [name={self.apelido}]"

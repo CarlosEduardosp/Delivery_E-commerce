@@ -1,3 +1,3 @@
 from collections import namedtuple
 
-Cliente = namedtuple("Users", "id name, password")
+Cliente = namedtuple("Cliente", "id_cliente apelido, email, senha, cep_cliente")

@@ -1,5 +1,4 @@
-from .cliente import Users
-from .pets import Pets
+from .cliente import Cliente
 
-print(Users, Pets)
+print(Cliente)
 

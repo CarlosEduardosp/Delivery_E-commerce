@@ -4,7 +4,7 @@ from sqlalchemy import text
 from src.data.interfaces import ClienteRepositoryInterface
 from src.doman.models import Cliente
 from src.infra.config import DBConnectionHandler
-from src.infra.entities import cliente as ClienteModels
+from src.infra.entities.cliente import Cliente as ClienteModels
 
 db_connection_handler = DBConnectionHandler
 
@@ -30,7 +30,7 @@ class ClienteRepository(ClienteRepositoryInterface):
                 db_connection.session.commit()
 
                 return Cliente(
-                    id_cliente=new_user.id_cliente, apelido=new_user.apelido, senha=new_user.senha, cep_cliente=new_user.cep_cliente
+                    id_cliente=new_user.id_cliente, apelido=new_user.apelido, email=new_user.email, senha=new_user.senha, cep_cliente=new_user.cep_cliente
                 )
             except:
                 db_connection.session.rollback()

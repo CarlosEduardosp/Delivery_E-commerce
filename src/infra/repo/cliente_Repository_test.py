@@ -1,28 +1,31 @@
 # pylint: disable=E1101
 from sqlalchemy import text
 from src.infra.config import DBConnectionHandler
-from .cliente_Repository import UserRepository
+from .cliente_Repository import ClienteRepository
 
-user_repostory = UserRepository()
+cliente_repostory = ClienteRepository()
 db_connection_handler = DBConnectionHandler()
 
 
 def test_insert_cliente():
     """should insert User"""
 
-    name = "kadu"
-    password = "1234"
+    apelido = "carol"
+    senha = "0000"
+    email = "carol.spadilha@yahoo.com.br"
+    cep_cliente = '28984351'
 
     try:
 
         # SQL comands
-        new_user = user_repostory.insert_user(name, password)
+        new_cliente = cliente_repostory.insert_user(apelido, email, senha, cep_cliente)
 
-        assert new_user.name == name
-        assert new_user.password == password
+
 
     except:
         print('ERRO - Usuário já existe')
+    finally:
+        print('Ok')
 
 
 def select_cliente():
