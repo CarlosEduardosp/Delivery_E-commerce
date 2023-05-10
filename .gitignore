@@ -1,6 +1,6 @@
 venv
 .idea
 **__pycache__
-storage.db
+ecommerce.db
 .pytest_cache
 main_test.py

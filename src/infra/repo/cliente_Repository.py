@@ -1,19 +1,21 @@
 # pylint: disable=E1101
 from typing import List
 from sqlalchemy import text
+from src.infra.config import DBConnectionHandler
 from src.data.interfaces import ClienteRepositoryInterface
 from src.doman.models import Cliente
-from src.infra.config import DBConnectionHandler
 from src.infra.entities.cliente import Cliente as ClienteModels
 
-db_connection_handler = DBConnectionHandler
+db_connection_handler = DBConnectionHandler()
 
 
 class ClienteRepository(ClienteRepositoryInterface):
     """Class to manage User Repository"""
 
     @classmethod
-    def insert_user(self, apelido: str, email: str, senha: str, cep_cliente: int) -> Cliente:
+    def insert_cliente(
+        self, apelido: str, email: str, senha: str, cep_cliente: int
+    ) -> Cliente:
         """Insert data in user entity
         :param - apelido - person apelido
                - senha - person senha
@@ -22,15 +24,18 @@ class ClienteRepository(ClienteRepositoryInterface):
 
         with DBConnectionHandler() as db_connection:
             try:
-                new_user = ClienteModels(apelido=apelido,
-                                         email=email,
-                                         senha=senha,
-                                         cep_cliente=cep_cliente)
+                new_user = ClienteModels(
+                    apelido=apelido, email=email, senha=senha, cep_cliente=cep_cliente
+                )
                 db_connection.session.add(new_user)
                 db_connection.session.commit()
 
                 return Cliente(
-                    id_cliente=new_user.id_cliente, apelido=new_user.apelido, email=new_user.email, senha=new_user.senha, cep_cliente=new_user.cep_cliente
+                    id_cliente=new_user.id_cliente,
+                    apelido=new_user.apelido,
+                    email=new_user.email,
+                    senha=new_user.senha,
+                    cep_cliente=new_user.cep_cliente,
                 )
             except:
                 db_connection.session.rollback()
@@ -39,53 +44,96 @@ class ClienteRepository(ClienteRepositoryInterface):
                 db_connection.session.close()
         return None
 
-
     @classmethod
-    def select_user(cls, id_cliente: int = None, apelido: str = None) -> List[Cliente]:
+    def select_cliente(self, id_cliente: int = None) -> List[Cliente]:
         """
         Select data in user entity by id and/or name
-        :param - user_id: id of the registry
-               - name: User name
-               :return - List with Users selected
+        :param - id_cliente: id of the registry
+               - apelido: apelido
+               :return - List with Cliente selected
         """
         with DBConnectionHandler() as db_connection:
             try:
-                query_data = None
-
                 engine = db_connection_handler.get_engine()
 
-                if id_cliente and not apelido:
+                if id_cliente:
+                    """select data of select in cliente"""
                     with engine.connect() as connection:
-                        # select data in users
-                        data = connection.execute(
-                            text(f"SELECT * FROM users WHERE id_cliente={id_cliente};")
-                        )
-                        query_data = [data]
-
-                elif not id_cliente and apelido:
-                    with engine.connect() as connection:
-                        # select data in users
-                        data = connection.execute(
-                            text(f"SELECT * FROM users WHERE apelido={apelido};")
-                        )
-                        query_data = [data]
-
-                elif id_cliente and apelido:
-                    with engine.connect() as connection:
-                        # select data in users
                         data = connection.execute(
                             text(
-                                f"SELECT * FROM users WHERE id_cliente={id_cliente} and apelido={apelido});"
+                                f"SELECT * FROM cliente WHERE id_cliente={id_cliente} ;"
                             )
                         )
-                        query_data = [data]
+                        connection.commit()
 
-                return query_data
+                        return data
+                else:
+                    data = None
+                    return data
 
             except:
                 db_connection.session.rollback()
-
+                raise
             finally:
                 db_connection.session.close()
+            return None
 
+    @classmethod
+    def delete_cliente(self, id_cliente: int = None) -> None:
+        """Deleting data by id_cliente
+        :param - id_cliente id of registry"""
+
+        with DBConnectionHandler() as db_connection:
+            engine = db_connection_handler.get_engine()
+            try:
+                if id_cliente:
+                    """deleting data of select in cliente"""
+                    with engine.connect() as connection:
+                        connection.execute(
+                            text(f"DELETE FROM cliente WHERE id_cliente={id_cliente} ;")
+                        )
+                        connection.commit()
+            except:
+                db_connection.session.rollback()
+                raise
+            finally:
+                db_connection.session.close()
+            return None
+
+    @classmethod
+    def update_cliente(
+        self,
+        id_cliente: int = None,
+        apelido: str = None,
+        email: str = None,
+        senha: str = None,
+        cep_cliente: str = None,
+    ) -> List[Cliente]:
+        """update of clientes"""
+
+        with DBConnectionHandler() as db_connection:
+            engine = db_connection_handler.get_engine()
+            try:
+                if id_cliente:
+                    """update data of select in cliente"""
+
+                    with engine.connect() as connection:
+                        connection.execute(
+                            text(
+                                f"UPDATE cliente SET id_cliente= {id_cliente}, "
+                                f"apelido= '{apelido}', "
+                                f"email= '{email}', "
+                                f"senha= '{senha}', "
+                                f"cep_cliente= '{cep_cliente}' "
+                                f"WHERE id_cliente= {id_cliente}"
+                            )
+                        )
+
+                        connection.commit()
+
+            except:
+                db_connection.session.rollback()
+                raise
+            finally:
+                db_connection.session.close()
             return None

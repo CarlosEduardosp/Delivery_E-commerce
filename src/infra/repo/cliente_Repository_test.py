@@ -1,56 +1,71 @@
 # pylint: disable=E1101
-from sqlalchemy import text
-from src.infra.config import DBConnectionHandler
 from .cliente_Repository import ClienteRepository
+from faker import Faker
 
-cliente_repostory = ClienteRepository()
-db_connection_handler = DBConnectionHandler()
+cliente_repository = ClienteRepository()
+faker = Faker()
 
 
 def test_insert_cliente():
     """should insert User"""
 
-    apelido = "carol"
-    senha = "0000"
-    email = "carol.spadilha@yahoo.com.br"
-    cep_cliente = '28984351'
+    apelido = faker.name()
+    senha = faker.password()
+    email = faker.email()
+    cep_cliente = faker.random_number(digits=8)
 
     try:
-
         # SQL comands
-        new_cliente = cliente_repostory.insert_user(apelido, email, senha, cep_cliente)
+        new_cliente = cliente_repository.insert_cliente(
+            apelido, email, senha, cep_cliente
+        )
 
+        assert new_cliente.apelido == apelido
+        assert new_cliente.email == email
+        assert new_cliente.senha == senha
 
+        print("Inserção finalizada com Sucesso.", new_cliente.apelido)
 
     except:
-        print('ERRO - Usuário já existe')
-    finally:
-        print('Ok')
+        print("ERRO - Usuário já existe")
 
 
-def select_cliente():
+def test_select_cliente():
     """Select in users"""
 
-    engine = db_connection_handler.get_engine()
-
     try:
-        with engine.connect() as connection:
-            # select data in users
-            query_user = connection.execute(text(f"SELECT * FROM users WHERE id={3} ;"))
-
-        for us in query_user:
-            print(f"Selected id {us.id} ->", us.name)
-
+        data = cliente_repository.select_cliente(id_cliente=5)
+        for i in data:
+            print("Select Ok -", i.apelido)
     except:
         print("Usuario não encontrado.")
 
 
-def delete_cliente():
-    """deleting data in users"""
+def test_delete_cliente():
+    try:
+        cliente_repository.delete_cliente(id_cliente=10)
+        print("Cliente Deletado com Sucesso.")
+    except:
+        print("Cliente Não Encontrado.")
 
-    engine = db_connection_handler.get_engine()
 
-    """ deleting data of select in users """
-    with engine.connect() as connection:
-        connection.execute(text(f"DELETE FROM users WHERE id>{0} ;"))
-        connection.commit()
+def test_update_cliente():
+    """deleting data in cliente"""
+
+    try:
+        apelido = faker.name()
+        senha = faker.password()
+        email = faker.email()
+        cep_cliente = faker.random_number(digits=8)
+
+        cliente_repository.update_cliente(
+            id_cliente=1,
+            apelido=apelido,
+            senha=senha,
+            email=email,
+            cep_cliente=cep_cliente,
+        )
+        print(f"Alteração realizada com Sucesso.")
+
+    except:
+        print("Cliente não encontrado.")

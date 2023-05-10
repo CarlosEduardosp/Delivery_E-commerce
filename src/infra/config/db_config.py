@@ -6,7 +6,7 @@ class DBConnectionHandler:
     """sqlalchemy database connection"""
 
     def __init__(self):
-        self.__connection_string = "sqlite:///storage.db"
+        self.__connection_string = "sqlite:///ecommerce.db"
         self.session = None
 
     def get_engine(self):
