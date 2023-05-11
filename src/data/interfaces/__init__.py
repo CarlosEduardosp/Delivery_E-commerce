@@ -1,1 +1,4 @@
 from .cliente_repository_interface import ClienteRepositoryInterface
+from .endereco_repository_interface import EnderecoRepositoryInterface
+
+print(ClienteRepositoryInterface, EnderecoRepositoryInterface)

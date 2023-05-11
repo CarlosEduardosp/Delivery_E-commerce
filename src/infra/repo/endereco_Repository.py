@@ -2,40 +2,52 @@
 from typing import List
 from sqlalchemy import text
 from src.infra.config import DBConnectionHandler
-from src.data.interfaces import ClienteRepositoryInterface
-from src.doman.models import Cliente
-from src.infra.entities import Cliente as ClienteModels
+from src.data.interfaces import EnderecoRepositoryInterface
+from src.doman.models import Endereco
+from src.infra.entities import Endereco as EnderecoModels
 
 db_connection_handler = DBConnectionHandler()
 
 
-class ClienteRepository(ClienteRepositoryInterface):
+class EnderecoRepository(EnderecoRepositoryInterface):
     """Class to manage User Repository"""
 
     @classmethod
-    def insert_cliente(
-        self, apelido: str, email: str, senha: str, cep_cliente: int
-    ) -> Cliente:
-        """Insert data in user entity
-        :param - apelido - person apelido
-               - senha - person senha
-        :return - tuple with new user inserted
-        """
+    def insert_endereco(
+        self,
+        cep_cliente: str = None,
+        estado: str = None,
+        cidade: str = None,
+        bairro: str = None,
+        logradouro: str = None,
+        complemento: str = None,
+        id_cliente: int = None,
+    ) -> Endereco:
+        """Insert data in endereco entity"""
 
         with DBConnectionHandler() as db_connection:
             try:
-                new_user = ClienteModels(
-                    apelido=apelido, email=email, senha=senha, cep_cliente=cep_cliente
+                new_end = EnderecoModels(
+                    cep_cliente=cep_cliente,
+                    estado=estado,
+                    cidade=cidade,
+                    bairro=bairro,
+                    logradouro=logradouro,
+                    complemento=complemento,
+                    id_cliente=id_cliente,
                 )
-                db_connection.session.add(new_user)
+                db_connection.session.add(new_end)
                 db_connection.session.commit()
 
-                return Cliente(
-                    id_cliente=new_user.id_cliente,
-                    apelido=new_user.apelido,
-                    email=new_user.email,
-                    senha=new_user.senha,
-                    cep_cliente=new_user.cep_cliente,
+                return Endereco(
+                    id_endereco=new_end.id_endereco,
+                    cep_cliente=new_end.cep_cliente,
+                    estado=new_end.estado,
+                    cidade=new_end.cidade,
+                    bairro=new_end.bairro,
+                    logradouro=new_end.logradouro,
+                    complemento=new_end.complemento,
+                    id_cliente=new_end.id_cliente,
                 )
             except:
                 db_connection.session.rollback()
@@ -45,7 +57,7 @@ class ClienteRepository(ClienteRepositoryInterface):
         return None
 
     @classmethod
-    def select_cliente(self, id_cliente: int = None) -> List[Cliente]:
+    def select_endereco(self, id_cliente: int = None) -> List[Endereco]:
         """
         Select data in user entity by id and/or name
         :param - id_cliente: id of the registry
@@ -57,11 +69,11 @@ class ClienteRepository(ClienteRepositoryInterface):
                 engine = db_connection_handler.get_engine()
 
                 if id_cliente:
-                    """select data of select in cliente"""
+                    """select data of select in endereco"""
                     with engine.connect() as connection:
                         data = connection.execute(
                             text(
-                                f"SELECT * FROM cliente WHERE id_cliente={id_cliente} ;"
+                                f"SELECT * FROM endereco WHERE id_cliente={id_cliente} ;"
                             )
                         )
                         connection.commit()
@@ -79,7 +91,7 @@ class ClienteRepository(ClienteRepositoryInterface):
             return None
 
     @classmethod
-    def delete_cliente(self, id_cliente: int = None) -> None:
+    def delete_endereco(self, id_cliente: int = None) -> None:
         """Deleting data by id_cliente
         :param - id_cliente id of registry"""
 
@@ -90,7 +102,9 @@ class ClienteRepository(ClienteRepositoryInterface):
                     """deleting data of select in cliente"""
                     with engine.connect() as connection:
                         connection.execute(
-                            text(f"DELETE FROM cliente WHERE id_cliente={id_cliente} ;")
+                            text(
+                                f"DELETE FROM endereco WHERE id_cliente={id_cliente} ;"
+                            )
                         )
                         connection.commit()
             except:
@@ -101,14 +115,14 @@ class ClienteRepository(ClienteRepositoryInterface):
             return None
 
     @classmethod
-    def update_cliente(
+    def update_endereco(
         self,
         id_cliente: int = None,
         apelido: str = None,
         email: str = None,
         senha: str = None,
         cep_cliente: str = None,
-    ) -> List[Cliente]:
+    ) -> List[Endereco]:
         """update of clientes"""
 
         with DBConnectionHandler() as db_connection:
@@ -120,7 +134,7 @@ class ClienteRepository(ClienteRepositoryInterface):
                     with engine.connect() as connection:
                         connection.execute(
                             text(
-                                f"UPDATE cliente SET id_cliente= {id_cliente}, "
+                                f"UPDATE endereco SET id_cliente= {id_cliente}, "
                                 f"apelido= '{apelido}', "
                                 f"email= '{email}', "
                                 f"senha= '{senha}', "

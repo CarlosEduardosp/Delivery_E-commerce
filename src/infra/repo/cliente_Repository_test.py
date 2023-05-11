@@ -34,7 +34,7 @@ def test_select_cliente():
     """Select in users"""
 
     try:
-        data = cliente_repository.select_cliente(id_cliente=5)
+        data = cliente_repository.select_cliente(id_cliente=2)
         for i in data:
             print("Select Ok -", i.apelido)
     except:
