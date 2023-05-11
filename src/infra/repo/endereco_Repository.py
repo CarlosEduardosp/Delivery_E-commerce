@@ -117,13 +117,15 @@ class EnderecoRepository(EnderecoRepositoryInterface):
     @classmethod
     def update_endereco(
         self,
-        id_cliente: int = None,
-        apelido: str = None,
-        email: str = None,
-        senha: str = None,
         cep_cliente: str = None,
+        estado: str = None,
+        cidade: str = None,
+        bairro: str = None,
+        logradouro: str = None,
+        complemento: str = None,
+        id_cliente: int = None,
     ) -> List[Endereco]:
-        """update of clientes"""
+        """update of endereco"""
 
         with DBConnectionHandler() as db_connection:
             engine = db_connection_handler.get_engine()
@@ -135,11 +137,13 @@ class EnderecoRepository(EnderecoRepositoryInterface):
                         connection.execute(
                             text(
                                 f"UPDATE endereco SET id_cliente= {id_cliente}, "
-                                f"apelido= '{apelido}', "
-                                f"email= '{email}', "
-                                f"senha= '{senha}', "
-                                f"cep_cliente= '{cep_cliente}' "
-                                f"WHERE id_cliente= {id_cliente}"
+                                f"cep_cliente= '{cep_cliente}',"
+                                f"estado= '{estado}', "
+                                f"cidade= '{cidade}', "
+                                f"bairro= '{bairro}', "
+                                f"logradouro= '{logradouro}', "
+                                f"complemento= '{complemento}'"
+                                f"WHERE id_cliente= '{id_cliente}'"
                             )
                         )
 

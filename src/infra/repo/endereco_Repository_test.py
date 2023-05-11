@@ -7,7 +7,7 @@ faker = Faker()
 
 
 def test_insert_endereco():
-    """should insert User"""
+    """should insert cliente"""
 
     cep_cliente = faker.random_number(digits=8)
     estado = faker.name()
@@ -35,19 +35,41 @@ def test_insert_endereco():
 
 
 def test_select_endereco():
-    """Select in users"""
+    """Select in cliente"""
 
     try:
-        data = endereco_repository.select_endereco(id_cliente=5)
+        data = endereco_repository.select_endereco(id_cliente=7)
         for i in data:
             print("Select Ok -", i.estado)
     except:
         print("Usuario não encontrado.")
 
 
-def delete_endereco():
+def test_delete_endereco():
     try:
-        endereco_repository.delete_endereco(id_cliente=2)
+        endereco_repository.delete_endereco(id_cliente=5)
         print("Endereco Deletado com Sucesso.")
     except:
         print("Cliente Não Encontrado.")
+
+
+def test_update_endereco():
+    """update data in endereço"""
+
+    try:
+        cep_cliente = faker.random_number(digits=8)
+        estado = "Rio de Janeiro"
+        cidade = faker.name()
+        bairro = faker.name()
+        logradouro = faker.name()
+        complemento = faker.name()
+        id_cliente = 1
+
+        endereco_repository.update_endereco(
+            cep_cliente, estado, cidade, bairro, logradouro, complemento, id_cliente
+        )
+
+        print(f"Alteração realizada com Sucesso.")
+
+    except:
+        print("Endereço não Encontrado.")
