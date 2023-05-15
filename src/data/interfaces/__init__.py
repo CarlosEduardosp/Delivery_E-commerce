@@ -4,6 +4,7 @@ from .carrinho_repository_interface import CarrinhoRepositoryInterface
 from .codigo_repository_interface import CodigoRepositoryInterface
 from .imagem_repository_interface import ImagemPerfilRepositoryInterface
 from .pedido_repository_interface import PedidoRepositoryInterface
+from .produto_repository_interface import ProdutoRepositoryInterface
 
 print(
     CarrinhoRepositoryInterface,
@@ -12,4 +13,5 @@ print(
     CodigoRepositoryInterface,
     ImagemPerfilRepositoryInterface,
     PedidoRepositoryInterface,
+    ProdutoRepositoryInterface,
 )
