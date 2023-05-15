@@ -31,3 +31,49 @@ def test_insert_pedido():
 
     except:
         print("ERRO - pedido já existe")
+
+
+def test_select_pedido():
+    """Select in users"""
+
+    try:
+        data = pedido_repository.select_pedido(id_pedido=2)
+        for i in data:
+            print("Select Ok -", i.id_pedido)
+    except:
+        print("Pedido não encontrado.")
+
+
+def test_delete_pedido():
+    try:
+        pedido_repository.delete_pedido(id_pedido=1)
+        print("Pedido Deletado com Sucesso.")
+    except:
+        print("Pedido Não Encontrado.")
+
+
+def test_update_cliente():
+    """deleting data in cliente"""
+
+    try:
+        id_cliente = faker.random_number(digits=1)
+        id_produto = faker.random_number(digits=1)
+        numero_pedido = faker.random_number(digits=1)
+        valor = faker.random_number(digits=2)
+        data_pedido = faker.name()
+        status = faker.name()
+        id_pedido = 3
+
+        pedido_repository.update_pedido(
+            id_pedido=id_pedido,
+            id_cliente=id_cliente,
+            id_produto=id_produto,
+            numero_pedido=numero_pedido,
+            valor=valor,
+            data_pedido=data_pedido,
+            status=status,
+        )
+        print(f"Alteração realizada com Sucesso.")
+
+    except:
+        print("Pedido não encontrado.")

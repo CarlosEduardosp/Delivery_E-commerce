@@ -1,6 +1,6 @@
 # pylint: disable=E1101
-# from typing import List
-# from sqlalchemy import text
+from typing import List
+from sqlalchemy import text
 from src.infra.config import DBConnectionHandler
 from src.data.interfaces import PedidoRepositoryInterface
 from src.doman.models import Pedido
@@ -56,3 +56,99 @@ class PedidoRepository(PedidoRepositoryInterface):
             finally:
                 db_connection.session.close()
         return None
+
+    @classmethod
+    def select_pedido(self, id_pedido: int = None) -> List[Pedido]:
+        """
+        Select data in user entity by id and/or name
+        :param - id_cliente: id of the registry
+               - apelido: apelido
+               :return - List with Pedido selected
+        """
+        with DBConnectionHandler() as db_connection:
+            try:
+                engine = db_connection_handler.get_engine()
+
+                if id_pedido:
+                    """select data of select in Pedido"""
+                    with engine.connect() as connection:
+                        data = connection.execute(
+                            text(f"SELECT * FROM pedido WHERE id_pedido={id_pedido} ;")
+                        )
+                        connection.commit()
+
+                        return data
+                else:
+                    data = None
+                    return data
+
+            except:
+                db_connection.session.rollback()
+                raise
+            finally:
+                db_connection.session.close()
+            return None
+
+    @classmethod
+    def delete_pedido(self, id_pedido: int = None) -> None:
+        """Deleting data by id_cliente
+        :param - id_cliente id of registry"""
+
+        with DBConnectionHandler() as db_connection:
+            engine = db_connection_handler.get_engine()
+            try:
+                if id_pedido:
+                    """deleting data of select in pedido"""
+                    with engine.connect() as connection:
+                        connection.execute(
+                            text(f"DELETE FROM pedido WHERE id_pedido={id_pedido} ;")
+                        )
+                        connection.commit()
+            except:
+                db_connection.session.rollback()
+                raise
+            finally:
+                db_connection.session.close()
+            return None
+
+    @classmethod
+    def update_pedido(
+        self,
+        id_pedido: int = None,
+        id_cliente: int = None,
+        id_produto: int = None,
+        numero_pedido: int = None,
+        valor: float = None,
+        data_pedido: str = None,
+        status: str = None,
+    ) -> List[Pedido]:
+        """update of clientes"""
+
+        with DBConnectionHandler() as db_connection:
+            engine = db_connection_handler.get_engine()
+            try:
+                if id_pedido:
+                    """update data of select in pedido"""
+
+                    with engine.connect() as connection:
+                        connection.execute(
+                            text(
+                                f"UPDATE pedido SET id_pedido= {id_pedido}, "
+                                f"id_cliente= '{id_cliente}', "
+                                f"id_produto= '{id_produto}', "
+                                f"numero_pedido= '{numero_pedido}', "
+                                f"valor= '{valor}', "
+                                f"data_pedido= '{data_pedido}',"
+                                f"status= '{status}'"
+                                f"WHERE id_pedido= {id_pedido}"
+                            )
+                        )
+
+                        connection.commit()
+
+            except:
+                db_connection.session.rollback()
+                raise
+            finally:
+                db_connection.session.close()
+            return None
