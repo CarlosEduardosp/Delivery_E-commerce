@@ -29,7 +29,7 @@ def test_select_imagem():
     try:
         data = imagem_repository.select_imagem()
         for i in data:
-            print("Select Imagem Ok -", i.codigo)
+            print("Select Imagem Ok -", i.imagem)
     except:
         print("Imagem não encontrado.")
 

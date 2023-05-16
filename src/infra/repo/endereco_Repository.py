@@ -10,7 +10,7 @@ db_connection_handler = DBConnectionHandler()
 
 
 class EnderecoRepository(EnderecoRepositoryInterface):
-    """Class to manage User Repository"""
+    """Class to manage Endereco Repository"""
 
     @classmethod
     def insert_endereco(
@@ -59,10 +59,9 @@ class EnderecoRepository(EnderecoRepositoryInterface):
     @classmethod
     def select_endereco(self, id_cliente: int = None) -> List[Endereco]:
         """
-        Select data in user entity by id and/or name
+        Select data in endereco entity by id a
         :param - id_cliente: id of the registry
-               - apelido: apelido
-               :return - List with Cliente selected
+               :return - List with Endereco selected
         """
         with DBConnectionHandler() as db_connection:
             try:
@@ -99,7 +98,7 @@ class EnderecoRepository(EnderecoRepositoryInterface):
             engine = db_connection_handler.get_engine()
             try:
                 if id_cliente:
-                    """deleting data of select in cliente"""
+                    """deleting data of select in endereco"""
                     with engine.connect() as connection:
                         connection.execute(
                             text(
@@ -131,7 +130,7 @@ class EnderecoRepository(EnderecoRepositoryInterface):
             engine = db_connection_handler.get_engine()
             try:
                 if id_cliente:
-                    """update data of select in cliente"""
+                    """update data of select in endereco"""
 
                     with engine.connect() as connection:
                         connection.execute(

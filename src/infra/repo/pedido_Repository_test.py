@@ -5,11 +5,12 @@ from faker import Faker
 pedido_repository = PedidoRepository()
 faker = Faker()
 
+id_cliente = faker.random_number(digits=1)
+
 
 def test_insert_pedido():
     """should insert User"""
 
-    id_cliente = faker.random_number(digits=1)
     id_produto = faker.random_number(digits=1)
     numero_pedido = faker.random_number(digits=1)
     valor = faker.random_number(digits=2)
@@ -37,7 +38,7 @@ def test_select_pedido():
     """Select in users"""
 
     try:
-        data = pedido_repository.select_pedido(id_pedido=2)
+        data = pedido_repository.select_pedido(id_pedido=1, id_cliente=6)
         for i in data:
             print("Select Ok -", i.id_pedido)
     except:
@@ -46,7 +47,7 @@ def test_select_pedido():
 
 def test_delete_pedido():
     try:
-        pedido_repository.delete_pedido(id_pedido=1)
+        pedido_repository.delete_pedido(id_pedido=4, id_cliente=8)
         print("Pedido Deletado com Sucesso.")
     except:
         print("Pedido Não Encontrado.")

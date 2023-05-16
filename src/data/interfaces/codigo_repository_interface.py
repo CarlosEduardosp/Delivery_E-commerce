@@ -8,19 +8,19 @@ class CodigoRepositoryInterface(ABC):
     """Interface to Pet Repository"""
 
     @abstractmethod
-    def insert_codigo(self, codigo: int = None) -> Codigo:
+    def insert_codigo(self, codigo: int = None, id_cliente: int = None) -> Codigo:
         """Abstractmethod"""
 
         raise Exception("Method not implementend")
 
     @abstractmethod
-    def select_codigo(self) -> List[Codigo]:
+    def select_codigo(self, id_cliente: int = None) -> List[Codigo]:
         """Abstractmethod"""
 
         raise Exception("Method not implementend")
 
     @abstractmethod
-    def delete_codigo(self) -> None:
+    def delete_codigo(self, id_cliente: int = None) -> None:
         """Abstractmethod"""
 
         raise Exception("Method not implementend")

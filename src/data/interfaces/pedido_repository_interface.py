@@ -22,13 +22,15 @@ class PedidoRepositoryInterface(ABC):
         raise Exception("Method not implementend")
 
     @abstractmethod
-    def select_pedido(self, id_pedido: int = None) -> List[Pedido]:
+    def select_pedido(
+        self, id_pedido: int = None, id_cliente: int = None
+    ) -> List[Pedido]:
         """Abstractmethod"""
 
         raise Exception("Method not implementend")
 
     @abstractmethod
-    def delete_pedido(self, id_pedido: int = None) -> None:
+    def delete_pedido(self, id_pedido: int = None, id_cliente: int = None) -> None:
         """Abstractmethod"""
 
         raise Exception("Method not implementend")

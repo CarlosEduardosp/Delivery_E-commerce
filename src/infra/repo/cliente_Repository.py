@@ -10,7 +10,7 @@ db_connection_handler = DBConnectionHandler()
 
 
 class ClienteRepository(ClienteRepositoryInterface):
-    """Class to manage User Repository"""
+    """Class to manage Cliente Repository"""
 
     @classmethod
     def insert_cliente(
@@ -18,8 +18,10 @@ class ClienteRepository(ClienteRepositoryInterface):
     ) -> Cliente:
         """Insert data in user entity
         :param - apelido - person apelido
+               - email - person email
                - senha - person senha
-        :return - tuple with new user inserted
+               - cep_cliente - person cep
+        :return - tuple with new Cliente inserted
         """
 
         with DBConnectionHandler() as db_connection:
@@ -47,9 +49,8 @@ class ClienteRepository(ClienteRepositoryInterface):
     @classmethod
     def select_cliente(self, id_cliente: int = None) -> List[Cliente]:
         """
-        Select data in user entity by id and/or name
+        Select data in cliente entity by id
         :param - id_cliente: id of the registry
-               - apelido: apelido
                :return - List with Cliente selected
         """
         with DBConnectionHandler() as db_connection:

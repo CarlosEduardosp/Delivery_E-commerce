@@ -8,6 +8,7 @@ class Codigo(Base):
     __tablename__ = "codigo"
 
     id_codigo = Column(Integer, primary_key=True)
+    id_cliente = Column(Integer, nullable=False)
     codigo = Column(Integer, nullable=False)
 
     def __rep__(self):

@@ -10,14 +10,13 @@ db_connection_handler = DBConnectionHandler()
 
 
 class ImagemPerfilRepository(ImagemPerfilRepositoryInterface):
-    """Class to manage User Repository"""
+    """Class to manage imagemperfil Repository"""
 
     @classmethod
     def insert_imagem(self, imagem: str = None) -> ImagemPerfil:
-        """Insert data in user entity
-        :param - apelido - person apelido
-               - senha - person senha
-        :return - tuple with new user inserted
+        """Insert data in imagemperfil entity
+        :param - imagem - imagem drawn
+        :return - tuple with new imagem inserted
         """
 
         with DBConnectionHandler() as db_connection:
@@ -40,10 +39,9 @@ class ImagemPerfilRepository(ImagemPerfilRepositoryInterface):
     @classmethod
     def select_imagem(self) -> List[ImagemPerfil]:
         """
-        Select data in user entity by id and/or name
-        :param - id_cliente: id of the registry
-               - apelido: apelido
-               :return - List with Cliente selected
+        Select data in imagemperfil
+        :param - null
+        :return - List with imagem selected
         """
         with DBConnectionHandler() as db_connection:
             try:
@@ -51,7 +49,7 @@ class ImagemPerfilRepository(ImagemPerfilRepositoryInterface):
                 """select data of select in Imagem"""
 
                 with engine.connect() as connection:
-                    data = connection.execute(text(f"SELECT * FROM codigo;"))
+                    data = connection.execute(text(f"SELECT * FROM imagemperfil;"))
                     connection.commit()
 
                     return data
@@ -65,8 +63,8 @@ class ImagemPerfilRepository(ImagemPerfilRepositoryInterface):
 
     @classmethod
     def delete_imagem(self) -> None:
-        """Deleting data by id_cliente
-        :param - id_cliente id of registry"""
+        """Deleting data in imagemperfil
+        :param - null"""
 
         with DBConnectionHandler() as db_connection:
             engine = db_connection_handler.get_engine()

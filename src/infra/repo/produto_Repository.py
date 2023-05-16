@@ -10,7 +10,7 @@ db_connection_handler = DBConnectionHandler()
 
 
 class ProdutoRepository(ProdutoRepositoryInterface):
-    """Class to manage User Repository"""
+    """Class to manage Produto Repository"""
 
     @classmethod
     def insert_produto(
@@ -20,10 +20,11 @@ class ProdutoRepository(ProdutoRepositoryInterface):
         imagem: str = None,
         preco: str = None,
     ) -> Produto:
-        """Insert data in user entity
-        :param - apelido - person apelido
-               - senha - person senha
-        :return - tuple with new user inserted
+        """Insert data in produto entity
+        :param - nome - product name
+               - descricao - product description
+               - imagem - product image
+        :return - tuple with new produto inserted
         """
 
         with DBConnectionHandler() as db_connection:
@@ -54,10 +55,9 @@ class ProdutoRepository(ProdutoRepositoryInterface):
     @classmethod
     def select_produto(self, id_produto: int = None) -> List[Produto]:
         """
-        Select data in user entity by id and/or name
+        Select data in produto entity by id and
         :param - id_produto: id of the registry
-               - apelido: apelido
-               :return - List with Pedido selected
+        :return - List with produto selected
         """
         with DBConnectionHandler() as db_connection:
             try:
@@ -87,14 +87,14 @@ class ProdutoRepository(ProdutoRepositoryInterface):
 
     @classmethod
     def delete_produto(self, id_produto: int = None) -> None:
-        """Deleting data by id_cliente
-        :param - id_cliente id of registry"""
+        """Deleting data by id_produto
+        :param - id_produto id of registry"""
 
         with DBConnectionHandler() as db_connection:
             engine = db_connection_handler.get_engine()
             try:
                 if id_produto:
-                    """deleting data of select in pedido"""
+                    """deleting data of select in produto"""
                     with engine.connect() as connection:
                         connection.execute(
                             text(f"DELETE FROM produto WHERE id_produto={id_produto} ;")
@@ -116,7 +116,7 @@ class ProdutoRepository(ProdutoRepositoryInterface):
         imagem: str = None,
         preco: float = None,
     ) -> List[Produto]:
-        """update of clientes"""
+        """update of products"""
 
         with DBConnectionHandler() as db_connection:
             engine = db_connection_handler.get_engine()

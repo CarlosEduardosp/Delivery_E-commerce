@@ -10,16 +10,16 @@ db_connection_handler = DBConnectionHandler()
 
 
 class CarrinhoRepository(CarrinhoRepositoryInterface):
-    """Class to manage User Repository"""
+    """Class to manage carrinho Repository"""
 
     @classmethod
     def insert_carrinho(
         self, id_produto: int = None, id_cliente: int = None
     ) -> Carrinho:
-        """Insert data in user entity
-        :param - apelido - person apelido
-               - senha - person senha
-        :return - tuple with new user inserted
+        """Insert data in carrinho entity
+        :param - id_produto
+               - id_cliente
+        :return - tuple with new cliente inserted
         """
 
         with DBConnectionHandler() as db_connection:
@@ -45,17 +45,16 @@ class CarrinhoRepository(CarrinhoRepositoryInterface):
     @classmethod
     def select_carrinho(self, id_cliente: int = None) -> List[Carrinho]:
         """
-        Select data in user entity by id and/or name
+        Select data in carrinho entity by id
         :param - id_cliente: id of the registry
-               - apelido: apelido
-               :return - List with Cliente selected
+        :return - List with Cliente selected
         """
         with DBConnectionHandler() as db_connection:
             try:
                 engine = db_connection_handler.get_engine()
 
                 if id_cliente:
-                    """select data of select in cliente"""
+                    """select data of select in carrinho"""
                     with engine.connect() as connection:
                         data = connection.execute(
                             text(
@@ -77,7 +76,7 @@ class CarrinhoRepository(CarrinhoRepositoryInterface):
             return None
 
     @classmethod
-    def delete_carrinho(self, id_cliente: int = None) -> None:
+    def delete_carrinho(self, id_cliente: int = None, id_produto: int = None) -> None:
         """Deleting data by id_cliente
         :param - id_cliente id of registry"""
 
@@ -89,7 +88,7 @@ class CarrinhoRepository(CarrinhoRepositoryInterface):
                     with engine.connect() as connection:
                         connection.execute(
                             text(
-                                f"DELETE FROM carrinho WHERE id_cliente={id_cliente} ;"
+                                f"DELETE FROM carrinho WHERE id_cliente={id_cliente} and id_produto= {id_produto} ;"
                             )
                         )
                         connection.commit()

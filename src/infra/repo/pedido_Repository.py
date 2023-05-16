@@ -10,7 +10,7 @@ db_connection_handler = DBConnectionHandler()
 
 
 class PedidoRepository(PedidoRepositoryInterface):
-    """Class to manage User Repository"""
+    """Class to manage Produto Repository"""
 
     @classmethod
     def insert_pedido(
@@ -22,10 +22,14 @@ class PedidoRepository(PedidoRepositoryInterface):
         data_pedido: str = None,
         status: str = None,
     ) -> Pedido:
-        """Insert data in user entity
-        :param - apelido - person apelido
-               - senha - person senha
-        :return - tuple with new user inserted
+        """Insert data in produto entity
+        :param - id_cliente
+               - id_produto
+               - numero_ppedido
+               - valor
+               - data_pedido
+               - status
+        :return - tuple with new pedido inserted
         """
 
         with DBConnectionHandler() as db_connection:
@@ -58,12 +62,14 @@ class PedidoRepository(PedidoRepositoryInterface):
         return None
 
     @classmethod
-    def select_pedido(self, id_pedido: int = None) -> List[Pedido]:
+    def select_pedido(
+        self, id_pedido: int = None, id_cliente: int = None
+    ) -> List[Pedido]:
         """
-        Select data in user entity by id and/or name
+        Select data in pedido entity by id_cliente and id_pedido
         :param - id_cliente: id of the registry
-               - apelido: apelido
-               :return - List with Pedido selected
+               - id_pedido: id of the registry
+        :return - List with Pedido selected
         """
         with DBConnectionHandler() as db_connection:
             try:
@@ -73,7 +79,9 @@ class PedidoRepository(PedidoRepositoryInterface):
                     """select data of select in Pedido"""
                     with engine.connect() as connection:
                         data = connection.execute(
-                            text(f"SELECT * FROM pedido WHERE id_pedido={id_pedido} ;")
+                            text(
+                                f"SELECT * FROM pedido WHERE id_pedido={id_pedido} and id_cliente={id_cliente};"
+                            )
                         )
                         connection.commit()
 
@@ -90,7 +98,7 @@ class PedidoRepository(PedidoRepositoryInterface):
             return None
 
     @classmethod
-    def delete_pedido(self, id_pedido: int = None) -> None:
+    def delete_pedido(self, id_pedido: int = None, id_cliente: int = None) -> None:
         """Deleting data by id_cliente
         :param - id_cliente id of registry"""
 
@@ -101,7 +109,9 @@ class PedidoRepository(PedidoRepositoryInterface):
                     """deleting data of select in pedido"""
                     with engine.connect() as connection:
                         connection.execute(
-                            text(f"DELETE FROM pedido WHERE id_pedido={id_pedido} ;")
+                            text(
+                                f"DELETE FROM pedido WHERE id_pedido={id_pedido} and id_cliente={id_cliente} ;"
+                            )
                         )
                         connection.commit()
             except:
@@ -122,7 +132,7 @@ class PedidoRepository(PedidoRepositoryInterface):
         data_pedido: str = None,
         status: str = None,
     ) -> List[Pedido]:
-        """update of clientes"""
+        """update of Pedido"""
 
         with DBConnectionHandler() as db_connection:
             engine = db_connection_handler.get_engine()

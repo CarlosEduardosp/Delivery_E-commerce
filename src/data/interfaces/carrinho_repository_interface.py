@@ -22,7 +22,7 @@ class CarrinhoRepositoryInterface(ABC):
         raise Exception("Method not implementend")
 
     @abstractmethod
-    def delete_carrinho(self, id_cliente: int = None) -> None:
+    def delete_carrinho(self, id_cliente: int = None, id_produto: int = None) -> None:
         """Abstractmethod"""
 
         raise Exception("Method not implementend")

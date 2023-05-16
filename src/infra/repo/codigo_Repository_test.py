@@ -5,6 +5,8 @@ from faker import Faker
 codigo_repository = CodigoRepository
 faker = Faker()
 
+id_cliente = faker.random_number(digits=1)
+
 
 def test_insert_codigo():
     """should insert Codigo"""
@@ -13,7 +15,9 @@ def test_insert_codigo():
 
     try:
         # SQL comands
-        new_codigo = codigo_repository.insert_codigo(codigo=codigo)
+        new_codigo = codigo_repository.insert_codigo(
+            codigo=codigo, id_cliente=id_cliente
+        )
 
         assert new_codigo.codigo == codigo
 
@@ -27,7 +31,7 @@ def test_select_codigo():
     """Select in codigo"""
 
     try:
-        data = codigo_repository.select_codigo()
+        data = codigo_repository.select_codigo(id_cliente=id_cliente)
         for i in data:
             print("Select Codigo Ok -", i.codigo)
     except:
@@ -36,7 +40,7 @@ def test_select_codigo():
 
 def test_delete_codigo():
     try:
-        codigo_repository.delete_codigo()
+        codigo_repository.delete_codigo(id_cliente=7)
         print("Codigo Deletado com Sucesso.")
     except:
         print("Codigo Não Encontrado.")

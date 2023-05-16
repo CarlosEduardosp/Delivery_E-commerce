@@ -40,7 +40,7 @@ def test_select_carrinho():
 
 def test_delete_carrinho():
     try:
-        carrinho_repository.delete_carrinho(id_cliente=5)
+        carrinho_repository.delete_carrinho(id_cliente=3, id_produto=1)
         print("Carrinho Deletado com Sucesso.")
     except:
         print("Carrinho Não Encontrado.")
