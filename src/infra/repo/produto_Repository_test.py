@@ -39,7 +39,7 @@ def test_select_produto():
 
 def test_delete_produto():
     try:
-        produto_repository.delete_produto(id_produto=1)
+        produto_repository.delete_produto(id_produto=10)
         print("Produto Deletado com Sucesso.")
     except:
         print("Produto Não Encontrado.")

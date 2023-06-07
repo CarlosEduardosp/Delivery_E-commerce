@@ -24,7 +24,7 @@ def test_insert_cliente():
         assert new_cliente.email == email
         assert new_cliente.senha == senha
 
-        print("Inserção finalizada com Sucesso.", new_cliente.apelido)
+        print("Inserção finalizada com Sucesso!!", new_cliente)
 
     except:
         print("ERRO - Usuário já existe")

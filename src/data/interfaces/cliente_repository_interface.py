@@ -5,10 +5,12 @@ from src.doman.models.cliente import Cliente
 
 class ClienteRepositoryInterface(ABC):
 
-    """Interface to Pet Repository"""
+    """Interface to Cliente Repository"""
 
     @abstractmethod
-    def insert_cliente(self, name: str, password: str) -> Cliente:
+    def insert_cliente(
+        self, apelido: str, email: str, senha: str, cep_cliente: int
+    ) -> Cliente:
         """Abstractmethod"""
 
         raise Exception("Method not implementend")
