@@ -32,3 +32,34 @@ def test_register_produto():
     assert response["Data"]
 
     return response
+
+
+def test_select_produto():
+    """testing select produto"""
+
+    user_repo = ProdutoRepository()
+    register_produto = RegisterProduto(user_repo)
+
+    try:
+        response_2 = register_produto.select_produto(
+            id_produto=faker.random_number(digits=2)
+        )
+
+        if response_2:
+            response_2 = response_2["Data"]
+            for i in response_2:
+                nome = i.nome
+                descricao = i.descricao
+                imagem = i.imagem
+                preco = i.preco
+                id_produto = i.id_produto
+
+            return {
+                "id_produto": id_produto,
+                "nome": nome,
+                "descricao": descricao,
+                "imagem": imagem,
+                "preco": preco,
+            }
+    except:
+        return {"Success": False, "Data": None}

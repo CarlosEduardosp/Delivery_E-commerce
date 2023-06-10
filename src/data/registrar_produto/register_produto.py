@@ -34,3 +34,15 @@ class RegisterProduto(RegisterProdutoInterface):
             )
 
         return {"Success": validade_entry, "Data": response}
+
+    def select_produto(self, id_produto: int) -> Dict[bool, Produto]:
+        """select produto"""
+
+        response = None
+        validate_entry = isinstance(id_produto, int)
+
+        if validate_entry:
+            response = self.produto_repository.select_produto(id_produto=id_produto)
+            return {"Success": True, "Data": response}
+
+        return {"Success": False, "Data": None}

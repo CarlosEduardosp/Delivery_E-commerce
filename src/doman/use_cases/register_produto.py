@@ -13,3 +13,9 @@ class RegisterProduto(ABC):
         """Case"""
 
         raise Exception("Should implement method: register")
+
+    @abstractmethod
+    def select_produto(self, id_produto: int) -> Dict[bool, Produto]:
+        """Case"""
+
+        raise Exception("Should implement method: register")
