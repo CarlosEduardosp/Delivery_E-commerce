@@ -67,3 +67,19 @@ def test_select_cliente():
             return {"Success": True, "Data": response}
     except:
         return {"Success": False, "Data": None}
+
+
+def test_delete_cliente():
+    """del cliente"""
+
+    user_repo = ClienteRepository()
+    register_user = RegisterCliente(user_repo)
+
+    try:
+        response = register_user.delete_cliente(
+            id_cliente=faker.random_number(digits=2)
+        )
+    except:
+        response = {"Success": False, "Data": None}
+
+    return response

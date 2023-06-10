@@ -48,3 +48,15 @@ class RegisterCliente(RegisterClienteInterface):
             return {"Success": True, "Data": response}
 
         return {"Success": False, "Data": response}
+
+    def delete_cliente(self, id_cliente: int) -> Dict[bool, Cliente]:
+        """delete in case"""
+
+        response = None
+        validate_entry = isinstance(id_cliente, int)
+
+        if validate_entry:
+            response = self.cliente_repository.delete_cliente(id_cliente=id_cliente)
+            return {"Success": True, "Data": response}
+
+        return {"Success": False, "Data": response}

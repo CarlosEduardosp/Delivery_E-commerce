@@ -94,6 +94,7 @@ class ClienteRepository(ClienteRepositoryInterface):
                             text(f"DELETE FROM cliente WHERE id_cliente={id_cliente} ;")
                         )
                         connection.commit()
+
             except:
                 db_connection.session.rollback()
                 raise
