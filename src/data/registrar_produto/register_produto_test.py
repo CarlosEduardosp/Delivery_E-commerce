@@ -45,21 +45,21 @@ def test_select_produto():
             id_produto=faker.random_number(digits=2)
         )
 
-        if response_2:
-            response_2 = response_2["Data"]
-            for i in response_2:
+        if response_2["Success"]:
+            for i in response_2["Data"]:
                 nome = i.nome
                 descricao = i.descricao
                 imagem = i.imagem
                 preco = i.preco
                 id_produto = i.id_produto
 
-            return {
+            response = {
                 "id_produto": id_produto,
                 "nome": nome,
                 "descricao": descricao,
                 "imagem": imagem,
                 "preco": preco,
             }
+            return {"Success": True, "Data": response}
     except:
         return {"Success": False, "Data": None}

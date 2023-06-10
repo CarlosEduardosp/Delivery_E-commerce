@@ -45,4 +45,4 @@ class RegisterProduto(RegisterProdutoInterface):
             response = self.produto_repository.select_produto(id_produto=id_produto)
             return {"Success": True, "Data": response}
 
-        return {"Success": False, "Data": None}
+        return {"Success": False, "Data": response}

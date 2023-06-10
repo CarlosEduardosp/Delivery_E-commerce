@@ -31,8 +31,20 @@ class RegisterCliente(RegisterClienteInterface):
         )
 
         if validade_entry:  # if validate_entry == True
-            response = self.cliente_repository.insert_cliente_spy(
+            response = self.cliente_repository.insert_cliente(
                 apelido, email, senha, cep_cliente
             )
 
         return {"Success": validade_entry, "Data": response}
+
+    def select_cliente(self, id_cliente: int) -> Dict[bool, Cliente]:
+        """select in Cliente"""
+
+        response = None
+        validate_entry = isinstance(id_cliente, int)
+
+        if validate_entry:
+            response = self.cliente_repository.select_cliente(id_cliente=id_cliente)
+            return {"Success": True, "Data": response}
+
+        return {"Success": False, "Data": response}
