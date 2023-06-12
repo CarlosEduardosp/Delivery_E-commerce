@@ -132,6 +132,7 @@ class ClienteRepository(ClienteRepositoryInterface):
                         )
 
                         connection.commit()
+                        return True
 
             except:
                 db_connection.session.rollback()

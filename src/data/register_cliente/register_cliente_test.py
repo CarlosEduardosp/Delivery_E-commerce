@@ -83,3 +83,19 @@ def test_delete_cliente():
         response = {"Success": False, "Data": None}
 
     return response
+
+
+def test_update_cliente():
+    """update cliente"""
+
+    user_repo = ClienteRepository()
+    register_user = RegisterCliente(user_repo)
+
+    response = register_user.update_cliente(
+        id_cliente=2,
+        apelido=faker.name(),
+        email=faker.name(),
+        senha=faker.name(),
+        cep_cliente=faker.name(),
+    )
+    return response

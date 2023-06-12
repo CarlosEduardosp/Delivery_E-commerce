@@ -59,7 +59,7 @@ def test_update_cliente():
         cep_cliente = faker.random_number(digits=8)
 
         cliente_repository.update_cliente(
-            id_cliente=1,
+            id_cliente=3,
             apelido=apelido,
             senha=senha,
             email=email,

@@ -60,3 +60,29 @@ class RegisterCliente(RegisterClienteInterface):
             return {"Success": True, "Data": response}
 
         return {"Success": False, "Data": response}
+
+    def update_cliente(
+        self, id_cliente: int, apelido: str, email: str, senha: str, cep_cliente: str
+    ) -> Dict[bool, Cliente]:
+        """update in Cliente"""
+
+        response = None
+        validade_entry = (
+            isinstance(id_cliente, int)
+            and isinstance(apelido, str)
+            and isinstance(senha, str)
+            and isinstance(email, str)
+            and isinstance(cep_cliente, str)
+        )
+        print(validade_entry)
+        if validade_entry:
+            response = self.cliente_repository.update_cliente(
+                id_cliente=id_cliente,
+                apelido=apelido,
+                senha=senha,
+                email=email,
+                cep_cliente=cep_cliente,
+            )
+            return {"Success": True, "Data": response}
+
+        return {"Success": False, "Data": response}

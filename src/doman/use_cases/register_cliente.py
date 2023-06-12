@@ -26,9 +26,8 @@ class RegisterCliente(ABC):
 
         raise Exception("Should implement method: register")
 
-
-"""    @abstractmethod
+    @abstractmethod
     def update_cliente(
-            self, id_cliente: int, apelido: str,
-            email: str, senha: str, cep_cliente: str
-    ): raise Exception("Should implement method: register")"""
+        self, id_cliente: int, apelido: str, email: str, senha: str, cep_cliente: str
+    ):
+        raise Exception("Should implement method: register")
