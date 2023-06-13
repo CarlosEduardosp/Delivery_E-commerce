@@ -63,3 +63,44 @@ def test_select_produto():
             return {"Success": True, "Data": response}
     except:
         return {"Success": False, "Data": None}
+
+
+def test_select_all_produto():
+    """select all produto"""
+
+    user_repo = ProdutoRepository()
+    register_produto = RegisterProduto(user_repo)
+
+    response = register_produto.select_all_produto()
+
+    return response
+
+
+def test_delete_produto():
+    """del produto"""
+
+    user_repo = ProdutoRepository()
+    register_produto = RegisterProduto(user_repo)
+
+    try:
+        response = register_produto.delete_produto(id_produto=2)
+    except:
+        response = {"Success": False, "Data": None}
+
+    return response
+
+
+def test_update_produto():
+    """update produto"""
+
+    user_repo = ProdutoRepository()
+    register_user = RegisterProduto(user_repo)
+
+    response = register_user.update_produto(
+        id_produto=3,
+        nome=faker.name(),
+        descricao=faker.name(),
+        imagem=faker.name(),
+        preco=float(faker.random_number(digits=2)),
+    )
+    return response
