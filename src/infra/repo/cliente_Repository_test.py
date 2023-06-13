@@ -69,3 +69,13 @@ def test_update_cliente():
 
     except:
         print("Cliente não encontrado.")
+
+
+def test_select_all():
+    """select all cliente"""
+
+    try:
+        cliente_repository.select_all_cliente()
+        print("Tudo Ok")
+    except:
+        print("Usuario não encontrado.")

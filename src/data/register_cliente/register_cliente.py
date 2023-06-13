@@ -61,6 +61,19 @@ class RegisterCliente(RegisterClienteInterface):
 
         return {"Success": False, "Data": response}
 
+    def select_all_cliente(self) -> Dict[bool, Cliente]:
+        """case select all"""
+
+        try:
+            ids = []
+            response = self.cliente_repository.select_all_cliente()
+            for i in response:
+                ids.append(i.id_cliente)
+            quantidade = len(ids)
+            return {"Success": True, "Data": response, "Len": quantidade}
+        except:
+            return {"Success": False, "Data": None}
+
     def update_cliente(
         self, id_cliente: int, apelido: str, email: str, senha: str, cep_cliente: str
     ) -> Dict[bool, Cliente]:
@@ -74,7 +87,6 @@ class RegisterCliente(RegisterClienteInterface):
             and isinstance(email, str)
             and isinstance(cep_cliente, str)
         )
-        print(validade_entry)
         if validade_entry:
             response = self.cliente_repository.update_cliente(
                 id_cliente=id_cliente,

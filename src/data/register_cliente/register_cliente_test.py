@@ -77,10 +77,21 @@ def test_delete_cliente():
 
     try:
         response = register_user.delete_cliente(
-            id_cliente=faker.random_number(digits=2)
+            id_cliente=faker.random_number(digits=3)
         )
     except:
         response = {"Success": False, "Data": None}
+
+    return response
+
+
+def test_select_all():
+    """select all clientes"""
+
+    user_repo = ClienteRepository()
+    register_user = RegisterCliente(user_repo)
+
+    response = register_user.select_all_cliente()
 
     return response
 

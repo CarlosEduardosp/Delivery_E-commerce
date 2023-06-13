@@ -103,6 +103,27 @@ class ClienteRepository(ClienteRepositoryInterface):
             return None
 
     @classmethod
+    def select_all_cliente(self) -> List[Cliente]:
+        """select all clientes"""
+
+        with DBConnectionHandler() as db_connection:
+            try:
+                engine = db_connection_handler.get_engine()
+
+                with engine.connect() as connection:
+                    data = connection.execute(text(f"SELECT * FROM cliente ;"))
+                    connection.commit()
+
+                    return data
+
+            except:
+                db_connection.session.rollback()
+                raise
+            finally:
+                db_connection.session.close()
+            return None
+
+    @classmethod
     def update_cliente(
         self,
         id_cliente: int = None,

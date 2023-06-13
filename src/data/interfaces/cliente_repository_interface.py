@@ -28,6 +28,12 @@ class ClienteRepositoryInterface(ABC):
         raise Exception("Method not implementend")
 
     @abstractmethod
+    def select_all_cliente(self) -> List[Cliente]:
+        """Abstractmethod"""
+
+        raise Exception("Method not implementend")
+
+    @abstractmethod
     def update_cliente(
         self,
         id_cliente: int = None,
