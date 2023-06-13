@@ -108,6 +108,27 @@ class ProdutoRepository(ProdutoRepositoryInterface):
             return None
 
     @classmethod
+    def select_all_produto(self) -> List[Produto]:
+        """select all produtos"""
+
+        with DBConnectionHandler() as db_connection:
+            try:
+                engine = db_connection_handler.get_engine()
+
+                with engine.connect() as connection:
+                    data = connection.execute(text(f"SELECT * FROM produto ;"))
+                    connection.commit()
+
+                    return data
+
+            except:
+                db_connection.session.rollback()
+                raise
+            finally:
+                db_connection.session.close()
+            return None
+
+    @classmethod
     def update_produto(
         self,
         id_produto: int = None,

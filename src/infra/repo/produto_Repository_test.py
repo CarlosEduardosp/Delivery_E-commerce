@@ -66,3 +66,13 @@ def test_update_produto():
 
     except:
         print("Produto não encontrado.")
+
+
+def test_select_all_produtos():
+    """select all produtos"""
+
+    try:
+        produto_repository.select_all_produto()
+        print("tudo Ok")
+    except:
+        print("Usuario não encontrado.")

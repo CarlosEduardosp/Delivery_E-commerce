@@ -43,3 +43,8 @@ class ProdutoRepositoryInterface(ABC):
         """Abstractmethod"""
 
         raise Exception("Method not implementend")
+
+    def select_all_produtos(self):
+        """Abstractmethod"""
+
+        raise Exception("Method not implementend")
