@@ -43,7 +43,7 @@ def test_select_cliente():
 
 def test_delete_cliente():
     try:
-        cliente_repository.delete_cliente(id_cliente=10)
+        cliente_repository.delete_cliente(id_cliente=9)
         print("Cliente Deletado com Sucesso.")
     except:
         print("Cliente Não Encontrado.")

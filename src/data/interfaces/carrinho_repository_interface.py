@@ -26,3 +26,9 @@ class CarrinhoRepositoryInterface(ABC):
         """Abstractmethod"""
 
         raise Exception("Method not implementend")
+
+    @abstractmethod
+    def select_all_carrinho(self) -> List[Carrinho]:
+        """case select all"""
+
+        raise Exception("Method not implementend")

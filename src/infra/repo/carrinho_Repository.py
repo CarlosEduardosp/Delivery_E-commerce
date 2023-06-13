@@ -76,6 +76,27 @@ class CarrinhoRepository(CarrinhoRepositoryInterface):
             return None
 
     @classmethod
+    def select_all_carrinho(self) -> List[Carrinho]:
+        """select all carrinho"""
+
+        with DBConnectionHandler() as db_connection:
+            try:
+                engine = db_connection_handler.get_engine()
+
+                with engine.connect() as connection:
+                    data = connection.execute(text(f"SELECT * FROM carrinho ;"))
+                    connection.commit()
+
+                    return data
+
+            except:
+                db_connection.session.rollback()
+                raise
+            finally:
+                db_connection.session.close()
+            return None
+
+    @classmethod
     def delete_carrinho(self, id_cliente: int = None, id_produto: int = None) -> None:
         """Deleting data by id_cliente
         :param - id_cliente id of registry"""
@@ -88,9 +109,10 @@ class CarrinhoRepository(CarrinhoRepositoryInterface):
                     with engine.connect() as connection:
                         connection.execute(
                             text(
-                                f"DELETE FROM carrinho WHERE id_cliente={id_cliente} and id_produto= {id_produto} ;"
+                                f"DELETE FROM carrinho WHERE id_produto = {id_produto} AND id_cliente = {id_cliente};"
                             )
                         )
+
                         connection.commit()
             except:
                 db_connection.session.rollback()
