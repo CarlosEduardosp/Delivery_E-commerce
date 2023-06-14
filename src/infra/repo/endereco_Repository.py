@@ -90,6 +90,27 @@ class EnderecoRepository(EnderecoRepositoryInterface):
             return None
 
     @classmethod
+    def select_all_endereco(self) -> List[Endereco]:
+        """select all endereco"""
+
+        with DBConnectionHandler() as db_connection:
+            try:
+                engine = db_connection_handler.get_engine()
+
+                with engine.connect() as connection:
+                    data = connection.execute(text(f"SELECT * FROM endereco ;"))
+                    connection.commit()
+
+                    return data
+
+            except:
+                db_connection.session.rollback()
+                raise
+            finally:
+                db_connection.session.close()
+            return None
+
+    @classmethod
     def delete_endereco(self, id_cliente: int = None) -> None:
         """Deleting data by id_cliente
         :param - id_cliente id of registry"""
@@ -116,6 +137,7 @@ class EnderecoRepository(EnderecoRepositoryInterface):
     @classmethod
     def update_endereco(
         self,
+        id_endereco: int = None,
         cep_cliente: str = None,
         estado: str = None,
         cidade: str = None,
@@ -129,25 +151,25 @@ class EnderecoRepository(EnderecoRepositoryInterface):
         with DBConnectionHandler() as db_connection:
             engine = db_connection_handler.get_engine()
             try:
-                if id_cliente:
+                if id_cliente and id_endereco:
                     """update data of select in endereco"""
 
                     with engine.connect() as connection:
                         connection.execute(
                             text(
-                                f"UPDATE endereco SET id_cliente= {id_cliente}, "
+                                f"UPDATE endereco SET id_endereco= '{id_endereco}',"
                                 f"cep_cliente= '{cep_cliente}',"
-                                f"estado= '{estado}', "
-                                f"cidade= '{cidade}', "
-                                f"bairro= '{bairro}', "
-                                f"logradouro= '{logradouro}', "
-                                f"complemento= '{complemento}'"
-                                f"WHERE id_cliente= '{id_cliente}'"
+                                f"estado= '{estado}',"
+                                f"cidade= '{cidade}',"
+                                f"bairro= '{bairro}',"
+                                f"logradouro= '{logradouro}',"
+                                f"complemento= '{complemento}',"
+                                f"id_cliente= '{id_cliente}'"
+                                f"WHERE id_endereco= '{id_endereco}'"
+                                f"AND id_cliente= '{id_cliente}';"
                             )
                         )
-
                         connection.commit()
-
             except:
                 db_connection.session.rollback()
                 raise

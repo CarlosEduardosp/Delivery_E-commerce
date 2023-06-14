@@ -57,19 +57,37 @@ def test_update_endereco():
     """update data in endereço"""
 
     try:
+        id_endereco = 2
         cep_cliente = faker.random_number(digits=8)
         estado = "Rio de Janeiro"
         cidade = faker.name()
         bairro = faker.name()
         logradouro = faker.name()
         complemento = faker.name()
-        id_cliente = 1
+        id_cliente = int(6)
 
         endereco_repository.update_endereco(
-            cep_cliente, estado, cidade, bairro, logradouro, complemento, id_cliente
+            id_endereco,
+            cep_cliente,
+            estado,
+            cidade,
+            bairro,
+            logradouro,
+            complemento,
+            id_cliente,
         )
-
         print(f"Alteração realizada com Sucesso.")
 
     except:
         print("Endereço não Encontrado.")
+
+
+def test_select_all():
+    """select all endereco"""
+
+    try:
+        response = endereco_repository.select_all_endereco()
+        print("tudo ok")
+        return response
+    except:
+        print("Usuario não encontrado.")

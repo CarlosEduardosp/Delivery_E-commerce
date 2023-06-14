@@ -33,3 +33,25 @@ class EnderecoRepositoryInterface(ABC):
         """Abstractmethod"""
 
         raise Exception("Method not implementend")
+
+    @abstractmethod
+    def select_all_endereco(self) -> List[Endereco]:
+        """Abstractmethod"""
+
+        raise Exception("Method not implementend")
+
+    @abstractmethod
+    def update_endereco(
+        self,
+        id_endereco: int,
+        cep_cliente: str,
+        estado: str,
+        cidade: str,
+        bairro: str,
+        logradouro: str,
+        complemento: str,
+        id_cliente: int,
+    ) -> List[Endereco]:
+        """Abstractmethod"""
+
+        raise Exception("Method not implementend")
