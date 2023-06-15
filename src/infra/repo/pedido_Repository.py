@@ -98,6 +98,27 @@ class PedidoRepository(PedidoRepositoryInterface):
             return None
 
     @classmethod
+    def select_all_pedido(self) -> List[Pedido]:
+        """select all clientes"""
+
+        with DBConnectionHandler() as db_connection:
+            try:
+                engine = db_connection_handler.get_engine()
+
+                with engine.connect() as connection:
+                    data = connection.execute(text(f"SELECT * FROM pedido ;"))
+                    connection.commit()
+
+                    return data
+
+            except:
+                db_connection.session.rollback()
+                raise
+            finally:
+                db_connection.session.close()
+            return None
+
+    @classmethod
     def delete_pedido(self, id_pedido: int = None, id_cliente: int = None) -> None:
         """Deleting data by id_cliente
         :param - id_cliente id of registry"""

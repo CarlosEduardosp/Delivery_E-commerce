@@ -45,6 +45,16 @@ def test_select_pedido():
         print("Pedido não encontrado.")
 
 
+def test_select_all_pedido():
+    """select all pedido test"""
+
+    try:
+        response = pedido_repository.select_all_pedido()
+        print("tudo Ok", response)
+    except:
+        print("Algo deu errado!!")
+
+
 def test_delete_pedido():
     try:
         pedido_repository.delete_pedido(id_pedido=4, id_cliente=8)

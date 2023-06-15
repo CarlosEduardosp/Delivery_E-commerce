@@ -49,3 +49,9 @@ class PedidoRepositoryInterface(ABC):
         """Abstractmethod"""
 
         raise Exception("Method not implementend")
+
+    @abstractmethod
+    def select_all_pedido(self) -> List[Pedido]:
+        """Abstractmethod"""
+
+        raise Exception("Method not implementend")
