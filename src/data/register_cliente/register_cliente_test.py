@@ -15,7 +15,7 @@ def test_register():
         "apelido": faker.name(),
         "email": faker.name(),
         "senha": faker.name(),
-        "cep_cliente": faker.random_number(digits=8),
+        "cep_cliente": faker.name(),
     }
 
     response = register_user.register(
@@ -45,9 +45,7 @@ def test_select_cliente():
     select_cliente = RegisterCliente(user_repo)
 
     try:
-        response = select_cliente.select_cliente(
-            id_cliente=faker.random_number(digits=2)
-        )
+        response = select_cliente.select_cliente(id_cliente=4)
 
         if response["Success"]:
             for i in response["Data"]:
@@ -65,6 +63,8 @@ def test_select_cliente():
                 "cep_cliente": cep_cliente,
             }
             return {"Success": True, "Data": response}
+
+        return response
     except:
         return {"Success": False, "Data": None}
 
@@ -77,7 +77,7 @@ def test_delete_cliente():
 
     try:
         response = register_user.delete_cliente(
-            id_cliente=faker.random_number(digits=3)
+            id_cliente=faker.random_number(digits=1)
         )
     except:
         response = {"Success": False, "Data": None}
@@ -103,7 +103,7 @@ def test_update_cliente():
     register_user = RegisterCliente(user_repo)
 
     response = register_user.update_cliente(
-        id_cliente=2,
+        id_cliente=4,
         apelido=faker.name(),
         email=faker.name(),
         senha=faker.name(),

@@ -13,7 +13,7 @@ class RegisterCliente(RegisterClienteInterface):
         self.cliente_repository = cliente_repository
 
     def register(
-        self, apelido: str, email: str, senha: str, cep_cliente: int
+        self, apelido: str, email: str, senha: str, cep_cliente: str
     ) -> Dict[bool, Cliente]:
         """Register user use case
         :param - name: person name
@@ -22,44 +22,46 @@ class RegisterCliente(RegisterClienteInterface):
         """
 
         response = None
-        # validate_entry == True or False
-        validade_entry = (
-            isinstance(apelido, str)
-            and isinstance(email, str)
-            and isinstance(senha, str)
-            and isinstance(cep_cliente, int)
-        )
+
+        validade_entry = self.__validar_dados(
+            apelido=apelido, email=email, senha=senha, cep_cliente=cep_cliente
+        )  # validando com metodo privado.
 
         if validade_entry:  # if validate_entry == True
             response = self.cliente_repository.insert_cliente(
                 apelido, email, senha, cep_cliente
             )
+            return {"Success": True, "Data": response}
 
-        return {"Success": validade_entry, "Data": response}
+        return self.__error()
 
     def select_cliente(self, id_cliente: int) -> Dict[bool, Cliente]:
         """select in Cliente"""
 
         response = None
-        validate_entry = isinstance(id_cliente, int)
+        validade_entry = self.__validar_dados(
+            id_cliente=id_cliente
+        )  # validando com metodo privado.
 
-        if validate_entry:
+        if validade_entry:
             response = self.cliente_repository.select_cliente(id_cliente=id_cliente)
             return {"Success": True, "Data": response}
 
-        return {"Success": False, "Data": response}
+        return self.__error()
 
     def delete_cliente(self, id_cliente: int) -> Dict[bool, Cliente]:
         """delete in case"""
 
         response = None
-        validate_entry = isinstance(id_cliente, int)
+        validade_entry = self.__validar_dados(
+            id_cliente=id_cliente
+        )  # validando com metodo privado.
 
-        if validate_entry:
+        if validade_entry:
             response = self.cliente_repository.delete_cliente(id_cliente=id_cliente)
             return {"Success": True, "Data": response}
 
-        return {"Success": False, "Data": response}
+        return self.__error()
 
     def select_all_cliente(self) -> Dict[bool, Cliente]:
         """case select all"""
@@ -72,7 +74,7 @@ class RegisterCliente(RegisterClienteInterface):
             quantidade = len(ids)
             return {"Success": True, "Data": response, "Len": quantidade}
         except:
-            return {"Success": False, "Data": None}
+            return self.__error()
 
     def update_cliente(
         self, id_cliente: int, apelido: str, email: str, senha: str, cep_cliente: str
@@ -80,13 +82,14 @@ class RegisterCliente(RegisterClienteInterface):
         """update in Cliente"""
 
         response = None
-        validade_entry = (
-            isinstance(id_cliente, int)
-            and isinstance(apelido, str)
-            and isinstance(senha, str)
-            and isinstance(email, str)
-            and isinstance(cep_cliente, str)
-        )
+        validade_entry = self.__validar_dados(
+            apelido=apelido,
+            id_cliente=id_cliente,
+            email=email,
+            senha=senha,
+            cep_cliente=cep_cliente,
+        )  # validando com metodo privado.
+
         if validade_entry:
             response = self.cliente_repository.update_cliente(
                 id_cliente=id_cliente,
@@ -96,5 +99,29 @@ class RegisterCliente(RegisterClienteInterface):
                 cep_cliente=cep_cliente,
             )
             return {"Success": True, "Data": response}
+
+        return self.__error(response)
+
+    def __validar_dados(
+        self,
+        id_cliente: int = 0,
+        apelido: str = "",
+        email: str = "",
+        senha: str = "",
+        cep_cliente: str = "",
+    ) -> bool:
+        """validador de dados"""
+
+        validade_entry = (
+            isinstance(id_cliente, int)
+            and isinstance(apelido, str)
+            and isinstance(senha, str)
+            and isinstance(email, str)
+            and isinstance(cep_cliente, str)
+        )
+        return validade_entry
+
+    def __error(self, response: str = None):
+        """mensagem de erro"""
 
         return {"Success": False, "Data": response}

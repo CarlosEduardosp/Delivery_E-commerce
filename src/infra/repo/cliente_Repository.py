@@ -153,7 +153,13 @@ class ClienteRepository(ClienteRepositoryInterface):
                         )
 
                         connection.commit()
-                        return True
+                        return Cliente(
+                            id_cliente=id_cliente,
+                            apelido=apelido,
+                            email=email,
+                            senha=senha,
+                            cep_cliente=cep_cliente,
+                        )
 
             except:
                 db_connection.session.rollback()
