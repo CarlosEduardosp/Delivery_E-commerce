@@ -13,7 +13,7 @@ def test_register():
 
     attributes = {
         "apelido": faker.name(),
-        "email": faker.name() + "@teste.com.br",
+        "email": faker.email(),
         "senha": faker.name(),
         "cep_cliente": faker.name(),
     }
@@ -105,7 +105,7 @@ def test_update_cliente():
     response = register_user.update_cliente(
         id_cliente=4,
         apelido=faker.name(),
-        email=faker.name(),
+        email=faker.email(),
         senha=faker.name(),
         cep_cliente=faker.name(),
     )

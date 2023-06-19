@@ -121,6 +121,9 @@ class RegisterCliente(RegisterClienteInterface):
         if not isinstance(email, str):
             raise ValueError("email deve ser uma string")
 
+        if "@" not in email:
+            raise ValueError("Email Inválido - sem o caracter '@'")
+
         if not isinstance(senha, str):
             raise ValueError("senha deve ser uma string")
 
