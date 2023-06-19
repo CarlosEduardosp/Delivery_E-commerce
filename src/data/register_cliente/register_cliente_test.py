@@ -13,7 +13,7 @@ def test_register():
 
     attributes = {
         "apelido": faker.name(),
-        "email": faker.name(),
+        "email": faker.name() + "@teste.com.br",
         "senha": faker.name(),
         "cep_cliente": faker.name(),
     }

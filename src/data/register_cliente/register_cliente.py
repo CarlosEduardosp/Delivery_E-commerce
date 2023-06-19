@@ -110,16 +110,24 @@ class RegisterCliente(RegisterClienteInterface):
         senha: str = "",
         cep_cliente: str = "",
     ) -> bool:
-        """validador de dados"""
+        """Validador de dados"""
 
-        validade_entry = (
-            isinstance(id_cliente, int)
-            and isinstance(apelido, str)
-            and isinstance(senha, str)
-            and isinstance(email, str)
-            and isinstance(cep_cliente, str)
-        )
-        return validade_entry
+        if not isinstance(id_cliente, int):
+            raise ValueError("id_cliente deve ser um número inteiro")
+
+        if not isinstance(apelido, str):
+            raise ValueError("apelido deve ser uma string")
+
+        if not isinstance(email, str):
+            raise ValueError("email deve ser uma string")
+
+        if not isinstance(senha, str):
+            raise ValueError("senha deve ser uma string")
+
+        if not isinstance(cep_cliente, str):
+            raise ValueError("cep_cliente deve ser uma string ou None")
+
+        return True
 
     def __error(self, response: str = None):
         """mensagem de erro"""
