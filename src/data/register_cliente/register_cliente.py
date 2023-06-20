@@ -106,7 +106,7 @@ class RegisterCliente(RegisterClienteInterface):
         self,
         id_cliente: int = 0,
         apelido: str = "",
-        email: str = "",
+        email: str = "@",
         senha: str = "",
         cep_cliente: str = "",
     ) -> bool:
