@@ -23,7 +23,7 @@ def test_handle():
         }
     )
 
-    response = register_produto_controller.handle_insert(http_request)
+    response = register_produto_controller.route_insert(http_request)
 
     return response
 
@@ -36,7 +36,7 @@ def test_select_controller():
 
     http_request = HttpRequest(query={"id_produto": faker.random_number(digits=1)})
 
-    response = register_produto_controller.handle_select(http_request)
+    response = register_produto_controller.route_select(http_request)
 
     return response
 
@@ -48,7 +48,7 @@ def test_select_all_controller():
     register_produto_controller = RegisterProdutoController(register_produto_use_case)
 
     http_request = HttpRequest()
-    response = register_produto_controller.handle_select_all(http_request)
+    response = register_produto_controller.route_select_all(http_request)
 
     return response
 
@@ -61,7 +61,7 @@ def test_delete_controller():
 
     http_request = HttpRequest(query={"id_produto": faker.random_number(digits=2)})
 
-    response = register_produto_controller.handle_delete(http_request)
+    response = register_produto_controller.route_delete(http_request)
 
     return response
 
@@ -82,6 +82,6 @@ def test_handle_update():
         }
     )
 
-    response = register_produto_controller.handle_update(http_request)
+    response = register_produto_controller.route_update(http_request)
 
     return response

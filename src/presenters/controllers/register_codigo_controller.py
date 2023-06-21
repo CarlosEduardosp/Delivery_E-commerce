@@ -1,16 +1,17 @@
 from typing import Type
+from src.main.interface.route_codigo import RouteInterface
 from src.doman.use_cases.register_codigo import RegisterCodigo
 from src.presenters.helpers.http_models import HttpRequest, HttpResponse
 from src.presenters.errors.http_errors import HttpErrors
 
 
-class RegisterCodigoController:
+class RegisterCodigoController(RouteInterface):
     """Class to define controller to register codigo use case"""
 
     def __init__(self, register_codigo_use_case: Type[RegisterCodigo]):
         self.register_codigo_use_case = register_codigo_use_case
 
-    def handle_insert(self, http_request: Type[HttpRequest]) -> HttpResponse:
+    def route_insert(self, http_request: Type[HttpRequest]) -> HttpResponse:
         """Method to call use case"""
 
         response = None
@@ -47,7 +48,7 @@ class RegisterCodigoController:
             status_code=http_error["status_code"], body=http_error["body"]
         )
 
-    def handle_select(self, http_request: Type[HttpRequest]) -> HttpResponse:
+    def route_select(self, http_request: Type[HttpRequest]) -> HttpResponse:
         """controller select carrinho"""
 
         response = None
@@ -70,7 +71,7 @@ class RegisterCodigoController:
 
         return HttpResponse(status_code=200, body=response["Data"])
 
-    def handle_delete(self, http_request: Type[HttpRequest]) -> HttpResponse:
+    def route_delete(self, http_request: Type[HttpRequest]) -> HttpResponse:
         """controller select carrinho"""
 
         response = None

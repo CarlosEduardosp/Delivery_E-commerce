@@ -1,16 +1,17 @@
 from typing import Type
+from src.main.interface.route_produto import RouteInterface
 from src.doman.use_cases.register_produto import RegisterProduto
 from src.presenters.helpers.http_models import HttpRequest, HttpResponse
 from src.presenters.errors.http_errors import HttpErrors
 
 
-class RegisterProdutoController:
+class RegisterProdutoController(RouteInterface):
     """Class to define controller to register produto use case"""
 
     def __init__(self, register_produto_use_case: Type[RegisterProduto]):
         self.register_produto_use_case = register_produto_use_case
 
-    def handle_insert(self, http_request: Type[HttpRequest]) -> HttpResponse:
+    def route_insert(self, http_request: Type[HttpRequest]) -> HttpResponse:
         """Method to call use case"""
 
         response = None
@@ -53,7 +54,7 @@ class RegisterProdutoController:
             status_code=http_error["status_code"], body=http_error["body"]
         )
 
-    def handle_select(self, http_request: Type[HttpRequest]) -> HttpResponse:
+    def route_select(self, http_request: Type[HttpRequest]) -> HttpResponse:
         """controller select produto"""
 
         response = None
@@ -76,7 +77,7 @@ class RegisterProdutoController:
 
         return HttpResponse(status_code=200, body=response["Data"])
 
-    def handle_select_all(self, http_request: Type[HttpRequest]) -> HttpResponse:
+    def route_select_all(self, http_request: Type[HttpRequest]) -> HttpResponse:
         """controller select cliente"""
 
         response = None
@@ -85,7 +86,7 @@ class RegisterProdutoController:
 
         return HttpResponse(status_code=200, body=response["Data"])
 
-    def handle_delete(self, http_request: Type[HttpRequest]) -> HttpResponse:
+    def route_delete(self, http_request: Type[HttpRequest]) -> HttpResponse:
         """controller select produto"""
 
         response = None
@@ -108,7 +109,7 @@ class RegisterProdutoController:
 
         return HttpResponse(status_code=200, body=response["Data"])
 
-    def handle_update(self, http_request: Type[HttpRequest]) -> HttpResponse:
+    def route_update(self, http_request: Type[HttpRequest]) -> HttpResponse:
         """Method to call use case"""
 
         response = None

@@ -16,7 +16,7 @@ def test_handle():
 
     http_request = HttpRequest(query={"imagem": faker.name()})
 
-    response = register_imagem_controller.handle_insert(http_request)
+    response = register_imagem_controller.route_insert(http_request)
 
     return response
 
@@ -29,7 +29,7 @@ def test_select_controller():
 
     http_request = HttpRequest()
 
-    response = register_imagem_controller.handle_select(http_request)
+    response = register_imagem_controller.route_select(http_request)
 
     return response
 
@@ -42,6 +42,6 @@ def test_delete_controller():
 
     http_request = HttpRequest()
 
-    response = register_imagem_controller.handle_delete(http_request)
+    response = register_imagem_controller.route_delete(http_request)
 
     return response

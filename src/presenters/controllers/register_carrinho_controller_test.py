@@ -23,7 +23,7 @@ def test_handle():
         }
     )
 
-    response = register_carrinho_controller.handle_insert(http_request)
+    response = register_carrinho_controller.route_insert(http_request)
 
     return response
 
@@ -38,7 +38,7 @@ def test_select_controller():
 
     http_request = HttpRequest(query={"id_cliente": faker.random_number(digits=1)})
 
-    response = register_carrinho_controller.handle_select(http_request)
+    response = register_carrinho_controller.route_select(http_request)
 
     return response
 
@@ -52,7 +52,7 @@ def test_select_all_controller():
     )
 
     http_request = HttpRequest()
-    response = register_carrinho_controller.handle_select_all(http_request)
+    response = register_carrinho_controller.route_select_all(http_request)
 
     return response
 
@@ -67,6 +67,6 @@ def test_delete_controller():
 
     http_request = HttpRequest(query={"id_cliente": 1, "id_produto": 1})
 
-    response = register_carrinho_controller.handle_delete(http_request)
+    response = register_carrinho_controller.route_delete(http_request)
 
     return response
