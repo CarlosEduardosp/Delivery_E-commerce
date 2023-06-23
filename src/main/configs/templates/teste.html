@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h1 class="titulo" xmlns="http://www.w3.org/1999/html">Login</h1>
+
+
+
+
+<form action="#" class=" centralizar" method="POST">
+  <div class="mb-1  ">
+    <label  class="form-label text-center">Email</label>
+    <input type="email" class="form-control " name="email" aria-describedby="emailHelp" required>
+    <div   class="form-text">Digite aqui um email válido.</div>
+  </div>
+  <div class="mb-1">
+    <label class="form-label">Senha</label>
+    <input type="password" class="form-control" name="senha" required>
+  </div>
+  <br>
+    <a type="button" href="#">
+            <button class="btn btn-outline-success">Entrar</button>
+            </a>
+  {% if id_cliente == 'Efetue o Login!' %}
+    <div class="mb-1 separar" >
+        <br>
+        <h5><a  href="#">Ainda não é cadastrado?</a></h5>
+</div>
+  {% endif %}
+</form>
+
+</body>
+</html>
