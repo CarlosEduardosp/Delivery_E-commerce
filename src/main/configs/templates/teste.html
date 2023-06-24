@@ -1,36 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title></title>
+  <title>Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    .container {
+      width: 400px;
+      margin: 0 auto;
+      margin-top: 100px;
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 20px;
+      box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    .form-text {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background-color: #4CAF50;
+      color: #fff;
+      border-radius: 3px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .separar {
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-<h1 class="titulo" xmlns="http://www.w3.org/1999/html">Login</h1>
-
-
-
-
-<form action="#" class=" centralizar" method="POST">
-  <div class="mb-1  ">
-    <label  class="form-label text-center">Email</label>
-    <input type="email" class="form-control " name="email" aria-describedby="emailHelp" required>
-    <div   class="form-text">Digite aqui um email válido.</div>
-  </div>
-  <div class="mb-1">
-    <label class="form-label">Senha</label>
-    <input type="password" class="form-control" name="senha" required>
-  </div>
-  <br>
-    <a type="button" href="#">
-            <button class="btn btn-outline-success">Entrar</button>
-            </a>
-  {% if id_cliente == 'Efetue o Login!' %}
-    <div class="mb-1 separar" >
+  <div class="container">
+    <form action="#" class="centralizar" method="POST">
+      <div class="mb-1">
+        <label class="form-label text-center">Email</label>
+        <input type="email" class="form-control" name="email" aria-describedby="emailHelp" required>
+        <div class="form-text">Digite aqui um email válido.</div>
+      </div>
+      <div class="mb-1">
+        <label class="form-label">Senha</label>
+        <input type="password" class="form-control" name="senha" required>
+      </div>
+      <br>
+      <a href="#">
+        <button class="btn btn-outline-success">Entrar</button>
+      </a>
+      <div class="mb-1 separar">
         <br>
-        <h5><a  href="#">Ainda não é cadastrado?</a></h5>
-</div>
-  {% endif %}
-</form>
-
+        <h5><a href="#">Ainda não é cadastrado?</a></h5>
+      </div>
+    </form>
+  </div>
 </body>
 </html>
