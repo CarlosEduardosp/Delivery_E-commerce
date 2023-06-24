@@ -73,6 +73,6 @@ def test_select_all_produtos():
 
     try:
         produto_repository.select_all_produto()
-        print("tudo Ok")
+        print("tudo ok")
     except:
         print("Usuario não encontrado.")

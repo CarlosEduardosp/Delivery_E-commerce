@@ -75,12 +75,15 @@ class RegisterEndereco(RegisterEnderecoInterface):
         """case select all"""
 
         try:
-            ids = []
+            todos_os_ids = []
             response = self.endereco_repository.select_all_endereco()
+            response_dict = []
             for i in response:
-                ids.append(i.id_cliente)
-            quantidade = len(ids)
-            return {"Success": True, "Data": response, "Len": quantidade}
+                todos_os_ids.append(i.id_endereco)
+                response_dict.append(i)
+            quantidade = len(todos_os_ids)
+
+            return {"Success": True, "Data": response_dict, "Len": quantidade}
         except:
             return {"Success": False, "Data": None}
 

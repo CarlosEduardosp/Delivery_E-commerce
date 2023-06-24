@@ -51,12 +51,15 @@ class RegisterProduto(RegisterProdutoInterface):
         """case select all"""
 
         try:
-            ids = []
+            todos_os_ids = []
             response = self.produto_repository.select_all_produto()
+            response_dict = []
             for i in response:
-                ids.append(i.id_produto)
-            quantidade = len(ids)
-            return {"Success": True, "Data": response, "Len": quantidade}
+                todos_os_ids.append(i.id_produto)
+                response_dict.append(i)
+            quantidade = len(todos_os_ids)
+
+            return {"Success": True, "Data": response_dict, "Len": quantidade}
         except:
             return {"Success": False, "Data": None}
 

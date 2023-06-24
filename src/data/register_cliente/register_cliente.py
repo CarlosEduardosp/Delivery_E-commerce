@@ -45,6 +45,7 @@ class RegisterCliente(RegisterClienteInterface):
 
         if validade_entry:
             response = self.cliente_repository.select_cliente(id_cliente=id_cliente)
+
             return {"Success": True, "Data": response}
 
         return self.__error()
@@ -67,12 +68,15 @@ class RegisterCliente(RegisterClienteInterface):
         """case select all"""
 
         try:
-            ids = []
+            todos_os_ids = []
             response = self.cliente_repository.select_all_cliente()
+            response_dict = []
             for i in response:
-                ids.append(i.id_cliente)
-            quantidade = len(ids)
-            return {"Success": True, "Data": response, "Len": quantidade}
+                todos_os_ids.append(i.id_cliente)
+                response_dict.append(i)
+            quantidade = len(todos_os_ids)
+
+            return {"Success": True, "Data": response_dict, "Len": quantidade}
         except:
             return self.__error()
 

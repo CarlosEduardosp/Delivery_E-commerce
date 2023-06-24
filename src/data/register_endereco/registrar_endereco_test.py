@@ -5,7 +5,7 @@ from src.infra.repo.endereco_Repository import EnderecoRepository
 faker = Faker()
 
 
-def insert_endereco():
+def test_insert_endereco():
     """testing endereco"""
 
     user_repo = EnderecoRepository()
@@ -27,7 +27,7 @@ def insert_endereco():
         return {"Success": False, "Data": response}
 
 
-def select_endereco():
+def test_select_endereco():
     """select case"""
 
     user_repo = EnderecoRepository()
@@ -42,7 +42,7 @@ def select_endereco():
         return {"Success": False, "Data": response}
 
 
-def select_all_endereco():
+def test_select_all_endereco():
     """case select all"""
 
     user_repo = EnderecoRepository()
@@ -57,7 +57,7 @@ def select_all_endereco():
         return {"Success": False, "Data": response}
 
 
-def endereco_delete():
+def test_endereco_delete():
     """case delete"""
 
     user_repo = EnderecoRepository()

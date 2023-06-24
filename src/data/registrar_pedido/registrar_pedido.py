@@ -65,8 +65,15 @@ class RegisterPedido(RegisterPedidoInterface):
 
         response = None
         try:
+            todos_os_ids = []
             response = self.pedido_repository.select_all_pedido()
-            return {"Success": True, "Data": response}
+            response_dict = []
+            for i in response:
+                todos_os_ids.append(i.id_pedido)
+                response_dict.append(i)
+            quantidade = len(todos_os_ids)
+
+            return {"Success": True, "Data": response_dict, "Len": quantidade}
         except:
             return {"Success": False, "Data": response}
 

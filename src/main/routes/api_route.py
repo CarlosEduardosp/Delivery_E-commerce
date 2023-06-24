@@ -1,4 +1,7 @@
 from flask import Blueprint, render_template
+from src.main.composer.register_produto_composer import register_produto_composer
+from src.presenters.helpers.http_models import HttpRequest
+import os
 
 api_routes_bp = Blueprint("api_routes", __name__)
 
@@ -7,10 +10,19 @@ api_routes_bp = Blueprint("api_routes", __name__)
 def home():
     """rota teste"""
 
-    apelido = "Carol"
-    quantidade_carrinho = 3
+    http_request = HttpRequest()
+    response = register_produto_composer()
+    response = response.route_select_all(http_request)
+    produtos = response.body
+
+    path = "C:/meus projetos/DeliverySystem/CleanArchitecture/src/main/configs/static/"
+    img = os.listdir(path)
+
+    # recupera a quantidade de imagens na pasta
+    carrinho = len(img)
+    print(carrinho)
     return render_template(
-        "base.html", apelido=apelido, quantidade_carrinho=quantidade_carrinho
+        "home.html", img=img, apelido="kadu", quantidade_carrinho=2, produtos=produtos
     )
 
 
