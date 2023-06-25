@@ -1,73 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Boleto</title>
     <style>
+        /* Estilos CSS para o boleto */
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-        }
-
-        header {
-            background-color: #333;
-            color: #fff;
             padding: 20px;
-            text-align: center;
         }
 
         h1 {
-            margin: 0;
+            text-align: center;
         }
 
-        main {
-            max-width: 800px;
-            margin: 20px auto;
+        .boleto-container {
+            background-color: #f7f7f7;
+            border: 1px solid #ccc;
             padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
         }
 
-        article {
-            margin-bottom: 20px;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 10px;
+        .boleto-container p {
+            margin: 10px 0;
         }
 
-        h2 {
-            margin-top: 0;
+        .boleto-container .label {
+            font-weight: bold;
         }
 
-        p {
-            margin: 0;
-        }
-
-        .date {
-            color: #777;
+        .boleto-container .barcode {
+            margin-top: 20px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Página de Notícias</h1>
-    </header>
-
-    <main>
-        <article>
-            <h2>Título da Notícia 1</h2>
-
-            <p class="date">Data da notícia</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis euismod semper convallis. Integer condimentum ipsum at eros tempus, nec iaculis massa tempor.</p>
-        </article>
-
-        <article>
-            <h2>Título da Notícia 2</h2>
-            <p class="date">Data da notícia</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis euismod semper convallis. Integer condimentum ipsum at eros tempus, nec iaculis massa tempor.</p>
-        </article>
-
-        <article>
-            <h2>Título da Notícia 3</h2>
-            <p class="date">Data da notícia</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis euismod semper convallis. Integer condimentum ipsum at eros tempus, nec iaculis massa tempor.</p>
-        </article>
-    </main>
+    <h1>Boleto</h1>
+    <div class="boleto-container">
+        <p><span class="label">Nome do Beneficiário:</span> Nome do Beneficiário</p>
+        <p><span class="label">CNPJ/CPF do Beneficiário:</span> 123.456.789-00</p>
+        <p><span class="label">Valor:</span> R$ 100,00</p>
+        <p><span class="label">Vencimento:</span> 01/01/2023</p>
+        <p><span class="label">Linha Digitável:</span> 12345.67890 12345.678901 23456.789012 3 45670000010000</p>
+        <div class="barcode">
+            <img src="barcode.png" alt="Código de Barras">
+        </div>
+    </div>
 </body>
 </html>

@@ -19,6 +19,15 @@
       padding: 20px;
       box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
     }
+    .container_validar {
+      width: 600px;
+      margin: 0 auto;
+      margin-top: 100px;
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 20px;
+      box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+    }
 
     .container_geral {
       width: 400px;
@@ -60,7 +69,7 @@
        <nav class="rounded nav justify-content-center bg bg-dark menu padding" >
            <a class="nav-link active text-white" href="#"><h6>Olá, {{apelido}}</h6></a>
 
-          <a class="nav-link active text-white" aria-current="page" href="#"><h6>Home</h6></a>
+          <a class="nav-link active text-white" aria-current="page" href="{{url_for('api_routes.home')}}"><h6>Home</h6></a>
         </li>
 
 
