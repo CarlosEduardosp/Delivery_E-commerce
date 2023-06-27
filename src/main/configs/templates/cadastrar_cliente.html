@@ -1,10 +1,18 @@
 {% extends "base.html"%}
 
 {% block conteudo %}
-<div class="container_cadastro">
+<div class="container_cadastro text-center">
+
+    {%- for mensagem in get_flashed_messages() %}
+                {% if 'erro' in mensagem or 'Nenhum' in mensagem%}
+                    <div class="alert alert-danger text-center ">
+                        {{mensagem}}
+                    </div>
+                {% endif %}
+              {%- endfor %}
+
 
 <h1 class="titulo">Tela de Cadastro</h1>
-
 
 
  <form action="{{url_for('api_routes.cadastrar_cliente')}}" class="row g-3 centralizarcadastro" method="POST">
@@ -16,7 +24,7 @@
          <h6><label for="apelido" class="form-label">Apelido</label></h6>
     <input type="text" class="form-control text-center" id="apelido" name="apelido" value="{{apelido}}" required>
      </div>
-  <div class="col-12">
+  <div class="col-md-12">
       <h6><label for="end" class="form-label text-center">Cep</label></h6>
     <input type="text" class="form-control text-center" id="end" name="end" required value="{{endereco.cep_cliente}}">
 
@@ -25,23 +33,28 @@
   </div>
 
 
-</form>
-     <form action="{{url_for('api_routes.validar_email', email=email)}}" class="row g-3 centralizarcadastro" method="POST">
+<div class="">
+     <form action="{{url_for('api_routes.cadastrar_cliente')}}" class="row g-3 centralizarcadastro" method="POST">
 
-     <div class="col-md-2">
-         <h6><label for="estado" class="form-label">Estado</label></h6>
-    <input type="text" class="form-control text-center" id="estado" name="estado"  value="{{endereco.estado}}">
+     <div class="row text-center">
+  <div class="col-md-2 ">
+    <h6><label for="estado" class="form-label">Estado</label></h6>
+    <input type="text" class="form-control text-center" id="estado" name="estado" value="{{endereco.estado}}">
   </div>
 
-     <div class="col-md-4">
-         <h6><label for="cidade" class="form-label">Cidade</label></h6>
-    <input type="text" class="form-control text-center" id="cidade" name="cidade"  value="{{endereco.cidade}}">
+  <div class="col-md-5 ">
+    <h6><label for="cidade" class="form-label">Cidade</label></h6>
+    <input type="text" class="form-control text-center" id="cidade" name="cidade" value="{{endereco.cidade}}">
   </div>
 
-     <div class="col-6 centro">
+   <div class="col-md-5 centro">
          <h6><label for="bairro" class="form-label">Bairro</label></h6>
     <input type="text" class="form-control text-center" id="bairro"  name="bairro"  value="{{endereco.bairro}}">
   </div>
+
+</div>
+
+
 
   <div class="col-12">
       <h6><label for="logradouro" class="form-label">Logradouro: Avenida/rua/Travessa</label></h6>
@@ -54,23 +67,25 @@
     <input type="text" class="form-control text-center" id="complemento"  name="complemento" value="{{endereco.complemento}}"  placeholder="Complemente o endereço aqui.">
   </div>
 
-
+    <div class="row text-center">
    <div class="col-md-6">
        <h6><label for="senha" class="form-label">Senha</label></h6>
-    <input type="password" class="form-control" id="senha" name="senha" >
+    <input type="password" class="form-control" id="senha" name="senha" value="" >
   </div>
      <div class="col-md-6">
          <h6><label for="confirmar_senha" class="form-label">Confirmar Senha</label></h6>
-    <input type="password" class="form-control" id="confirmar_senha" name="confirmar_senha" >
+    <input type="password" class="form-control" id="confirmar_senha" name="confirmar_senha" value="" >
   </div>
-
+    </div>
          <div class="col-12">
-      <a href="{{url_for('api_routes.validar_email', email=email)}}" > <button type="submit" class="btn btn-primary">Cadastrar</button></a>
+    <a  href="{{url_for('api_routes.cadastrar_cliente')}}"><br><button class="btn btn-primary">Cadastrar</button></a>
   </div>
 
 
      <hr>
 
 </form>
+</div>
+ </form>
 </div>
 {% endblock %}

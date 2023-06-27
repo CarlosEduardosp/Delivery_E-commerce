@@ -13,7 +13,7 @@
      margin-left: auto;
 }
 .painel{
-    width: 1200px;
+    width: 1000px;
     height: 400px;
 }
 .centralizar{
@@ -123,3 +123,7 @@
 .paddingicone{
         padding: 0px 0%;
 }
+.card-padrao {
+  width: 5rem;
+}
+

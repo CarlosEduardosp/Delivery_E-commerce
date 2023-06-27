@@ -60,16 +60,26 @@
       box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
     }
 
+    .padding_input {
+      width: 200px;
+      height: 100px;
+      margin: 20 auto;
+      margin-top: 30px;
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 20px;
+      box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+    }
     </style>
 </head>
 
 <br>
-<body class="rounded bg bg-white">
+<body class="rounded bg bg-white" >
 
        <nav class="rounded nav justify-content-center bg bg-dark menu padding" >
            <a class="nav-link active text-white" href="#"><h6>Olá, {{apelido}}</h6></a>
 
-          <a class="nav-link active text-white" aria-current="page" href="{{url_for('api_routes.home')}}"><h6>Home</h6></a>
+          <a class="nav-link active text-white" aria-current="page" href="{{url_for('api_routes.home', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Home</h6></a>
         </li>
 
 
@@ -96,7 +106,7 @@
               <a class="nav-link text-white" href="#"><h6>Perfil</h6> </a>
             </li>
            <li class="nav-item">
-          <a class="nav-link text-white" href="{{url_for('api_routes.login')}}"><h6>Login</h6> </a>
+          <a class="nav-link text-white" href="{{url_for('api_routes.login', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Login</h6> </a>
            </li>
 
 
@@ -121,7 +131,7 @@
 </button>
 
 
-        <a type="button" href="#">
+        <a type="button" href="{{url_for('api_routes.sair', apelido=apelido)}}">
 
             <button class="btn btn-white  "><h6><mark class="rounded bg bg-dark text-white">Sair</mark></h6></button>
            </a><br>

@@ -6,7 +6,7 @@
  <div class="text-center">
     <div class="container-fluid ">
 
-        <div class="padding  "  >
+        <div class="padding "  >
 
          <img class="rounded painel border border-5 border-dark container_imageminicial" src="\static\imagem\16590.jpg" alt="Imagem não disponível no momento.">
 
@@ -15,19 +15,19 @@
 
      </div></div>
 
-<div class="row centralizarhome">
+<div class="row ">
 
-        {% for i in img %}
-            {% for j in produtos %}
+
+            {% for i in img %}
             {% if i != 'estilo.css' and i != 'carrinho.png' and i != 'free.jpg'  %}
 
-  <div class="col-md-3 separarhome ">
-<div class="card text-center " style="width: 20rem;">
-<img src="\static\{{i}}" class=" card-img-top imgquadrada " alt="...">
-  <div class="card-body imgquadrada">
-    <h5 class="card-title text-center">{{i.nome}}</h5>
-    <p class="card-text acertartexto text-center">{{i}}</p>
-    <h5 class="card-title text-center ">R$ - {{i}}</h5>
+  <div class="col-md-3  ">
+<div class="card text-center container" style="width: 20rem;">
+<img src="\static\{{i}}" width="300px" height="200px" class="card-img-top" alt="...">
+  <div class="card-body ">
+    <h5 class="card-title text-center">Nome</h5>
+    <p class="card-text acertartexto text-center">Descrição</p>
+    <h5 class="card-title text-center ">R$ - Preço</h5>
       {% if id_cliente != 'Efetue o Login!' %}
             <a href="#"  class="btn btn-outline-dark">Adicionar ao Carrinho</a>
         {% endif %}
@@ -42,7 +42,7 @@
 
         {% endif %}
       {% endfor %}
-        {% endfor %}
+
 </div>
 
 {% endblock%}

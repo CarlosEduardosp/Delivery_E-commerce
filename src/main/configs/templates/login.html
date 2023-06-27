@@ -2,7 +2,13 @@
 
 {% block conteudo%}
 
-
+            {%- for mensagem in get_flashed_messages() %}
+                {% if 'encontrado' in mensagem or 'Nenhum' in mensagem%}
+                    <div class="alert alert-danger text-center ">
+                        {{mensagem}}
+                    </div>
+                {% endif %}
+              {%- endfor %}
 
 <div class="container">
 
@@ -23,12 +29,12 @@
     <a type="button" href="#">
             <button class="btn btn-outline-success">Entrar</button>
             </a>
-
+    {% if apelido == 'Efetue o Login!'%}
     <div class="mb-1 separar" >
         <br>
         <h5><a  href="{{url_for('api_routes.cadastrar_cliente')}}">Ainda não é cadastrado?</a></h5>
-</div>
-
+    </div>
+    {% endif %}
 </form>
 </div>
 
