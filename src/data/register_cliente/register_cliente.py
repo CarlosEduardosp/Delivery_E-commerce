@@ -111,7 +111,7 @@ class RegisterCliente(RegisterClienteInterface):
         id_cliente: int = 0,
         apelido: str = "",
         email: str = "@",
-        senha: str = "",
+        senha: str = ".....",
         cep_cliente: str = "",
     ) -> bool:
         """Validador de dados"""
@@ -130,6 +130,9 @@ class RegisterCliente(RegisterClienteInterface):
 
         if not isinstance(senha, str):
             raise ValueError("senha deve ser uma string")
+
+        if len(senha) < 5:
+            raise ValueError("Senha deve conter no minimo 5 caracteres.")
 
         if not isinstance(cep_cliente, str):
             raise ValueError("cep_cliente deve ser uma string ou None")

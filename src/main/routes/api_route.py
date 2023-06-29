@@ -1,4 +1,12 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from flask import (
+    Blueprint,
+    render_template,
+    request,
+    redirect,
+    url_for,
+    flash,
+    session,
+)
 from src.main.composer.register_produto_composer import register_produto_composer
 from src.main.composer.buscar_cep_composer import buscar_cep_composer
 from src.presenters.helpers.http_models import HttpRequest
@@ -9,8 +17,12 @@ from src.main.composer.register_cliente_composite import register_cliente_compos
 from src.main.composer.register_carrinho_composer import register_carrinho_composer
 from src.main.composer.register_endereco_composer import register_endereco_composer
 from src.doman.models.cliente import Cliente
+from src.main.adapter.flask_adapter_cliente import flask_adapter_cliente
 from faker import Faker
 import os
+
+# import json
+
 
 api_routes_bp = Blueprint("api_routes", __name__)
 
@@ -224,8 +236,24 @@ def sair(apelido: str):
     return redirect(url_for("api_routes.login", apelido="Efetue o Login!"))
 
 
-@api_routes_bp.route("/teste/teste")
+@api_routes_bp.route("/testando/teste/denovo", methods=["GET", "POST"])
 def teste():
     """teste"""
+
+    dados = {
+        "id_cliente": 1,
+        "apelido": "Carlos Eduardo",
+        "email": "carlos.spadilha@yahoo.com.br",
+        "senha": "01254",
+        "cep_cliente": "26515570",
+    }
+    response = flask_adapter_cliente(
+        api_route=register_cliente_composer(), data=dados, action="select"
+    )
+
+    print(response)
+    if response.body:
+        for i in response.body:
+            print(i)
 
     return render_template("teste.html")
