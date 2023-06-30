@@ -55,9 +55,9 @@ def login(apelido: str, quantidade_carrinho: str = "vazio"):
     """Realiza o login comparando os dados inseridos, com os da tabela Cliente."""
 
     # instancia clientes, HttpRequest e selct de todos os clientes.
-    http_request = HttpRequest()
-    clientes = register_cliente_composer()
-    clientes = clientes.route_select_all(http_request)
+    clientes = flask_adapter_cliente(
+        register_cliente_composer(), data={}, action="select_all"
+    )
 
     # request do email e senhao do form
     if request.method == "POST":
@@ -70,24 +70,22 @@ def login(apelido: str, quantidade_carrinho: str = "vazio"):
                 apelido = cliente.apelido
 
                 # coletando quantidade de produtos no carrinho de clientes
-                http_request_carrinho = HttpRequest(
-                    query={"id_cliente": cliente.id_cliente}
+                quantidade_carrinho = flask_adapter_carrinho(
+                    api_route=register_carrinho_composer(),
+                    data={"id_cliente": cliente.id_cliente},
+                    action="select_len",
                 )
-                quantidade_carrinho = register_carrinho_composer()
-                response = quantidade_carrinho.route_select(http_request_carrinho)
-                carrinho = []
-                for i in response.body:
-                    carrinho.append(i)
-                carrinho = len(carrinho)
 
                 return redirect(
                     url_for(
-                        "api_routes.home", quantidade_carrinho=carrinho, apelido=apelido
+                        "api_routes.home",
+                        quantidade_carrinho=quantidade_carrinho,
+                        apelido=apelido,
                     )
                 )
-            else:
-                mensagem = "Usuário não encontrado ou senha incorreta!!"
-                flash(mensagem)
+        # exibi mensagem de erro caso senha ou email sejam inválidos.
+        mensagem = "Usuário não encontrado ou senha incorreta!!"
+        flash(mensagem)
 
     return render_template(
         "login.html", apelido=apelido, quantidade_carrinho=quantidade_carrinho
@@ -114,14 +112,19 @@ def cadastrar_cliente(apelido: str):
         confirmar_senha = request.form.get("confirmar_senha")
         apelido = request.form.get("apelido")
         cep_cliente = request.form.get("end")
-        # complemento_form = request.form.get("complemento")
+        complemento = request.form.get("complemento")
 
         # realizando a pesquisa do cep.
         if cep_cliente:
-            response = buscar_cep_composer()
-            http_request = HttpRequest(query={"cep_cliente": cep_cliente})
-            endereco = response.route_buscar_cep(http_request)
-            endereco = endereco.body
+            endereco = flask_adapter_buscar_cep(
+                api_route=buscar_cep_composer(),
+                data={"cep_cliente": cep_cliente},
+                action="cep_cliente",
+            )  # se o usuario digitar algum complemento.
+            if complemento:
+                session["complemento"] = complemento
+            else:
+                session["complemento"] = endereco[5]
 
         # comparação das senhas e retorna um valor boolean
         if senha and confirmar_senha:
@@ -131,12 +134,15 @@ def cadastrar_cliente(apelido: str):
                 flash("erro -- senhas não conferem !!")
 
             else:
-                # enviando codigo para o email cadastrado
+                # registrar codigo no banco
                 faker = Faker()
                 codigo = faker.random_number(digits=4)
-                http_request = HttpRequest(query={"codigo": codigo, "id_cliente": 1})
-                registrar_codigo = register_codigo_composer()
-                registrar_codigo.route_insert(http_request)
+                flask_adapter_codigo(
+                    api_route=register_codigo_composer(),
+                    data={"codigo": codigo, "id_cliente": 1},
+                    action="insert",
+                )
+
                 enviar_codigo = EnviarCodigoEmail()
                 enviar_codigo.enviar_email_codigo(
                     codigo=codigo, email_destinatario=email
@@ -172,49 +178,45 @@ def validar_email(email: str):
         # validação do codigo, com o codigo cadastrado
         response = comparar_codigo(codigo)
         if response:
-            http_request = HttpRequest(query={"id_cliente": 1, "codigo": codigo})
-            response_codigo = register_codigo_composer()
-            response_codigo.route_delete(http_request)
-
-            # dados salvos do cliente
-            dados_cliente = session.get("dados_cliente")
-            http_request_cliente = HttpRequest(
-                query={
-                    "apelido": dados_cliente[1],
-                    "email": dados_cliente[2],
-                    "senha": dados_cliente[3],
-                    "cep_cliente": dados_cliente[4],
-                }
+            # salvando dados do cliente no banco
+            cliente = session.get("dados_cliente")
+            cliente_insert = flask_adapter_cliente(
+                api_route=register_cliente_composer(),
+                data={
+                    "apelido": cliente[1],
+                    "email": cliente[2],
+                    "senha": cliente[3],
+                    "cep_cliente": cliente[4],
+                },
+                action="insert",
             )
 
-            # salvando od dados no banco de dados.
-            response_inserir_cliente_bd = register_cliente_composer()
-            response_cliente_bd = response_inserir_cliente_bd.route_insert(
-                http_request_cliente
-            )
-            cliente = []
-            for i in response_cliente_bd.body:
-                cliente.append(i)
-
+            # salvando endereço no banco
+            complemento = session.get("complemento")
             endereco = session.get("endereco_cliente")
-
-            http_endereco = HttpRequest(
-                query={
+            flask_adapter_endereco(
+                api_route=register_endereco_composer(),
+                data={
                     "id_cliente": cliente[0],
                     "cep_cliente": endereco[0],
                     "estado": endereco[1],
                     "cidade": endereco[2],
                     "bairro": endereco[3],
                     "logradouro": endereco[4],
-                    "complemento": endereco[5],
-                }
+                    "complemento": complemento,
+                },
+                action="insert",
             )
-            registrar_endereco = register_endereco_composer()
-            registrar_endereco.route_insert(http_endereco)
+
+            # deletando do banco o codigo validado pelo cliente
+            flask_adapter_codigo(
+                api_route=register_codigo_composer(),
+                data={"id_cliente": cliente_insert.body.id_cliente},
+                action="delete",
+            )
+
             return redirect(
-                url_for(
-                    "api_routes.home", apelido=dados_cliente[1], quantidade_carrinho=0
-                )
+                url_for("api_routes.home", apelido=cliente[1], quantidade_carrinho=0)
             )
 
     return render_template("validacao_codigo.html", email=email)

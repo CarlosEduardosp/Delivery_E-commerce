@@ -27,6 +27,10 @@ from src.main.adapter.adapter_produto.flask_adapter_produto import flask_adapter
 from src.main.adapter.adapter_carrinho.flask_adapter_carrinho import (
     flask_adapter_carrinho,
 )
+from src.main.adapter.adapter_codigo.flask_adapter_codigo import flask_adapter_codigo
+from src.main.adapter.adapter_endereco.flask_adapter_endereco import (
+    flask_adapter_endereco,
+)
 from faker import Faker
 import os
 import requests

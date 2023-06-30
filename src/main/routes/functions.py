@@ -20,8 +20,10 @@ def comparar_codigo(codigo: int):
     if codigo:
         codigo = int(codigo)
         response = comparar.route_select(http_request)
+
         for i in response.body:
+            print(i.codigo)
             if codigo == i.codigo:
                 return True
-            else:
-                return False
+
+        return False

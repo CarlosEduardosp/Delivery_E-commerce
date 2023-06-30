@@ -40,6 +40,7 @@ def flask_adapter_codigo(
     # deletando um codigo especifico no banco
     elif action == "delete":
         query_data = data.keys()
+        response = None
 
         if "id_cliente" in query_data:
             http_request = HttpRequest(query=data)
