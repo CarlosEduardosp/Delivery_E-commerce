@@ -47,7 +47,9 @@ class ClienteRepository(ClienteRepositoryInterface):
         return None
 
     @classmethod
-    def select_cliente(self, id_cliente: int = None) -> List[Cliente]:
+    def select_cliente(
+        self, id_cliente: int = None, apelido: str = None
+    ) -> List[Cliente]:
         """
         Select data in cliente entity by id
         :param - id_cliente: id of the registry
@@ -68,6 +70,29 @@ class ClienteRepository(ClienteRepositoryInterface):
                         connection.commit()
 
                         return data
+
+                if apelido:
+                    """select data of select in cliente"""
+                    with engine.connect() as connection:
+                        data = connection.execute(
+                            text(f"SELECT * FROM cliente WHERE apelido='{apelido}' ;")
+                        )
+                        connection.commit()
+
+                        return data
+
+                if apelido and id_cliente:
+                    """select data of select in cliente"""
+                    with engine.connect() as connection:
+                        data = connection.execute(
+                            text(
+                                f"SELECT * FROM cliente WHERE id_cliente={id_cliente} ;"
+                            )
+                        )
+                        connection.commit()
+
+                        return data
+
                 else:
                     data = None
                     return data

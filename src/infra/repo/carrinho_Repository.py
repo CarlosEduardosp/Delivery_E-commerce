@@ -63,7 +63,11 @@ class CarrinhoRepository(CarrinhoRepositoryInterface):
                         )
                         connection.commit()
 
-                        return data
+                        carrinho = []
+                        for i in data:
+                            carrinho.append(i)
+
+                        return carrinho
                 else:
                     data = None
                     return data

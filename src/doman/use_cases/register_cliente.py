@@ -15,7 +15,9 @@ class RegisterCliente(ABC):
         raise Exception("Should implement method: register")
 
     @abstractmethod
-    def select_cliente(self, id_cliente: int) -> Dict[bool, Cliente]:
+    def select_cliente(
+        self, id_cliente: int = None, apelido: str = None
+    ) -> Dict[bool, Cliente]:
         """Case"""
 
         raise Exception("Should implement method: register")

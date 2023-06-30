@@ -1,15 +1,13 @@
 from typing import Type, Dict
 
 # from sqlalchemy.exc import IntegrityError
-from src.main.interface.route_cliente import RouteInterface as Route
+from src.main.interface.route_endereco import RouteInterface as Route
 from src.presenters.helpers.http_models import HttpRequest, HttpResponse
 
 # from src.presenters.errors.http_errors import HttpErrors
-# from flask import request
-# import json
 
 
-def flask_adapter_cliente(
+def flask_adapter_endereco(
     api_route: Type[Route], data: Type[Dict], action: Type[str]
 ) -> any:
     """Adapter pattern to Flask
@@ -19,24 +17,32 @@ def flask_adapter_cliente(
     :api_route: Composite Routes
     """
 
-    # selecionando todos os clientes
+    # selecionando todos os endereços
     if action == "select_all":
         http_request = HttpRequest(query=data)
         response = api_route.route_select_all(http_request)
 
         return response
 
-    # inserindo cliente no banco
+    # inserindo endereço no banco
     elif action == "insert":
         query_data = data.keys()
 
-        if "apelido" and "email" and "senha" and "cep_cliente" in query_data:
+        if (
+            "cep_cliente"
+            and "estado"
+            and "cidade"
+            and "bairro"
+            and "logradouro"
+            and "complemento"
+            and "id_cliente" in query_data
+        ):
             http_request = HttpRequest(query=data)
             response = api_route.route_insert(http_request)
 
             return response
 
-    # selecionando um cliente especifico no banco
+    # selecionando um endereço especifico no banco
     elif action == "select":
         query_data = data.keys()
 
@@ -46,7 +52,7 @@ def flask_adapter_cliente(
 
         return response
 
-    # deletando um cliente especifico no banco
+    # deletando um endereço especifico no banco
     elif action == "delete":
         query_data = data.keys()
 
@@ -56,16 +62,19 @@ def flask_adapter_cliente(
 
         return response
 
-    # atualizando dados de cliente no banco
+    # atualizando dados de endereço no banco
     elif action == "update":
         query_data = data.keys()
 
         if (
-            "id_cliente"
-            and "apelido"
-            and "email"
-            and "senha"
-            and "cep_cliente" in query_data
+            "id_endereco"
+            and "cep-cliente"
+            and "estado"
+            and "cidade"
+            and "bairro"
+            and "logradouro"
+            and "complemento"
+            and "id_cliente" in query_data
         ):
             http_request = HttpRequest(query=data)
             response = api_route.route_update(http_request)

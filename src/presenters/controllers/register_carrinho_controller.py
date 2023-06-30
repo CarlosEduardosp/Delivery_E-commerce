@@ -72,7 +72,9 @@ class RegisterCarrinhoController(RouteInterface):
                 status_code=http_error["status_code"], body=http_error["body"]
             )
 
-        return HttpResponse(status_code=200, body=response["Data"])
+        return HttpResponse(
+            status_code=200, body={"Dados": response["Data"], "Len": response["len"]}
+        )
 
     def route_select_all(self, http_request: Type[HttpRequest]) -> HttpResponse:
         """controller select cliente"""

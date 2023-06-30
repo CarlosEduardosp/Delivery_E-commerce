@@ -66,6 +66,10 @@ class RegisterClienteController(RouteInterface):
                 id_cliente=id_cliente
             )
 
+        elif "apelido" in data:
+            apelido = http_request.query["apelido"]
+            response = self.register_cliente_use_case.select_cliente(apelido=apelido)
+
         else:
             return {"Success": False, "Data": None}
 

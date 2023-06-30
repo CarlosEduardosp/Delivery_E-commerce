@@ -35,18 +35,41 @@ class RegisterCliente(RegisterClienteInterface):
 
         return self.__error()
 
-    def select_cliente(self, id_cliente: int) -> Dict[bool, Cliente]:
+    def select_cliente(
+        self, id_cliente: int = None, apelido: str = None
+    ) -> Dict[bool, Cliente]:
         """select in Cliente"""
 
         response = None
-        validade_entry = self.__validar_dados(
-            id_cliente=id_cliente
-        )  # validando com metodo privado.
+        if id_cliente and apelido:
+            validade_entry = self.__validar_dados(
+                id_cliente=id_cliente, apelido=apelido
+            )  # validando com metodo privado.
 
-        if validade_entry:
-            response = self.cliente_repository.select_cliente(id_cliente=id_cliente)
+            if validade_entry:
+                response = self.cliente_repository.select_cliente(id_cliente=id_cliente)
 
-            return {"Success": True, "Data": response}
+                return {"Success": True, "Data": response}
+
+        elif id_cliente and not apelido:
+            validade_entry = self.__validar_dados(
+                id_cliente=id_cliente
+            )  # validando com metodo privado.
+
+            if validade_entry:
+                response = self.cliente_repository.select_cliente(id_cliente=id_cliente)
+
+                return {"Success": True, "Data": response}
+
+        elif not id_cliente and apelido:
+            validade_entry = self.__validar_dados(
+                id_cliente=id_cliente, apelido=apelido
+            )  # validando com metodo privado.
+
+            if validade_entry:
+                response = self.cliente_repository.select_cliente(apelido=apelido)
+
+                return {"Success": True, "Data": response}
 
         return self.__error()
 
@@ -116,7 +139,11 @@ class RegisterCliente(RegisterClienteInterface):
     ) -> bool:
         """Validador de dados"""
 
+        if not id_cliente:
+            id_cliente = 0
+
         if not isinstance(id_cliente, int):
+            print(id_cliente)
             raise ValueError("id_cliente deve ser um número inteiro")
 
         if not isinstance(apelido, str):

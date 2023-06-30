@@ -1,53 +1,43 @@
-from flask import (
-    Blueprint,
-    render_template,
-    request,
-    redirect,
-    url_for,
-    flash,
-    session,
-)
-from src.main.composer.register_produto_composer import register_produto_composer
-from src.main.composer.buscar_cep_composer import buscar_cep_composer
-from src.presenters.helpers.http_models import HttpRequest
-from .functions import validador_senha, comparar_codigo
-from src.data.enviar_codigo_email.enviar_codigo import EnviarCodigoEmail
-from src.main.composer.register_codigo_composer import register_codigo_composer
-from src.main.composer.register_cliente_composite import register_cliente_composer
-from src.main.composer.register_carrinho_composer import register_carrinho_composer
-from src.main.composer.register_endereco_composer import register_endereco_composer
-from src.doman.models.cliente import Cliente
-from src.main.adapter.flask_adapter_cliente import flask_adapter_cliente
-from faker import Faker
-import os
-
-# import json
-
+from .imports_api_route import *  # noqa
 
 api_routes_bp = Blueprint("api_routes", __name__)
 
 
 @api_routes_bp.route(
     "/",
-    defaults={"apelido": "Efetue o Login!", "quantidade_carrinho": 0},
+    defaults={"apelido": "Efetue o Login!", "quantidade_carrinho": "Vazio"},
     methods=["GET", "POST"],
 )
+@api_routes_bp.route("/<apelido>", methods=["GET", "POST"])
 @api_routes_bp.route("/<apelido>/<quantidade_carrinho>/", methods=["GET", "POST"])
-def home(apelido: str, quantidade_carrinho: int = 0):
+def home(apelido: str, quantidade_carrinho: int = "vazio"):
     """rota teste"""
 
+    # buscando cliente pelo apelido
+    response_cliente = flask_adapter_cliente(
+        api_route=register_cliente_composer(),
+        data={"apelido": apelido},
+        action="select",
+    )
+
+    for i in response_cliente:
+        # caso tenha um apelido valido, consulta quantidade de carrinho pelo apelido.
+        if apelido != "Efetue o Login!":
+            quantidade_carrinho = flask_adapter_carrinho(
+                api_route=register_carrinho_composer(),
+                data={"id_cliente": i.id_cliente},
+                action="select_len",
+            )
+
     # selecionando todos os produtos cadastrados
-    http_request = HttpRequest()
-    response = register_produto_composer()
-    response = response.route_select_all(http_request)
-    produtos = response.body
+    produtos = flask_adapter_produto(
+        api_route=register_produto_composer(), data=None, action="select_all"
+    )
 
     # selecionando todos os arquivos de imagens cadastrados na pasta static
     path = "C:/meus projetos/DeliverySystem/CleanArchitecture/src/main/configs/static/"
     img = os.listdir(path)
 
-    # recupera a quantidade de imagens na pasta
-    # carrinho = len(img)
     return render_template(
         "home.html",
         img=img,
@@ -61,7 +51,7 @@ def home(apelido: str, quantidade_carrinho: int = 0):
     "/login", defaults={"apelido": "Efetue o Login!"}, methods=["GET", "POST"]
 )
 @api_routes_bp.route("/login/<apelido>/<quantidade_carrinho>", methods=["GET", "POST"])
-def login(apelido: str, quantidade_carrinho: int = 0):
+def login(apelido: str, quantidade_carrinho: str = "vazio"):
     """Realiza o login comparando os dados inseridos, com os da tabela Cliente."""
 
     # instancia clientes, HttpRequest e selct de todos os clientes.
@@ -163,6 +153,7 @@ def cadastrar_cliente(apelido: str):
                 # guardando os dados do cliente
                 session["dados_cliente"] = dados_cliente
                 session["endereco_cliente"] = endereco
+
                 return render_template("validacao_codigo.html", email=email)
 
     return render_template(
@@ -240,20 +231,29 @@ def sair(apelido: str):
 def teste():
     """teste"""
 
-    dados = {
-        "id_cliente": 1,
-        "apelido": "Carlos Eduardo",
-        "email": "carlos.spadilha@yahoo.com.br",
-        "senha": "01254",
-        "cep_cliente": "26515570",
-    }
-    response = flask_adapter_cliente(
-        api_route=register_cliente_composer(), data=dados, action="select"
-    )
+    data = {"id_cliente": 2}
 
-    print(response)
-    if response.body:
-        for i in response.body:
-            print(i)
+    response_adapter = flask_adapter_cliente(api_route=register_cliente_composer())
+    print(response_adapter)
+
+    url = "http://127.0.0.1:5000/buscando/api/post"
+    headers = {"Content-Type": "application/json"}
+    response = requests.post(url, data=json.dumps(data), headers=headers)
+
+    response_adapter = flask_adapter_cliente(api_route=register_cliente_composer())
+    print(response_adapter)
+
+    print("sucesso no envio", response)
 
     return render_template("teste.html")
+
+
+@api_routes_bp.route("/buscando/api/post", methods=["GET", "POST"])
+def buscar_api():
+    response = flask_adapter_buscar_cep(
+        api_route=buscar_cep_composer(),
+        data={"cep_cliente": "26515570"},
+        action="cep_cliente",
+    )
+
+    return response.cep_cliente

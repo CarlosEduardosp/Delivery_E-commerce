@@ -34,7 +34,9 @@ class RegisterCarrinho(RegisterCarrinhoInterface):
 
         if validate_entry:
             response = self.carrinho_repository.select_carrinho(id_cliente=id_cliente)
-            return {"Success": True, "Data": response}
+            quantidade = len(response)
+
+            return {"Success": True, "Data": response, "len": quantidade}
 
         return {"Success": False, "Data": response}
 
