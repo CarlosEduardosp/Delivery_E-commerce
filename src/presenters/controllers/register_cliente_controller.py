@@ -71,7 +71,7 @@ class RegisterClienteController(RouteInterface):
             response = self.register_cliente_use_case.select_cliente(apelido=apelido)
 
         else:
-            return {"Success": False, "Data": None}
+            response = {"Success": False, "Data": None}
 
         if response["Success"] is False:
             http_error = HttpErrors.error_422()
@@ -103,7 +103,7 @@ class RegisterClienteController(RouteInterface):
             )
 
         else:
-            return {"Success": False, "Data": None}
+            response = {"Success": False, "Data": None}
 
         if response["Success"] is False:
             http_error = HttpErrors.error_422()

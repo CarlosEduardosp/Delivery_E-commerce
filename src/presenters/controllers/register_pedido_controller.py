@@ -77,7 +77,7 @@ class RegisterPedidoController(RouteInterface):
             )
 
         else:
-            return {"Success": False, "Data": None}
+            response = {"Success": False, "Data": None}
 
         if response["Success"] is False:
             http_error = HttpErrors.error_422()
@@ -110,7 +110,7 @@ class RegisterPedidoController(RouteInterface):
                 id_pedido=id_pedido, id_cliente=id_cliente
             )
         else:
-            return {"Success": False, "Data": None}
+            response = {"Success": False, "Data": None}
 
         if response["Success"] is False:
             http_error = HttpErrors.error_422()

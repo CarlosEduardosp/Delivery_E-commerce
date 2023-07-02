@@ -64,7 +64,7 @@ class RegisterCarrinhoController(RouteInterface):
             )
 
         else:
-            return {"Success": False, "Data": None}
+            response = {"Success": False, "Data": None}
 
         if response["Success"] is False:
             http_error = HttpErrors.error_422()
@@ -99,7 +99,7 @@ class RegisterCarrinhoController(RouteInterface):
             )
 
         else:
-            return {"Success": False, "Data": None}
+            response = {"Success": False, "Data": None}
 
         if response["Success"] is False:
             http_error = HttpErrors.error_422()

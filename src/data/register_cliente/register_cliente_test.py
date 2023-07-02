@@ -45,7 +45,7 @@ def test_select_cliente():
     select_cliente = RegisterCliente(user_repo)
 
     try:
-        response = select_cliente.select_cliente(id_cliente=25)
+        response = select_cliente.select_cliente(id_cliente=2)
 
         if response["Success"]:
             for i in response["Data"]:
