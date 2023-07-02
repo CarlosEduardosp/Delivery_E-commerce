@@ -51,14 +51,17 @@ class BuscarCep(BuscarCepInterface):
     def __error(self):
         """error"""
 
-        return "Cep Inválido !! Tente outra vez."
+        return {"Success": False, "Data": "Cep Inválido !! Tente outra vez."}
 
     def __error_str(self):
         """error"""
 
-        return "Cep inválido, Precisa ser um string."
+        return {"Success": False, "Data": "Cep inválido, Precisa ser um string."}
 
     def __error_len(self):
         """error"""
 
-        return "Cep inválido, Precisa conter 8 numeros, em formato string."
+        return {
+            "Success": False,
+            "Data": "Cep inválido, Precisa conter 8 numeros, em formato string.",
+        }
