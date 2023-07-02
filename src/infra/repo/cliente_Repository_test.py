@@ -35,8 +35,7 @@ def test_select_cliente():
 
     try:
         data = cliente_repository.select_cliente(id_cliente=2)
-        for i in data:
-            print("Select Ok -", i.apelido)
+        print("Inserção reailizada com sucesso.", data)
     except:
         print("Usuario não encontrado.")
 
@@ -58,14 +57,14 @@ def test_update_cliente():
         email = faker.email()
         cep_cliente = faker.random_number(digits=8)
 
-        cliente_repository.update_cliente(
+        data = cliente_repository.update_cliente(
             id_cliente=3,
             apelido=apelido,
             senha=senha,
             email=email,
             cep_cliente=cep_cliente,
         )
-        print(f"Alteração realizada com Sucesso.")
+        print(f"Alteração realizada com Sucesso.", data)
 
     except:
         print("Cliente não encontrado.")
@@ -75,7 +74,7 @@ def test_select_all():
     """select all cliente"""
 
     try:
-        cliente_repository.select_all_cliente()
-        print("Tudo Ok")
+        data = cliente_repository.select_all_cliente()
+        print("Tudo Ok", data)
     except:
         print("Usuario não encontrado.")

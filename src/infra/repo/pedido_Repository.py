@@ -85,7 +85,12 @@ class PedidoRepository(PedidoRepositoryInterface):
                         )
                         connection.commit()
 
-                        return data
+                        pedido = []
+                        for i in data:
+                            pedido.append(i)
+
+                        return pedido
+
                 else:
                     data = None
                     return data
@@ -109,7 +114,11 @@ class PedidoRepository(PedidoRepositoryInterface):
                     data = connection.execute(text(f"SELECT * FROM pedido ;"))
                     connection.commit()
 
-                    return data
+                    pedido = []
+                    for i in data:
+                        pedido.append(i)
+
+                    return pedido
 
             except:
                 db_connection.session.rollback()
@@ -176,6 +185,16 @@ class PedidoRepository(PedidoRepositoryInterface):
                         )
 
                         connection.commit()
+
+                        return Pedido(
+                            id_pedido=id_pedido,
+                            id_cliente=id_cliente,
+                            id_produto=id_produto,
+                            numero_pedido=numero_pedido,
+                            valor=valor,
+                            data_pedido=data_pedido,
+                            status=status,
+                        )
 
             except:
                 db_connection.session.rollback()

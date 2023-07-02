@@ -32,8 +32,7 @@ def test_select_codigo():
 
     try:
         data = codigo_repository.select_codigo(id_cliente=id_cliente)
-        for i in data:
-            print("Select Codigo Ok -", i.codigo)
+        print("Select Codigo Ok -", data)
     except:
         print("Codigo não encontrado.")
 

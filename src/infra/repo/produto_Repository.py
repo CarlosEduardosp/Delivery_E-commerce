@@ -73,7 +73,12 @@ class ProdutoRepository(ProdutoRepositoryInterface):
                         )
                         connection.commit()
 
-                        return data
+                        produtos = []
+                        for i in data:
+                            produtos.append(i)
+
+                        return produtos
+
                 else:
                     data = None
                     return data
@@ -119,7 +124,11 @@ class ProdutoRepository(ProdutoRepositoryInterface):
                     data = connection.execute(text(f"SELECT * FROM produto ;"))
                     connection.commit()
 
-                    return data
+                    produtos = []
+                    for i in data:
+                        produtos.append(i)
+
+                    return produtos
 
             except:
                 db_connection.session.rollback()
@@ -158,6 +167,14 @@ class ProdutoRepository(ProdutoRepositoryInterface):
                         )
 
                         connection.commit()
+
+                        return Produto(
+                            id_produto=id_produto,
+                            nome=nome,
+                            descricao=descricao,
+                            imagem=imagem,
+                            preco=preco,
+                        )
 
             except:
                 db_connection.session.rollback()

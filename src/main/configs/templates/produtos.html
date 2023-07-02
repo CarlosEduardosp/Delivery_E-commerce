@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<div class="centralizartable container">
+<h1 class="titulo ">Cadastrar Produtos</h1>
+<a href="" class="btn btn-outline-success separar">Ir para Cadastro</a>
+</div>
+<br><br>
+ <h1 class="titulo ">Produtos Cadastrados</h1>
+
+{%- for mensagem in get_flashed_messages() %}
+                {% if 'Editado' in mensagem  %}
+                    <div class="alert alert-success text-center">
+                        {{mensagem}}
+                    </div>
+                {% endif %}
+              {%- endfor %}
+
+<table class="table ">
+  <thead>
+    <tr>
+      <th scope="col">Imagem</th>
+      <th scope="col">Id_produto</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Descrição</th>
+      <th scope="col">Preço</th>
+    </tr>
+  </thead>
+
+
+
+
+
+  <tbody>
+    <tr>
+
+      <th ><img class="icone_carrinho rounded-circle"  src="\static\" alt="">imagem _do_produto</a></th>
+
+      <td>id do produto</td>
+
+      <td>nome_produto</td>
+      <td>descrição_produto</td>
+      <td>preço_produto</td>
+      <td>
+        <div class="ajustar separar">
+        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+            <a href="" class="btn btn-outline-success">Editar</a>
+            <a href="" class="btn btn-outline-danger">Deletar</a>
+        </div>
+        </div>
+      </td>
+    </tr>
+
+  </tbody>
+
+
+
+</table>
+{% endblock%}

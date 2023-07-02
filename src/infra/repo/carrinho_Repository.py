@@ -91,7 +91,11 @@ class CarrinhoRepository(CarrinhoRepositoryInterface):
                     data = connection.execute(text(f"SELECT * FROM carrinho ;"))
                     connection.commit()
 
-                    return data
+                    carrinho = []
+                    for i in data:
+                        carrinho.append(i)
+
+                    return carrinho
 
             except:
                 db_connection.session.rollback()

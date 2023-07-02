@@ -28,8 +28,7 @@ def test_select_imagem():
 
     try:
         data = imagem_repository.select_imagem()
-        for i in data:
-            print("Select Imagem Ok -", i.imagem)
+        print("Select Imagem Ok -", data)
     except:
         print("Imagem não encontrado.")
 

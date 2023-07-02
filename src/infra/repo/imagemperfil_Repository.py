@@ -52,7 +52,11 @@ class ImagemPerfilRepository(ImagemPerfilRepositoryInterface):
                     data = connection.execute(text(f"SELECT * FROM imagemperfil;"))
                     connection.commit()
 
-                    return data
+                    imagem = []
+                    for i in data:
+                        imagem.append(i)
+
+                    return imagem
 
             except:
                 db_connection.session.rollback()

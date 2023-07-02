@@ -58,7 +58,11 @@ class CodigoRepository(CodigoRepositoryInterface):
                     )
                     connection.commit()
 
-                    return data
+                    codigo = []
+                    for i in data:
+                        codigo.append(i)
+
+                    return codigo
 
             except:
                 db_connection.session.rollback()

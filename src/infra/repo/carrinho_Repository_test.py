@@ -31,9 +31,8 @@ def test_select_carrinho():
     """Select in carrinho"""
 
     try:
-        data = carrinho_repository.select_carrinho(id_cliente=2)
-        for i in data:
-            print("Select Carrinho Ok -", i.id_produto)
+        data = carrinho_repository.select_carrinho(id_cliente=6)
+        print("Select Carrinho Ok -", data)
     except:
         print("Carrinho não encontrado.")
 

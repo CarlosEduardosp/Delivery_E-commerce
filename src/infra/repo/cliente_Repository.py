@@ -69,7 +69,11 @@ class ClienteRepository(ClienteRepositoryInterface):
                         )
                         connection.commit()
 
-                        return data
+                        clientes = []
+                        for i in data:
+                            clientes.append(i)
+
+                        return clientes
 
                 if apelido:
                     """select data of select in cliente"""
@@ -79,7 +83,11 @@ class ClienteRepository(ClienteRepositoryInterface):
                         )
                         connection.commit()
 
-                        return data
+                        clientes = []
+                        for i in data:
+                            clientes.append(i)
+
+                        return clientes
 
                 if apelido and id_cliente:
                     """select data of select in cliente"""
@@ -91,7 +99,11 @@ class ClienteRepository(ClienteRepositoryInterface):
                         )
                         connection.commit()
 
-                        return data
+                        clientes = []
+                        for i in data:
+                            clientes.append(i)
+
+                        return clientes
 
                 else:
                     data = None
@@ -139,7 +151,11 @@ class ClienteRepository(ClienteRepositoryInterface):
                     data = connection.execute(text(f"SELECT * FROM cliente ;"))
                     connection.commit()
 
-                    return data
+                    clientes = []
+                    for i in data:
+                        clientes.append(i)
+
+                    return clientes
 
             except:
                 db_connection.session.rollback()

@@ -38,9 +38,8 @@ def test_select_pedido():
     """Select in users"""
 
     try:
-        data = pedido_repository.select_pedido(id_pedido=1, id_cliente=6)
-        for i in data:
-            print("Select Ok -", i.id_pedido)
+        data = pedido_repository.select_pedido(id_pedido=201, id_cliente=1)
+        print("Select Ok -", data)
     except:
         print("Pedido não encontrado.")
 
@@ -75,7 +74,7 @@ def test_update_cliente():
         status = faker.name()
         id_pedido = 3
 
-        pedido_repository.update_pedido(
+        data = pedido_repository.update_pedido(
             id_pedido=id_pedido,
             id_cliente=id_cliente,
             id_produto=id_produto,
@@ -84,7 +83,7 @@ def test_update_cliente():
             data_pedido=data_pedido,
             status=status,
         )
-        print(f"Alteração realizada com Sucesso.")
+        print(f"Alteração realizada com Sucesso.", data)
 
     except:
         print("Pedido não encontrado.")

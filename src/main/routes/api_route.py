@@ -5,7 +5,7 @@ api_routes_bp = Blueprint("api_routes", __name__)
 
 @api_routes_bp.route(
     "/",
-    defaults={"apelido": "Efetue o Login!", "quantidade_carrinho": "Vazio"},
+    defaults={"apelido": "Efetue_o_Login!", "quantidade_carrinho": "Vazio"},
     methods=["GET", "POST"],
 )
 @api_routes_bp.route("/<apelido>", methods=["GET", "POST"])
@@ -48,7 +48,7 @@ def home(apelido: str, quantidade_carrinho: int = "vazio"):
 
 
 @api_routes_bp.route(
-    "/login", defaults={"apelido": "Efetue o Login!"}, methods=["GET", "POST"]
+    "/login", defaults={"apelido": "Efetue_o_Login!"}, methods=["GET", "POST"]
 )
 @api_routes_bp.route("/login/<apelido>/<quantidade_carrinho>", methods=["GET", "POST"])
 def login(apelido: str, quantidade_carrinho: str = "vazio"):
@@ -94,7 +94,7 @@ def login(apelido: str, quantidade_carrinho: str = "vazio"):
 
 @api_routes_bp.route(
     "/cadastrar_cliente",
-    defaults={"apelido": "Efetue o Login!"},
+    defaults={"apelido": "Efetue_o_Login!"},
     methods=["GET", "POST"],
 )
 @api_routes_bp.route("/cadastrar_cliente/<apelido>", methods=["GET", "POST"])
@@ -222,11 +222,18 @@ def validar_email(email: str):
     return render_template("validacao_codigo.html", email=email)
 
 
+@api_routes_bp.route("/produto/<apelido>.", methods=["GET", "POST"])
+def produto(apelido: str):
+    """endpoint para exibir produtos cadastrados"""
+
+    return render_template("produtos.html", apelido=apelido)
+
+
 @api_routes_bp.route("/sair/<apelido>", methods=["GET", "POST"])
 def sair(apelido: str):
     """Função para encerrar o login. e o apelido passa a ser 'Efetue o login!'."""
 
-    return redirect(url_for("api_routes.login", apelido="Efetue o Login!"))
+    return redirect(url_for("api_routes.login", apelido="Efetue_o_Login!"))
 
 
 @api_routes_bp.route("/testando/teste/denovo", methods=["GET", "POST"])

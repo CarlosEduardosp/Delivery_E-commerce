@@ -38,9 +38,8 @@ def test_select_endereco():
     """Select in cliente"""
 
     try:
-        data = endereco_repository.select_endereco(id_cliente=7)
-        for i in data:
-            print("Select Ok -", i.estado)
+        data = endereco_repository.select_endereco(id_cliente=2)
+        print("Select Ok -", data)
     except:
         print("Usuario não encontrado.")
 
@@ -66,7 +65,7 @@ def test_update_endereco():
         complemento = faker.name()
         id_cliente = int(6)
 
-        endereco_repository.update_endereco(
+        data = endereco_repository.update_endereco(
             id_endereco,
             cep_cliente,
             estado,
@@ -76,7 +75,7 @@ def test_update_endereco():
             complemento,
             id_cliente,
         )
-        print(f"Alteração realizada com Sucesso.")
+        print(f"Alteração realizada com Sucesso.", data)
 
     except:
         print("Endereço não Encontrado.")
@@ -87,7 +86,7 @@ def test_select_all():
 
     try:
         response = endereco_repository.select_all_endereco()
-        print("tudo ok")
+        print("tudo ok", response)
         return response
     except:
         print("Usuario não encontrado.")

@@ -77,7 +77,11 @@ class EnderecoRepository(EnderecoRepositoryInterface):
                         )
                         connection.commit()
 
-                        return data
+                        endereco = []
+                        for i in data:
+                            endereco.append(i)
+
+                        return endereco
                 else:
                     data = None
                     return data
@@ -101,7 +105,11 @@ class EnderecoRepository(EnderecoRepositoryInterface):
                     data = connection.execute(text(f"SELECT * FROM endereco ;"))
                     connection.commit()
 
-                    return data
+                    endereco = []
+                    for i in data:
+                        endereco.append(i)
+
+                    return endereco
 
             except:
                 db_connection.session.rollback()
@@ -170,6 +178,16 @@ class EnderecoRepository(EnderecoRepositoryInterface):
                             )
                         )
                         connection.commit()
+                        return Endereco(
+                            id_endereco=id_endereco,
+                            cep_cliente=cep_cliente,
+                            estado=estado,
+                            cidade=cidade,
+                            bairro=bairro,
+                            logradouro=logradouro,
+                            complemento=complemento,
+                            id_cliente=id_cliente,
+                        )
             except:
                 db_connection.session.rollback()
                 raise

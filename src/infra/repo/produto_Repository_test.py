@@ -9,7 +9,7 @@ faker = Faker()
 def test_insert_produto():
     """should insert User"""
 
-    nome = faker.random_number(digits=1)
+    nome = faker.name()
     descricao = faker.name()
     imagem = faker.name()
     preco = faker.random_number(digits=2)
@@ -20,7 +20,7 @@ def test_insert_produto():
             nome=nome, descricao=descricao, imagem=imagem, preco=preco
         )
 
-        print("Inserção finalizada com Sucesso.", new_produto.id_produto)
+        print("Inserção finalizada com Sucesso.", new_produto)
 
     except:
         print("ERRO - Produto já existe")
@@ -30,9 +30,8 @@ def test_select_produto():
     """Select in users"""
 
     try:
-        data = produto_repository.select_produto(id_produto=1)
-        for i in data:
-            print("Select Ok -", i.id_produto)
+        data = produto_repository.select_produto(id_produto=3)
+        print("Select Ok -", data)
     except:
         print("Produto não encontrado.")
 
@@ -55,14 +54,14 @@ def test_update_produto():
         imagem = faker.name()
         preco = faker.random_number(digits=2)
 
-        produto_repository.update_produto(
+        data = produto_repository.update_produto(
             id_produto=id_produto,
             nome=nome,
             descricao=descricao,
             imagem=imagem,
             preco=preco,
         )
-        print(f"Alteração realizada com Sucesso.")
+        print(f"Alteração realizada com Sucesso.", data)
 
     except:
         print("Produto não encontrado.")
@@ -72,7 +71,7 @@ def test_select_all_produtos():
     """select all produtos"""
 
     try:
-        produto_repository.select_all_produto()
-        print("tudo ok")
+        data = produto_repository.select_all_produto()
+        print("tudo ok", data)
     except:
         print("Usuario não encontrado.")
