@@ -1,5 +1,5 @@
 from src.main.composer.register_codigo_composer import register_codigo_composer
-from src.presenters.helpers.http_models import HttpRequest
+from src.main.adapter.adapter_codigo.adapter_codigo import AdapterCodigo
 
 
 def validador_senha(senha: any, confirmar_senha: any) -> bool:
@@ -14,16 +14,13 @@ def validador_senha(senha: any, confirmar_senha: any) -> bool:
 
 def comparar_codigo(codigo: int):
     """realiza a comparação de codigo"""
-    http_request = HttpRequest(query={"id_cliente": 1})
-    comparar = register_codigo_composer()
+    codigobd = AdapterCodigo(
+        api_route=register_codigo_composer(), data={"id_cliente": 1}
+    )
+    response = codigobd.select()
 
-    if codigo:
+    if response.status_code == 200:
         codigo = int(codigo)
-        response = comparar.route_select(http_request)
-
-        for i in response.body:
-            print(i.codigo)
-            if codigo == i.codigo:
-                return True
-
+        if response.body.codigo == codigo:
+            return True
         return False

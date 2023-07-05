@@ -5,7 +5,7 @@ from src.infra.repo.pedido_Repository import PedidoRepository
 faker = Faker()
 
 
-def test_insert_pedido():
+def insert_pedido():
     """testing insert pedido"""
 
     user_repo = PedidoRepository()
@@ -22,7 +22,7 @@ def test_insert_pedido():
     return response
 
 
-def test_select_pedido():
+def select_pedido():
     """testing select pedido"""
 
     user_repo = PedidoRepository()
@@ -35,7 +35,7 @@ def test_select_pedido():
     return response
 
 
-def test_select_all():
+def select_all():
     """testing selct all pedido"""
 
     user_repo = PedidoRepository()
@@ -46,7 +46,7 @@ def test_select_all():
     return response
 
 
-def test_delete_pedido():
+def delete_pedido():
     """testing use case delete pedido"""
 
     user_repo = PedidoRepository()
@@ -57,7 +57,7 @@ def test_delete_pedido():
     return response
 
 
-def test_update_pedido():
+def update_pedido():
     """testing update use case in pedido"""
 
     user_repo = PedidoRepository()

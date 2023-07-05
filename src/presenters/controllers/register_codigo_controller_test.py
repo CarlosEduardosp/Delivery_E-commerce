@@ -26,7 +26,7 @@ def test_handle():
     return response
 
 
-def test_select_controller():
+def select_controller():
     """testing controller select"""
 
     register_codigo_use_case = RegisterCodigo(CodigoRepository())

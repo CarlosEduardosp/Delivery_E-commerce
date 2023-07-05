@@ -73,7 +73,13 @@ class ClienteRepository(ClienteRepositoryInterface):
                         for i in data:
                             clientes.append(i)
 
-                        return clientes
+                        return Cliente(
+                            id_cliente=id_cliente,
+                            apelido=clientes[0].apelido,
+                            email=clientes[0].email,
+                            senha=clientes[0].senha,
+                            cep_cliente=clientes[0].cep_cliente,
+                        )
 
                 if apelido:
                     """select data of select in cliente"""

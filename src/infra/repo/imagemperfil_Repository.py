@@ -56,7 +56,9 @@ class ImagemPerfilRepository(ImagemPerfilRepositoryInterface):
                     for i in data:
                         imagem.append(i)
 
-                    return imagem
+                    return ImagemPerfil(
+                        imagem=imagem[0].imagem, id_imagem=imagem[0].id_imagem
+                    )
 
             except:
                 db_connection.session.rollback()

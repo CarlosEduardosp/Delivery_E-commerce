@@ -81,7 +81,16 @@ class EnderecoRepository(EnderecoRepositoryInterface):
                         for i in data:
                             endereco.append(i)
 
-                        return endereco
+                        return Endereco(
+                            id_endereco=endereco[0].id_endereco,
+                            cep_cliente=endereco[0].cep_cliente,
+                            estado=endereco[0].estado,
+                            cidade=endereco[0].cidade,
+                            bairro=endereco[0].bairro,
+                            logradouro=endereco[0].logradouro,
+                            complemento=endereco[0].complemento,
+                            id_cliente=endereco[0].id_cliente,
+                        )
                 else:
                     data = None
                     return data
@@ -153,7 +162,7 @@ class EnderecoRepository(EnderecoRepositoryInterface):
         logradouro: str = None,
         complemento: str = None,
         id_cliente: int = None,
-    ) -> List[Endereco]:
+    ) -> Endereco:
         """update of endereco"""
 
         with DBConnectionHandler() as db_connection:
@@ -165,19 +174,20 @@ class EnderecoRepository(EnderecoRepositoryInterface):
                     with engine.connect() as connection:
                         connection.execute(
                             text(
-                                f"UPDATE endereco SET id_endereco= '{id_endereco}',"
-                                f"cep_cliente= '{cep_cliente}',"
-                                f"estado= '{estado}',"
-                                f"cidade= '{cidade}',"
-                                f"bairro= '{bairro}',"
-                                f"logradouro= '{logradouro}',"
-                                f"complemento= '{complemento}',"
-                                f"id_cliente= '{id_cliente}'"
-                                f"WHERE id_endereco= '{id_endereco}'"
-                                f"AND id_cliente= '{id_cliente}';"
+                                f"UPDATE endereco SET id_endereco = {id_endereco},"
+                                f"cep_cliente = '{cep_cliente}',"
+                                f"estado = '{estado}',"
+                                f"cidade = '{cidade}',"
+                                f"bairro = '{bairro}',"
+                                f"logradouro = '{logradouro}',"
+                                f"complemento = '{complemento}',"
+                                f"id_cliente = {id_cliente}"
+                                f" WHERE id_endereco = {id_endereco} AND"
+                                f" id_cliente = {id_cliente};"
                             )
                         )
                         connection.commit()
+
                         return Endereco(
                             id_endereco=id_endereco,
                             cep_cliente=cep_cliente,

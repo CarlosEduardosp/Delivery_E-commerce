@@ -1,5 +1,5 @@
 # pylint: disable=E1101
-from typing import List
+from typing import List, Optional
 from sqlalchemy import text
 from src.infra.config import DBConnectionHandler
 from src.data.interfaces import PedidoRepositoryInterface
@@ -64,7 +64,7 @@ class PedidoRepository(PedidoRepositoryInterface):
     @classmethod
     def select_pedido(
         self, id_pedido: int = None, id_cliente: int = None
-    ) -> List[Pedido]:
+    ) -> Optional[Pedido]:
         """
         Select data in pedido entity by id_cliente and id_pedido
         :param - id_cliente: id of the registry
@@ -89,7 +89,15 @@ class PedidoRepository(PedidoRepositoryInterface):
                         for i in data:
                             pedido.append(i)
 
-                        return pedido
+                        return Pedido(
+                            id_pedido=pedido[0].id_pedido,
+                            id_cliente=pedido[0].id_cliente,
+                            id_produto=pedido[0].id_produto,
+                            numero_pedido=pedido[0].numero_pedido,
+                            valor=pedido[0].valor,
+                            data_pedido=pedido[0].data_pedido,
+                            status=pedido[0].status,
+                        )
 
                 else:
                     data = None

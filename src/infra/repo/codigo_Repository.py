@@ -62,7 +62,11 @@ class CodigoRepository(CodigoRepositoryInterface):
                     for i in data:
                         codigo.append(i)
 
-                    return codigo
+                    return Codigo(
+                        codigo=codigo[0].codigo,
+                        id_cliente=codigo[0].id_cliente,
+                        id_codigo=codigo[0].id_codigo,
+                    )
 
             except:
                 db_connection.session.rollback()

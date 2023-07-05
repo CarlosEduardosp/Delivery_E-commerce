@@ -14,25 +14,24 @@ def home(apelido: str, quantidade_carrinho: int = "vazio"):
     """rota teste"""
 
     # buscando cliente pelo apelido
-    response_cliente = flask_adapter_cliente(
-        api_route=register_cliente_composer(),
-        data={"apelido": apelido},
-        action="select",
+    cliente = AdapterCliente(
+        api_route=register_cliente_composer(), data={"apelido": apelido}
     )
+    response_cliente = cliente.select()
 
-    for i in response_cliente:
+    for i in response_cliente.body:
         # caso tenha um apelido valido, consulta quantidade de carrinho pelo apelido.
         if apelido != "Efetue o Login!":
-            quantidade_carrinho = flask_adapter_carrinho(
+            quantidade_carrinho = AdapterCarrinho(
                 api_route=register_carrinho_composer(),
                 data={"id_cliente": i.id_cliente},
-                action="select_len",
             )
+            quantidade_carrinho = quantidade_carrinho.select()
+            quantidade_carrinho = quantidade_carrinho.body["Len"]
 
     # selecionando todos os produtos cadastrados
-    produtos = flask_adapter_produto(
-        api_route=register_produto_composer(), data=None, action="select_all"
-    )
+    produtos = AdapterProduto(api_route=register_produto_composer(), data={})
+    produtos = produtos.select_all()
 
     # selecionando todos os arquivos de imagens cadastrados na pasta static
     path = "C:/meus projetos/DeliverySystem/CleanArchitecture/src/main/configs/static/"
@@ -55,9 +54,8 @@ def login(apelido: str, quantidade_carrinho: str = "vazio"):
     """Realiza o login comparando os dados inseridos, com os da tabela Cliente."""
 
     # instancia clientes, HttpRequest e selct de todos os clientes.
-    clientes = flask_adapter_cliente(
-        register_cliente_composer(), data={}, action="select_all"
-    )
+    clientes = AdapterCliente(api_route=register_cliente_composer(), data={})
+    clientes = clientes.select_all()
 
     # request do email e senhao do form
     if request.method == "POST":
@@ -70,11 +68,10 @@ def login(apelido: str, quantidade_carrinho: str = "vazio"):
                 apelido = cliente.apelido
 
                 # coletando quantidade de produtos no carrinho de clientes
-                quantidade_carrinho = flask_adapter_carrinho(
-                    api_route=register_carrinho_composer(),
-                    data={"id_cliente": cliente.id_cliente},
-                    action="select_len",
+                quantidade_carrinho = AdapterCarrinho(
+                    api_route=register_cliente_composer(), data={}
                 )
+                quantidade_carrinho = quantidade_carrinho.select_all()
 
                 return redirect(
                     url_for(
@@ -116,15 +113,17 @@ def cadastrar_cliente(apelido: str):
 
         # realizando a pesquisa do cep.
         if cep_cliente:
-            endereco = flask_adapter_buscar_cep(
-                api_route=buscar_cep_composer(),
-                data={"cep_cliente": cep_cliente},
-                action="cep_cliente",
-            )  # se o usuario digitar algum complemento.
+            endereco = BuscarCep(
+                api_route=buscar_cep_composer(), data={"cep_cliente": cep_cliente}
+            )
+            endereco = endereco.adapter_buscar_cep()
+            endereco = endereco.body
+
+            # se o usuario digitar algum complemento.
             if complemento:
                 session["complemento"] = complemento
             else:
-                session["complemento"] = endereco[5]
+                session["complemento"] = endereco.complemento
 
         # comparação das senhas e retorna um valor boolean
         if senha and confirmar_senha:
@@ -137,11 +136,11 @@ def cadastrar_cliente(apelido: str):
                 # registrar codigo no banco
                 faker = Faker()
                 codigo = faker.random_number(digits=4)
-                flask_adapter_codigo(
+                enviar_codigobd = AdapterCodigo(
                     api_route=register_codigo_composer(),
                     data={"codigo": codigo, "id_cliente": 1},
-                    action="insert",
                 )
+                enviar_codigobd.insert()
 
                 enviar_codigo = EnviarCodigoEmail()
                 enviar_codigo.enviar_email_codigo(
@@ -160,7 +159,9 @@ def cadastrar_cliente(apelido: str):
                 session["dados_cliente"] = dados_cliente
                 session["endereco_cliente"] = endereco
 
-                return render_template("validacao_codigo.html", email=email)
+                return render_template(
+                    "validacao_codigo.html", email=email, apelido=apelido
+                )
 
     return render_template(
         "cadastrar_cliente.html", email=email, apelido=apelido, endereco=endereco
@@ -180,7 +181,7 @@ def validar_email(email: str):
         if response:
             # salvando dados do cliente no banco
             cliente = session.get("dados_cliente")
-            cliente_insert = flask_adapter_cliente(
+            cliente_insert = AdapterCliente(
                 api_route=register_cliente_composer(),
                 data={
                     "apelido": cliente[1],
@@ -188,13 +189,13 @@ def validar_email(email: str):
                     "senha": cliente[3],
                     "cep_cliente": cliente[4],
                 },
-                action="insert",
             )
+            response_cliente = cliente_insert.insert()
 
             # salvando endereço no banco
             complemento = session.get("complemento")
             endereco = session.get("endereco_cliente")
-            flask_adapter_endereco(
+            insert_endereco = AdapterEndereco(
                 api_route=register_endereco_composer(),
                 data={
                     "id_cliente": cliente[0],
@@ -205,15 +206,15 @@ def validar_email(email: str):
                     "logradouro": endereco[4],
                     "complemento": complemento,
                 },
-                action="insert",
             )
+            insert_endereco.insert()
 
             # deletando do banco o codigo validado pelo cliente
-            flask_adapter_codigo(
+            del_codigo = AdapterCodigo(
                 api_route=register_codigo_composer(),
-                data={"id_cliente": cliente_insert.body.id_cliente},
-                action="delete",
+                data={"id_cliente": response_cliente.body.id_cliente},
             )
+            del_codigo.delete()  # metodo para deletar o codigo no banco
 
             return redirect(
                 url_for("api_routes.home", apelido=cliente[1], quantidade_carrinho=0)
@@ -222,11 +223,68 @@ def validar_email(email: str):
     return render_template("validacao_codigo.html", email=email)
 
 
-@api_routes_bp.route("/produto/<apelido>.", methods=["GET", "POST"])
-def produto(apelido: str):
+@api_routes_bp.route(
+    "/produtos/<apelido>/<quantidade_carrinho>/", methods=["GET", "POST"]
+)
+def produto(apelido: str, quantidade_carrinho: int):
     """endpoint para exibir produtos cadastrados"""
 
-    return render_template("produtos.html", apelido=apelido)
+    select_produtos = AdapterProduto(api_route=register_produto_composer(), data={})
+    select_produtos = select_produtos.select_all()
+
+    return render_template(
+        "produtos.html",
+        apelido=apelido,
+        quantidade_carrinho=quantidade_carrinho,
+        produtos=select_produtos.body,
+    )
+
+
+@api_routes_bp.route(
+    "/cadastrar_produto/<apelido>/<quantidade_carrinho>/", methods=["GET", "POST"]
+)
+def cadastrar_produto(apelido: str, quantidade_carrinho: int):
+    """endpoint para cadastrar produtos"""
+
+    if request.method == "POST":
+        nome_produto = request.form.get("nome")
+        descricao = request.form.get("descricao")
+        preco = request.form.get("preco")
+        # recebendo post do arquivo para upload
+        imagem = request.files.get("upload")
+
+        # adquirindo nome do arquivo do upload
+        nome_imagem = imagem.filename
+
+        # salvando arquivo na pasta static.
+        diretorio = "C:\\meus projetos\\DeliverySystem\\CleanArchitecture\\src\\main\\configs\\static"
+        imagem.save(os.path.join(diretorio, nome_imagem))
+
+        # salvando os dados no banco
+        cadastro_pro = AdapterProduto(
+            api_route=register_produto_composer(),
+            data={
+                "nome": nome_produto,
+                "descricao": descricao,
+                "preco": float(preco),
+                "imagem": nome_imagem,
+            },
+        )
+        response = cadastro_pro.insert()
+        if response.status_code == 200:
+            return redirect(
+                url_for(
+                    "api_routes.cadastrar_produto",
+                    apelido=apelido,
+                    quantidade_carrinho=quantidade_carrinho,
+                )
+            )
+
+    return render_template(
+        "cadastrar_produto.html",
+        apelido=apelido,
+        quantidade_carrinho=quantidade_carrinho,
+    )
 
 
 @api_routes_bp.route("/sair/<apelido>", methods=["GET", "POST"])
@@ -237,32 +295,10 @@ def sair(apelido: str):
 
 
 @api_routes_bp.route("/testando/teste/denovo", methods=["GET", "POST"])
-def teste():
-    """teste"""
-
-    data = {"id_cliente": 2}
-
-    response_adapter = flask_adapter_cliente(api_route=register_cliente_composer())
-    print(response_adapter)
-
-    url = "http://127.0.0.1:5000/buscando/api/post"
-    headers = {"Content-Type": "application/json"}
-    response = requests.post(url, data=json.dumps(data), headers=headers)
-
-    response_adapter = flask_adapter_cliente(api_route=register_cliente_composer())
-    print(response_adapter)
-
-    print("sucesso no envio", response)
-
+def nada():
     return render_template("teste.html")
 
 
 @api_routes_bp.route("/buscando/api/post", methods=["GET", "POST"])
 def buscar_api():
-    response = flask_adapter_buscar_cep(
-        api_route=buscar_cep_composer(),
-        data={"cep_cliente": "26515570"},
-        action="cep_cliente",
-    )
-
     return response.cep_cliente

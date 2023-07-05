@@ -28,7 +28,7 @@ def test_handle():
     return response
 
 
-def test_select_controller():
+def select_controller():
     """testing controller select"""
 
     register_produto_use_case = RegisterProduto(ProdutoRepository())

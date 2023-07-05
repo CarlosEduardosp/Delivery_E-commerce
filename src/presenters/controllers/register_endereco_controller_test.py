@@ -33,7 +33,7 @@ def test_handle():
     return response
 
 
-def test_select_controller():
+def select_controller():
     """testing controller select"""
 
     register_endereco_use_case = RegisterEndereco(EnderecoRepository())

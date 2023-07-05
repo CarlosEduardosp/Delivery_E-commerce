@@ -1,5 +1,5 @@
 # pylint: disable=E1101
-from typing import List
+from typing import List, Optional
 from sqlalchemy import text
 from src.infra.config import DBConnectionHandler
 from src.data.interfaces import ProdutoRepositoryInterface
@@ -77,7 +77,13 @@ class ProdutoRepository(ProdutoRepositoryInterface):
                         for i in data:
                             produtos.append(i)
 
-                        return produtos
+                        return Produto(
+                            id_produto=produtos[0].id_produto,
+                            nome=produtos[0].nome,
+                            descricao=produtos[0].descricao,
+                            imagem=produtos[0].imagem,
+                            preco=produtos[0].preco,
+                        )
 
                 else:
                     data = None
@@ -145,7 +151,7 @@ class ProdutoRepository(ProdutoRepositoryInterface):
         descricao: str = None,
         imagem: str = None,
         preco: float = None,
-    ) -> List[Produto]:
+    ) -> Optional[Produto]:
         """update of products"""
 
         with DBConnectionHandler() as db_connection:

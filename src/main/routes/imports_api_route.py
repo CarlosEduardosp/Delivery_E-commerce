@@ -19,18 +19,12 @@ from src.main.composer.register_cliente_composite import register_cliente_compos
 from src.main.composer.register_carrinho_composer import register_carrinho_composer
 from src.main.composer.register_endereco_composer import register_endereco_composer
 from src.doman.models.cliente import Cliente
-from src.main.adapter.adapter_cliente.flask_adapter_cliente import flask_adapter_cliente
-from src.main.adapter.adapter_buscar_cep.flask_adapter_buscar_cep import (
-    flask_adapter_buscar_cep,
-)
-from src.main.adapter.adapter_produto.flask_adapter_produto import flask_adapter_produto
-from src.main.adapter.adapter_carrinho.flask_adapter_carrinho import (
-    flask_adapter_carrinho,
-)
-from src.main.adapter.adapter_codigo.flask_adapter_codigo import flask_adapter_codigo
-from src.main.adapter.adapter_endereco.flask_adapter_endereco import (
-    flask_adapter_endereco,
-)
+from src.main.adapter.adapter_cliente.adapter_cliente import AdapterCliente
+from src.main.adapter.adapter_buscar_cep.flask_adapter_buscar_cep import BuscarCep
+from src.main.adapter.adapter_produto.adapter_produto import AdapterProduto
+from src.main.adapter.adapter_carrinho.adapter_carrinho import AdapterCarrinho
+from src.main.adapter.adapter_codigo.adapter_codigo import AdapterCodigo
+from src.main.adapter.adapter_endereco.adapter_endereco import AdapterEndereco
 from faker import Faker
 import os
 import requests

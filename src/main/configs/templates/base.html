@@ -60,6 +60,19 @@
       box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
     }
 
+    .container_produtos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 1400px;
+      margin: 10 auto;
+      margin-top: 10px;
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+    }
+
     .padding_input {
       width: 200px;
       height: 100px;
@@ -88,7 +101,7 @@
               <a class="nav-link text-white" href="#"><h6>Clientes</h6></a>
             </li>
           <li class="nav-item">
-              <a class="nav-link text-white" href="{{url_for('api_routes.produto', apelido=apelido)}}"><h6>Produtos</h6></a>
+              <a class="nav-link text-white" href="{{url_for('api_routes.produto', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Produtos</h6></a>
             </li>
           <li class="nav-item">
               <a class="nav-link text-white" href="#"><h6>Controle_Pedidos</h6> </a>

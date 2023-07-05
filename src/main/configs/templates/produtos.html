@@ -1,12 +1,20 @@
 {% extends "base.html" %}
 
 {% block conteudo %}
-<div class="centralizartable container">
+
+<div class="text-center container">
+
 <h1 class="titulo ">Cadastrar Produtos</h1>
-<a href="" class="btn btn-outline-success separar">Ir para Cadastro</a>
+    <P>use o botão abaixo para cadastrar um produto.</P>
+
+<a href="{{url_for('api_routes.cadastrar_produto', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}" class="btn btn-outline-success separar">Ir para Cadastro</a>
 </div>
 <br><br>
- <h1 class="titulo ">Produtos Cadastrados</h1>
+
+ <h1 class="titulo text-center">Todos os Produtos Cadastrados</h1>
+<div class="container_produtos text-center">
+
+
 
 {%- for mensagem in get_flashed_messages() %}
                 {% if 'Editado' in mensagem  %}
@@ -30,17 +38,17 @@
 
 
 
-
+{% for prod in produtos%}
   <tbody>
     <tr>
 
-      <th ><img class="icone_carrinho rounded-circle"  src="\static\" alt="">imagem _do_produto</a></th>
+      <th ><img class="icone_carrinho rounded-circle" width="80px" height="60px" src="\static\{{prod.imagem}}" alt=""></a></th>
 
-      <td>id do produto</td>
+      <td>{{prod.id_produto}}</td>
 
-      <td>nome_produto</td>
-      <td>descrição_produto</td>
-      <td>preço_produto</td>
+      <td>{{prod.nome}}</td>
+      <td>{{prod.descricao}}</td>
+      <td>{{prod.preco}}</td>
       <td>
         <div class="ajustar separar">
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
@@ -53,7 +61,7 @@
 
   </tbody>
 
-
-
+{%endfor%}
+</div>
 </table>
 {% endblock%}

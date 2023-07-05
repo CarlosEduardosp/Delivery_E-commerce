@@ -113,7 +113,7 @@ class RegisterEndereco(RegisterEnderecoInterface):
         )
 
         if validade_entry:
-            self.endereco_repository.update_endereco(
+            response = self.endereco_repository.update_endereco(
                 id_endereco=id_endereco,
                 cep_cliente=cep_cliente,
                 estado=estado,
