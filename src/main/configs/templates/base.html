@@ -98,7 +98,7 @@
 
 
           <li class="nav-item">
-              <a class="nav-link text-white" href="#"><h6>Clientes</h6></a>
+              <a class="nav-link text-white" href="{{url_for('api_routes.clientes', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Clientes</h6></a>
             </li>
           <li class="nav-item">
               <a class="nav-link text-white" href="{{url_for('api_routes.produto', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Produtos</h6></a>

@@ -33,13 +33,8 @@ def home(apelido: str, quantidade_carrinho: int = "vazio"):
     produtos = AdapterProduto(api_route=register_produto_composer(), data={})
     produtos = produtos.select_all()
 
-    # selecionando todos os arquivos de imagens cadastrados na pasta static
-    path = "C:/meus projetos/DeliverySystem/CleanArchitecture/src/main/configs/static/"
-    img = os.listdir(path)
-
     return render_template(
         "home.html",
-        img=img,
         apelido=apelido,
         quantidade_carrinho=quantidade_carrinho,
         produtos=produtos,
@@ -192,13 +187,15 @@ def validar_email(email: str):
             )
             response_cliente = cliente_insert.insert()
 
+            id_cliente = response_cliente.body.id_cliente
+
             # salvando endereço no banco
             complemento = session.get("complemento")
             endereco = session.get("endereco_cliente")
             insert_endereco = AdapterEndereco(
                 api_route=register_endereco_composer(),
                 data={
-                    "id_cliente": cliente[0],
+                    "id_cliente": id_cliente,
                     "cep_cliente": endereco[0],
                     "estado": endereco[1],
                     "cidade": endereco[2],
@@ -284,6 +281,99 @@ def cadastrar_produto(apelido: str, quantidade_carrinho: int):
         "cadastrar_produto.html",
         apelido=apelido,
         quantidade_carrinho=quantidade_carrinho,
+    )
+
+
+@api_routes_bp.route(
+    "/clientes/<apelido>/<quantidade_carrinho>", methods=["GET", "POST"]
+)
+def clientes(apelido: str, quantidade_carrinho: int):
+    """Mostra na tela todos os clientes cadastrados."""
+    # selecionando todos os clientes do banco
+    clientes = AdapterCliente(api_route=register_cliente_composer(), data={})
+    lista_clientes = clientes.select_all()
+    # selecionando todos os endereços
+    endereco = AdapterEndereco(api_route=register_endereco_composer(), data={})
+    endereco = endereco.select_all()
+    # verifica o status code da requisição
+    if lista_clientes.status_code == 200 and endereco.status_code == 200:
+        endereco = endereco.body
+        lista_clientes = lista_clientes.body
+
+    return render_template(
+        "clientes.html",
+        apelido=apelido,
+        lista_clientes=lista_clientes,
+        endereco=endereco,
+        quantidade_carrinho=quantidade_carrinho,
+    )
+
+
+@api_routes_bp.route(
+    "/deletar/<apelido>/<quantidade_carrinho>/<id_cliente>", methods=["GET", "POST"]
+)
+def deletar_cliente(apelido: str, quantidade_carrinho: int, id_cliente: int):
+    """Endpoint para deletar clientes"""
+
+    cliente = AdapterCliente(
+        api_route=register_cliente_composer(), data={"id_cliente": int(id_cliente)}
+    )
+    endereco = AdapterEndereco(
+        api_route=register_endereco_composer(), data={"id_cliente": int(id_cliente)}
+    )
+    cliente.delete()
+    endereco.delete()
+
+    return redirect(
+        url_for(
+            "api_routes.clientes",
+            apelido=apelido,
+            quantidade_carrinho=quantidade_carrinho,
+        )
+    )
+
+
+@api_routes_bp.route(
+    "/deletar_produto/<apelido>/<quantidade_carrinho>/<id_produto>",
+    methods=["GET", "POST"],
+)
+def deletar_produto(apelido: str, quantidade_carrinho: int, id_produto: int):
+    """Endpoint para deletar clientes"""
+
+    produto = AdapterProduto(
+        api_route=register_produto_composer(), data={"id_produto": int(id_produto)}
+    )
+    produto.delete()
+
+    return redirect(
+        url_for(
+            "api_routes.produto",
+            apelido=apelido,
+            quantidade_carrinho=quantidade_carrinho,
+        )
+    )
+
+
+@api_routes_bp.route(
+    "/editar_produtos/<apelido>/<quantidade_carrinho>/<id_produto>",
+    methods=["GET", "POST"],
+)
+def editar_produtos(apelido: str, quantidade_carrinho: int, id_produto: int):
+    """editar produtos"""
+
+    id_produto = int(id_produto)
+    produtos = AdapterProduto(api_route=register_produto_composer(), data={})
+    produtos = produtos.select_all()
+    produtos = produtos.body
+
+    if request.method == "POST":
+        pass
+
+    return render_template(
+        "editar_produtos.html",
+        id_produto=id_produto,
+        apelido=apelido,
+        produtos=produtos,
     )
 
 

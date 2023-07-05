@@ -18,16 +18,16 @@
 <div class="row ">
 
 
-            {% for i in img %}
-            {% if i != 'estilo.css' and i != 'carrinho.png' and i != 'free.jpg'  %}
+            {% for prod in produtos.body %}
+            {% if i != 'estilo.css' and i != 'carrinho.png' and i != 'free.jpg' and i != 'imagem' %}
 
   <div class="col-md-3  ">
 <div class="card text-center container" style="width: 20rem;">
-<img src="\static\{{i}}" width="300px" height="200px" class="card-img-top" alt="...">
+<img src="\static\{{prod.imagem}}" width="300px" height="200px" class="card-img-top" alt="...">
   <div class="card-body ">
-    <h5 class="card-title text-center">Nome</h5>
-    <p class="card-text acertartexto text-center">Descrição</p>
-    <h5 class="card-title text-center ">R$ - Preço</h5>
+    <h5 class="card-title text-center">{{prod.nome}}</h5>
+    <p class="card-text acertartexto text-center">{{prod.descricao}}</p>
+    <h5 class="card-title text-center ">R$ - {{prod.preco}}</h5>
       {% if id_cliente != 'Efetue o Login!' %}
             <a href="#"  class="btn btn-outline-dark">Adicionar ao Carrinho</a>
         {% endif %}
