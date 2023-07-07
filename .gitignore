@@ -4,3 +4,4 @@ venv
 ecommerce.db
 .pytest_cache
 main_test.py
+precommit-pytest
