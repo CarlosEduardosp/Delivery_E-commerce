@@ -1,0 +1,57 @@
+{% extends "base.html"%}
+
+{% block conteudo %}
+    <h1 class="titulo text-center">Meu Carrinho de Compras</h1>
+
+{%- for mensagem in get_flashed_messages() %}
+                {% if 'existe' in mensagem  %}
+                    <div class="alert alert-success text-center">
+                        {{mensagem}}
+                    </div>
+                {% endif %}
+              {%- endfor %}
+
+<div class="container_pai">
+
+    <table class="table centralizartable container_carrinho">
+  <thead>
+    <tr>
+      <th scope="col">Imagem</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Descrição</th>
+      <th scope="col">Preço</th>
+    </tr>
+  </thead>
+
+     {% for i in produtos_no_carrinho %}
+
+
+  <tbody>
+    <tr>
+
+      <th ><img class="icone_carrinho rounded-circle" width="80px" height="60px" src="\static\{{i.imagem}}" alt=""></a></th>
+      <td>{{i.nome}}</td>
+      <td>{{i.descricao}}</td>
+      <td>R$ {{i.preco}}</td>
+      <td>
+          <form class="">
+            <a href="#" class="btn btn-outline-danger">Deletar</a>
+      </form>
+      </td>
+    </tr>
+
+  </tbody>
+
+
+
+    {% endfor %}
+
+</table>
+<div class="centralizar text-center">
+    <a href="#" class="btn btn-success ajustar "><h1>Realizar Pedido</h1></a>
+</div>
+</div>
+
+
+
+{% endblock %}

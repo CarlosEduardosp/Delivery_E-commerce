@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+ {%- for mensagem in get_flashed_messages() %}
+                {% if 'Alterados' in mensagem %}
+                    <div class="alert alert-success text-center ">
+                        {{mensagem}}
+                    </div>
+                {% endif %}
+              {%- endfor %}
+
+<h1 class="titulo text-center">Meus Dados</h1>
+<table class="table centro container_perfil">
+  <thead>
+    <tr>
+
+      <th scope="col"  >Email</th>
+      <th scope="col" >Apelido</th>
+      <th scope="col">Cep</th>
+      <th scope="col">Estado</th>
+        <th scope="col">Cidade</th>
+        <th scope="col">Bairro</th>
+        <th scope="col">Logradouro</th>
+        <th scope="col">complemento</th>
+    </tr>
+  </thead>
+
+     {% for i in clientes %}
+         {% if apelido == i.apelido %}
+
+  <tbody>
+    <tr>
+
+        <form action="{{url_for('api_routes.perfil', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}" class=" centralizar" method="POST">
+  <div class="mb-1  ">
+      <td width="300px"><input type="text" class="form-control text-center" name="email" aria-describedby="emailHelp" value="{{i.email}}"></td>
+  </div>
+  <div class="mb-1">
+      <td  width="150px"><input type="text" class="form-control text-center" name="apelido" aria-describedby="emailHelp" value="{{i.apelido}}"></td>
+  </div>
+  <br>
+      <td width="200px"><input  type="text" class="form-control text-center" name="cep_cliente" aria-describedby="emailHelp" value="{{i.cep_cliente}}"></td>
+      <div class="mb-1">
+          {% for x in endereco %}
+            {% if x.cep_cliente == i.cep_cliente and x.id_cliente == i.id_cliente %}
+
+      <td width="50px"><input type="text" class="form-control " name="estado" aria-describedby="emailHelp" value="{{x.estado}}"></td>
+  </div>
+      <div class="mb-1">
+      <td><input type="text" class="form-control text-center" name="cidade" aria-describedby="emailHelp" value="{{x.cidade}}"></td>
+  </div>
+            <div class="mb-1">
+      <td><input type="text" class="form-control text-center " name="bairro" aria-describedby="emailHelp" value="{{x.bairro}}"></td>
+  </div>
+            <div class="mb-1">
+      <td><input type="text" class="form-control text-center" name="logradouro" aria-describedby="emailHelp" value="{{x.logradouro}}"></td>
+  </div>
+            <div class="mb-1">
+      <td><input type="text" class="form-control text-center" name="complemento" aria-describedby="emailHelp" value="{{x.complemento}}"></td>
+  </div>
+            {% endif %}
+{% endfor %}
+
+          </div></td>
+              <td> <a href="{{url_for('api_routes.perfil', apelido=apelido, quantidade_carrinho=quantidade_carrinho )}}" ><button type="submit" class="btn btn-outline-success" >Atualizar</button></a>
+              </td>
+</form>
+    </tr>
+
+  </tbody>
+        {% endif %}
+
+
+    {% endfor %}
+
+</table>
+
+
+
+{% endblock %}

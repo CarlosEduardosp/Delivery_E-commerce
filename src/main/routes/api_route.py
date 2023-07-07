@@ -4,13 +4,16 @@ api_routes_bp = Blueprint("api_routes", __name__)
 
 
 @api_routes_bp.route(
-    "/",
+    "/home/",
+    methods=["GET", "POST"],
+)
+@api_routes_bp.route("/home/<apelido>/<quantidade_carrinho>", methods=["GET", "POST"])
+@api_routes_bp.route(
+    "/home/<apelido>/<quantidade_carrinho>/",
     defaults={"apelido": "Efetue_o_Login!", "quantidade_carrinho": "Vazio"},
     methods=["GET", "POST"],
 )
-@api_routes_bp.route("/<apelido>", methods=["GET", "POST"])
-@api_routes_bp.route("/<apelido>/<quantidade_carrinho>/", methods=["GET", "POST"])
-def home(apelido: str, quantidade_carrinho: int = "vazio"):
+def home(apelido: str, quantidade_carrinho: int):
     """rota teste"""
 
     # buscando cliente pelo apelido
@@ -42,10 +45,9 @@ def home(apelido: str, quantidade_carrinho: int = "vazio"):
 
 
 @api_routes_bp.route(
-    "/login", defaults={"apelido": "Efetue_o_Login!"}, methods=["GET", "POST"]
+    "/efetuar_login/<apelido>/<quantidade_carrinho>", methods=["GET", "POST"]
 )
-@api_routes_bp.route("/login/<apelido>/<quantidade_carrinho>", methods=["GET", "POST"])
-def login(apelido: str, quantidade_carrinho: str = "vazio"):
+def login(apelido: str, quantidade_carrinho: int):
     """Realiza o login comparando os dados inseridos, com os da tabela Cliente."""
 
     # instancia clientes, HttpRequest e selct de todos os clientes.
@@ -60,21 +62,24 @@ def login(apelido: str, quantidade_carrinho: str = "vazio"):
         # comparando senha digitada com senha salva no banco
         for cliente in clientes.body:
             if cliente.email == email and senha == cliente.senha:
-                apelido = cliente.apelido
-
                 # coletando quantidade de produtos no carrinho de clientes
                 quantidade_carrinho = AdapterCarrinho(
-                    api_route=register_cliente_composer(), data={}
+                    api_route=register_carrinho_composer(),
+                    data={"id_cliente": cliente.id_cliente},
                 )
-                quantidade_carrinho = quantidade_carrinho.select_all()
+                quantidade_carrinho = quantidade_carrinho.select()
+                quantidade_carrinho = quantidade_carrinho.body["Len"]
+
+                apelido = cliente.apelido
 
                 return redirect(
                     url_for(
-                        "api_routes.home",
-                        quantidade_carrinho=quantidade_carrinho,
+                        "api_routes.login",
                         apelido=apelido,
+                        quantidade_carrinho=quantidade_carrinho,
                     )
                 )
+
         # exibi mensagem de erro caso senha ou email sejam inválidos.
         mensagem = "Usuário não encontrado ou senha incorreta!!"
         flash(mensagem)
@@ -170,54 +175,58 @@ def validar_email(email: str):
     # request do valor do codigo via form
     if request.method == "POST":
         codigo = request.form.get("codigo")
+        if codigo:
+            # validação do codigo, com o codigo cadastrado
+            response = comparar_codigo(codigo)
+            if response:
+                # salvando dados do cliente no banco
+                cliente = session.get("dados_cliente")
+                cliente_insert = AdapterCliente(
+                    api_route=register_cliente_composer(),
+                    data={
+                        "apelido": cliente[1],
+                        "email": cliente[2],
+                        "senha": cliente[3],
+                        "cep_cliente": cliente[4],
+                    },
+                )
+                response_cliente = cliente_insert.insert()
 
-        # validação do codigo, com o codigo cadastrado
-        response = comparar_codigo(codigo)
-        if response:
-            # salvando dados do cliente no banco
-            cliente = session.get("dados_cliente")
-            cliente_insert = AdapterCliente(
-                api_route=register_cliente_composer(),
-                data={
-                    "apelido": cliente[1],
-                    "email": cliente[2],
-                    "senha": cliente[3],
-                    "cep_cliente": cliente[4],
-                },
-            )
-            response_cliente = cliente_insert.insert()
+                id_cliente = response_cliente.body.id_cliente
 
-            id_cliente = response_cliente.body.id_cliente
+                # salvando endereço no banco
+                complemento = session.get("complemento")
+                endereco = session.get("endereco_cliente")
+                insert_endereco = AdapterEndereco(
+                    api_route=register_endereco_composer(),
+                    data={
+                        "id_cliente": id_cliente,
+                        "cep_cliente": endereco[0],
+                        "estado": endereco[1],
+                        "cidade": endereco[2],
+                        "bairro": endereco[3],
+                        "logradouro": endereco[4],
+                        "complemento": complemento,
+                    },
+                )
+                insert_endereco.insert()
 
-            # salvando endereço no banco
-            complemento = session.get("complemento")
-            endereco = session.get("endereco_cliente")
-            insert_endereco = AdapterEndereco(
-                api_route=register_endereco_composer(),
-                data={
-                    "id_cliente": id_cliente,
-                    "cep_cliente": endereco[0],
-                    "estado": endereco[1],
-                    "cidade": endereco[2],
-                    "bairro": endereco[3],
-                    "logradouro": endereco[4],
-                    "complemento": complemento,
-                },
-            )
-            insert_endereco.insert()
+                # deletando do banco o codigo validado pelo cliente
+                del_codigo = AdapterCodigo(
+                    api_route=register_codigo_composer(),
+                    data={"id_cliente": response_cliente.body.id_cliente},
+                )
+                del_codigo.delete()  # metodo para deletar o codigo no banco
 
-            # deletando do banco o codigo validado pelo cliente
-            del_codigo = AdapterCodigo(
-                api_route=register_codigo_composer(),
-                data={"id_cliente": response_cliente.body.id_cliente},
-            )
-            del_codigo.delete()  # metodo para deletar o codigo no banco
+                apelido = cliente[1]
 
-            return redirect(
-                url_for("api_routes.home", apelido=cliente[1], quantidade_carrinho=0)
-            )
+                return redirect(
+                    url_for("api_routes.home", apelido=apelido, quantidade_carrinho=0)
+                )
 
-    return render_template("validacao_codigo.html", email=email)
+    return render_template(
+        "validacao_codigo.html", email=email, apelido="Efetue_o_Login!"
+    )
 
 
 @api_routes_bp.route(
@@ -228,12 +237,13 @@ def produto(apelido: str, quantidade_carrinho: int):
 
     select_produtos = AdapterProduto(api_route=register_produto_composer(), data={})
     select_produtos = select_produtos.select_all()
+    produtos = select_produtos.body
 
     return render_template(
         "produtos.html",
         apelido=apelido,
         quantidade_carrinho=quantidade_carrinho,
-        produtos=select_produtos.body,
+        produtos=produtos,
     )
 
 
@@ -281,6 +291,67 @@ def cadastrar_produto(apelido: str, quantidade_carrinho: int):
         "cadastrar_produto.html",
         apelido=apelido,
         quantidade_carrinho=quantidade_carrinho,
+    )
+
+
+@api_routes_bp.route(
+    "/carrinho/<apelido>/<quantidade_carrinho>", methods=["GET", "POST"]
+)
+def carrinho(apelido: str, quantidade_carrinho: int):
+    """carrinho de compras"""
+
+    cliente = AdapterCliente(
+        api_route=register_cliente_composer(), data={"apelido": apelido}
+    )
+    cliente = cliente.select()
+    cliente = cliente.body[0]
+
+    produto = AdapterProduto(api_route=register_produto_composer(), data={})
+    produto = produto.select_all()
+    produtos = produto.body
+
+    carrinho = AdapterCarrinho(
+        api_route=register_carrinho_composer(), data={"id_cliente": cliente.id_cliente}
+    )
+    carrinho = carrinho.select()
+
+    produtos_no_carrinho = []
+    for i in produtos:
+        for j in carrinho.body["Dados"]:
+            if i.id_produto == j.id_produto:
+                produtos_no_carrinho.append(i)
+
+    return render_template(
+        "carrinho.html",
+        apelido=apelido,
+        quantidade_carrinho=quantidade_carrinho,
+        produtos_no_carrinho=produtos_no_carrinho,
+    )
+
+
+@api_routes_bp.route(
+    "/adicionar_carrinho/<apelido>/<quantidade_carrinho>/<id_produto>",
+    methods=["GET", "POST"],
+)
+def adicionar_carrinho(apelido: str, quantidade_carrinho: int, id_produto: int):
+    """adiciona produtos ao carrinho"""
+
+    cliente = AdapterCliente(api_route=register_cliente_composer(), data={})
+    clientes = cliente.select_all()
+
+    for i in clientes.body:
+        if apelido == i.apelido:
+            id_cliente = i.id_cliente
+            carrinho = AdapterCarrinho(
+                api_route=register_carrinho_composer(),
+                data={"id_cliente": int(id_cliente), "id_produto": int(id_produto)},
+            )
+            carrinho.insert()
+
+    return redirect(
+        url_for(
+            "api_routes.home", apelido=apelido, quantidade_carrinho=quantidade_carrinho
+        )
     )
 
 
@@ -367,13 +438,120 @@ def editar_produtos(apelido: str, quantidade_carrinho: int, id_produto: int):
     produtos = produtos.body
 
     if request.method == "POST":
-        pass
+        nome = request.form.get("nome")
+        descricao = request.form.get("descricao")
+        preco = float(request.form.get("preco"))
+
+        for i in produtos:
+            if id_produto == i.id_produto:
+                todos_produtos = AdapterProduto(
+                    api_route=register_produto_composer(),
+                    data={
+                        "id_produto": id_produto,
+                        "nome": nome,
+                        "descricao": descricao,
+                        "preco": preco,
+                        "imagem": i.imagem,
+                    },
+                )
+                todos_produtos.update()
+
+                return redirect(
+                    url_for(
+                        "api_routes.produto",
+                        apelido=apelido,
+                        quantidade_carrinho=quantidade_carrinho,
+                    )
+                )
 
     return render_template(
         "editar_produtos.html",
         id_produto=id_produto,
         apelido=apelido,
         produtos=produtos,
+        quantidade_carrinho=quantidade_carrinho,
+    )
+
+
+@api_routes_bp.route("/perfil/<apelido>/<quantidade_carrinho>", methods=["GET", "POST"])
+def perfil(apelido: str, quantidade_carrinho: int):
+    cliente = AdapterCliente(api_route=register_cliente_composer(), data={})
+    clientes = cliente.select_all()
+    endereco = AdapterEndereco(api_route=register_endereco_composer(), data={})
+    endereco_cliente = endereco.select_all()
+
+    if request.method == "POST":
+        email = request.form.get("email")
+        apelido_request = request.form.get("apelido")
+        cep_cliente = request.form.get("cep_cliente")
+        estado = request.form.get("estado")
+        cidade = request.form.get("cidade")
+        bairro = request.form.get("bairro")
+        logradouro = request.form.get("logradouro")
+        complemento = request.form.get("complemento")
+
+        if (
+            email
+            and apelido_request
+            and cep_cliente
+            and estado
+            and cidade
+            and bairro
+            and logradouro
+            and complemento
+        ):
+            for i in clientes.body:
+                if apelido == i.apelido:
+                    cliente = AdapterCliente(
+                        api_route=register_cliente_composer(),
+                        data={
+                            "id_cliente": i.id_cliente,
+                            "apelido": apelido_request,
+                            "email": email,
+                            "senha": i.senha,
+                            "cep_cliente": cep_cliente,
+                        },
+                    )
+                    cliente.update()
+
+                for x in endereco_cliente.body:
+                    if i.id_cliente == x.id_cliente:
+                        endereco = AdapterEndereco(
+                            api_route=register_endereco_composer(),
+                            data={
+                                "id_endereco": x.id_endereco,
+                                "cep_cliente": cep_cliente,
+                                "estado": estado,
+                                "cidade": cidade,
+                                "bairro": bairro,
+                                "logradouro": logradouro,
+                                "complemento": complemento,
+                                "id_cliente": i.id_cliente,
+                            },
+                        )
+                        resposta = endereco.update()
+                        print(resposta)
+            mensagem = f"{apelido}, Seus Dados Foram Alterados com Sucesso."
+            flash(mensagem)
+            return redirect(
+                url_for(
+                    "api_routes.perfil",
+                    apelido=apelido_request,
+                    quantidade_carrinho=quantidade_carrinho,
+                )
+            )
+
+    clientes = cliente.select_all()
+    clientes = clientes.body
+    endereco = endereco.select_all()
+    endereco = endereco.body
+
+    return render_template(
+        "perfil.html",
+        apelido=apelido,
+        quantidade_carrinho=quantidade_carrinho,
+        clientes=clientes,
+        endereco=endereco,
     )
 
 

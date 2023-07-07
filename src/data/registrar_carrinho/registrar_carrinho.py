@@ -17,7 +17,7 @@ class RegisterCarrinho(RegisterCarrinhoInterface):
 
         response = None
         # validate_entry == True or False
-        validade_entry = isinstance(id_produto, int) and isinstance(id_produto, int)
+        validade_entry = isinstance(id_cliente, int) and isinstance(id_produto, int)
 
         if validade_entry:  # if validate_entry == True
             response = self.carrinho_repository.insert_carrinho(

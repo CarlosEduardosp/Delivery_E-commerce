@@ -40,7 +40,7 @@
       <td><input type="text" class="form-control " name="preco" aria-describedby="emailHelp" value="{{i.preco}}"></td>
           <td>  <div class="btn-group" role="group" aria-label="Basic mixed styles example">
 
-              <a href="#" ><button type="submit" class="btn btn-outline-success" >Atualizar</button></a>
+              <a href="{{url_for('api_routes.editar_produtos',id_produto=id_produto, apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}" ><button type="submit" class="btn btn-outline-success" >Atualizar</button></a>
 
           </div></td>
 
