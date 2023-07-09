@@ -12,7 +12,7 @@ def validador_senha(senha: any, confirmar_senha: any) -> bool:
         return False
 
 
-def comparar_codigo(codigo: int):
+def comparar_codigo(codigo: int) -> bool:
     """realiza a comparação de codigo"""
     codigobd = AdapterCodigo(
         api_route=register_codigo_composer(), data={"id_cliente": 1}

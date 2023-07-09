@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<div class="text-center">
+<h1 class="titulo">{{apelido.title()}}, Confirme seu Pedido aqui:</h1>
+
+<h2 class="titulo ajustar">Dados Pessoais:</h2>
+
+</div>
+
+<table class="table icone_carrinho container_pedido">
+  <thead>
+    <tr>
+      <th scope="col">Id_cliente</th>
+      <th scope="col">Apelido</th>
+      <th scope="col">Endereço de Entrega</th>
+      <th scope="col">Email</th>
+
+    </tr>
+
+</thead>
+
+
+
+  <tbody>
+    <tr>
+
+
+      <td>{{cliente.id_cliente}}</td>
+      <td>{{cliente.apelido}}</td>
+      <td>
+
+        <mark class="rounded">Cep:</mark> {{endereco.cep_cliente}}
+               <mark class="rounded">UF:</mark> {{endereco.estado}}
+                <mark class="rounded">Cidade:</mark> {{endereco.cidade}}
+               <mark class="rounded">Bairro:</mark> {{endereco.bairro}}<br>
+        <mark class="rounded">Avenida/Rua:</mark> {{endereco.logradouro}}
+        <mark class="rounded">Complemento:</mark> {{endereco.complemento}}
+
+      </td>
+      <td>{{cliente.email}}</td>
+
+    </tr>
+
+  </tbody>
+
+
+
+</table>
+
+
+<table class="table painel container_pedido">
+<h2 class="titulo text-center ">Dados Pedidos:</h2>
+
+
+  <thead>
+    <tr>
+      <th scope="col">Imagem</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Descrição</th>
+      <th scope="col">Preço</th>
+
+    </tr>
+  </thead>
+
+
+{% for i in produtos_no_carrinho %}
+
+  <tbody>
+    <tr>
+
+      <th ><img class="icone_carrinho rounded-circle" width="80px" height="60px" src="\static\{{i.imagem}}" alt=""></a></th>
+      <td>{{i.nome}}</td>
+      <td>{{i.descricao}}</td>
+      <td>R$ {{i.preco}}</td>
+
+
+    </tr>
+
+  </tbody>
+
+{% endfor %}
+
+
+</table>
+
+<h1 class="titulo text-center ">Valor Total:</h1>
+
+  <div class="titulo container_pedido text-center">
+      <span class="badge text-bg-light border border-dark p-3 ">
+        <h2 class=" text-danger ajustar">R$ {{valor}}</h2>
+      </span>
+    <br><br>
+    <a href="#" class="btn btn-outline-dark ajustar "><h1>Confirmar Pedido</h1></a>
+</div>
+
+
+{% endblock %}
