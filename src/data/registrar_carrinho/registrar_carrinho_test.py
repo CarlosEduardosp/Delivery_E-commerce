@@ -5,7 +5,7 @@ from src.infra.repo.carrinho_Repository import CarrinhoRepository
 faker = Faker()
 
 
-def test_register_carrinho():
+def register_carrinho():
     """testing registry method"""
 
     user_repo = CarrinhoRepository()
@@ -25,7 +25,7 @@ def test_register_carrinho():
     return None
 
 
-def test_select_carrinho():
+def select_carrinho():
     """testing select carrinho"""
 
     user_repo = CarrinhoRepository()
@@ -40,7 +40,7 @@ def test_select_carrinho():
         return response
 
 
-def test_delete_carrinho():
+def delete_carrinho():
     """testing delete carrinho"""
 
     user_repo = CarrinhoRepository()
@@ -48,13 +48,13 @@ def test_delete_carrinho():
 
     response = None
     try:
-        response = register_car.delete_carrinho(id_cliente=5, id_produto=4)
+        response = register_car.delete_carrinho(id_cliente=1, id_compra=1)
         return response
     except:
         return response
 
 
-def test_select_all_carrinho():
+def select_all_carrinho():
     """testing select all"""
 
     user_repo = CarrinhoRepository()

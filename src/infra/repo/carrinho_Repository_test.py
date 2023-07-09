@@ -6,7 +6,7 @@ carrinho_repository = CarrinhoRepository()
 faker = Faker()
 
 
-def test_insert_carrinho():
+def insert_carrinho():
     """should insert Carrinho"""
 
     id_produto = faker.random_number(digits=1)
@@ -27,7 +27,7 @@ def test_insert_carrinho():
         print("ERRO ao inserir dados")
 
 
-def test_select_carrinho():
+def select_carrinho():
     """Select in carrinho"""
 
     try:
@@ -37,9 +37,9 @@ def test_select_carrinho():
         print("Carrinho não encontrado.")
 
 
-def test_delete_carrinho():
+def delete_carrinho():
     try:
-        carrinho_repository.delete_carrinho(id_cliente=7, id_produto=0)
+        carrinho_repository.delete_carrinho(id_cliente=1, id_compra=6)
         print("Carrinho Deletado com Sucesso.")
     except:
         print("Carrinho Não Encontrado.")

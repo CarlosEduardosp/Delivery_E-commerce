@@ -121,7 +121,8 @@
         </li>
 
 
-
+{% if apelido != 'Efetue_o_Login!' %}
+{% if apelido == 'adm' or apelido == 'Adm' or apelido == 'ADM' %}
           <li class="nav-item">
               <a class="nav-link text-white" href="{{url_for('api_routes.clientes', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Clientes</h6></a>
             </li>
@@ -134,7 +135,7 @@
           <li class="nav-item">
               <a class="nav-link text-white" href="#"><h6>Editar Loja</h6> </a>
             </li>
-
+{% endif %}
 
           <li class="nav-item">
           <a class="nav-link active text-white" aria-current="page" href="#"><h6>Minhas Compras</h6> </a>
@@ -143,10 +144,6 @@
           <li class="nav-item">
               <a class="nav-link text-white" href="{{url_for('api_routes.perfil', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Perfil</h6> </a>
             </li>
-           <li class="nav-item">
-          <a class="nav-link text-white" href="{{url_for('api_routes.login', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Login</h6> </a>
-           </li>
-
 
       </ul>
 
@@ -154,7 +151,7 @@
       <button type="button"  class="btn btn-white position-relative paddingicone">
         <a href="{{url_for('api_routes.carrinho', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}">
 
-  <img class="icone" width="30" src="\static\carrinho.png" alt=""></a>
+  <img class="icone" width="30" src="\static\icones\carrinho.png" alt=""></a>
 
 
               <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -168,8 +165,14 @@
 
 </button>
 
+{% endif %}
 
-        <a type="button" href="{{url_for('api_routes.sair', apelido=apelido)}}">
+           <li class="nav-item">
+          <a class="nav-link text-white" href="{{url_for('api_routes.login', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Login</h6> </a>
+           </li>
+
+
+        <a type="button" href="{{url_for('api_routes.sair', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}">
 
             <button class="btn btn-white  "><h6><mark class="rounded bg bg-dark text-white">Sair</mark></h6></button>
            </a><br>

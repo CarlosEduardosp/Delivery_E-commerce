@@ -51,7 +51,7 @@ class AdapterCarrinho:
     def delete(self):
         query_data = self.data.keys()
 
-        if "id_cliente" and "id_produto" in query_data:
+        if "id_cliente" and "id_compra" in query_data:
             http_request = HttpRequest(query=self.data)
             response = self.api_route.route_delete(http_request)
 

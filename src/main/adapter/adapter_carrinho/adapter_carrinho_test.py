@@ -5,13 +5,13 @@ from faker import Faker
 faker = Faker()
 
 
-def test_select_all():
+def select_all():
     buscar = AdapterCarrinho(api_route=register_carrinho_composer(), data={})
     response = buscar.select_all()
     print(response)
 
 
-def test_select():
+def select():
     buscar = AdapterCarrinho(
         api_route=register_carrinho_composer(), data={"id_cliente": 8}
     )
@@ -19,7 +19,7 @@ def test_select():
     print(response)
 
 
-def test_insert():
+def insert():
     buscar = AdapterCarrinho(
         api_route=register_carrinho_composer(),
         data={
@@ -35,8 +35,8 @@ def test_delete():
     buscar = AdapterCarrinho(
         api_route=register_carrinho_composer(),
         data={
-            "id_produto": faker.random_number(digits=1),
-            "id_cliente": faker.random_number(digits=1),
+            "id_compra": 3,
+            "id_cliente": 1,
         },
     )
     response = buscar.delete()

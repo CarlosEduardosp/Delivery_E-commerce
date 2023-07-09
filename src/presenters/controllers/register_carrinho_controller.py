@@ -91,11 +91,11 @@ class RegisterCarrinhoController(RouteInterface):
         response = None
         data = http_request.query.keys()
 
-        if "id_cliente" in data and "id_produto" in data:
+        if "id_cliente" in data and "id_compra" in data:
             id_cliente = http_request.query["id_cliente"]
-            id_produto = http_request.query["id_produto"]
+            id_compra = http_request.query["id_compra"]
             response = self.register_carrinho_use_case.delete_carrinho(
-                id_cliente=id_cliente, id_produto=id_produto
+                id_cliente=id_cliente, id_compra=id_compra
             )
 
         else:

@@ -19,7 +19,7 @@ class RegisterCarrinho(ABC):
         raise Exception("Should implement method: register")
 
     @abstractmethod
-    def delete_carrinho(self, id_cliente: int, id_produto: int) -> Dict[bool, Carrinho]:
+    def delete_carrinho(self, id_cliente: int, id_compra: int) -> Dict[bool, Carrinho]:
         """del case"""
 
         raise Exception("Should implement method: register")

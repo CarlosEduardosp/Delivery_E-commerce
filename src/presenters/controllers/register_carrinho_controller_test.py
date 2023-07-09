@@ -8,7 +8,7 @@ from .register_carrinho_controller import RegisterCarrinhoController
 faker = Faker()
 
 
-def test_handle():
+def handle():
     """Testing Handle method"""
 
     register_carrinho_use_case = RegisterCarrinho(CarrinhoRepository())
@@ -43,7 +43,7 @@ def select_controller():
     return response
 
 
-def test_select_all_controller():
+def select_all_controller():
     """testing select all"""
 
     register_carrinho_use_case = RegisterCarrinho(CarrinhoRepository())
@@ -57,7 +57,7 @@ def test_select_all_controller():
     return response
 
 
-def test_delete_controller():
+def delete_controller():
     """testing controller delete"""
 
     register_carrinho_use_case = RegisterCarrinho(CarrinhoRepository())
@@ -65,7 +65,7 @@ def test_delete_controller():
         register_carrinho_use_case
     )
 
-    http_request = HttpRequest(query={"id_cliente": 1, "id_produto": 1})
+    http_request = HttpRequest(query={"id_cliente": 1, "id_compra": 2})
 
     response = register_carrinho_controller.route_delete(http_request)
 

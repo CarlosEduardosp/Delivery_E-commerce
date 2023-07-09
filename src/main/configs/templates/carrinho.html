@@ -35,7 +35,7 @@
       <td>R$ {{i.preco}}</td>
       <td>
           <form class="">
-            <a href="#" class="btn btn-outline-danger">Deletar</a>
+            <a href="{{url_for('api_routes.deletar_carrinho', apelido=apelido, quantidade_carrinho=quantidade_carrinho, id_produto=i.id_produto)}}" class="btn btn-outline-danger">Deletar</a>
       </form>
       </td>
     </tr>

@@ -40,15 +40,15 @@ class RegisterCarrinho(RegisterCarrinhoInterface):
 
         return {"Success": False, "Data": response}
 
-    def delete_carrinho(self, id_cliente: int, id_produto: int) -> Dict[bool, Carrinho]:
+    def delete_carrinho(self, id_cliente: int, id_compra: int) -> Dict[bool, Carrinho]:
         """delete in case"""
 
         response = None
-        validate_entry = isinstance(id_cliente, int) and isinstance(id_produto, int)
+        validate_entry = isinstance(id_cliente, int) and isinstance(id_compra, int)
 
         if validate_entry:
             response = self.carrinho_repository.delete_carrinho(
-                id_cliente=id_cliente, id_produto=id_produto
+                id_cliente=id_cliente, id_compra=id_compra
             )
             return {"Success": True, "Data": response}
 

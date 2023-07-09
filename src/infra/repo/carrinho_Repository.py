@@ -105,7 +105,7 @@ class CarrinhoRepository(CarrinhoRepositoryInterface):
             return None
 
     @classmethod
-    def delete_carrinho(self, id_cliente: int = None, id_produto: int = None) -> None:
+    def delete_carrinho(self, id_cliente: int = None, id_compra: int = None) -> None:
         """Deleting data by id_cliente
         :param - id_cliente id of registry"""
 
@@ -117,7 +117,7 @@ class CarrinhoRepository(CarrinhoRepositoryInterface):
                     with engine.connect() as connection:
                         connection.execute(
                             text(
-                                f"DELETE FROM carrinho WHERE id_produto = {id_produto} AND id_cliente = {id_cliente};"
+                                f"DELETE FROM carrinho WHERE id_compra = {id_compra} AND id_cliente = {id_cliente};"
                             )
                         )
 
