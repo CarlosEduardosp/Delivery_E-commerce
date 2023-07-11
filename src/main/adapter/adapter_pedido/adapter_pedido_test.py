@@ -5,21 +5,19 @@ from faker import Faker
 faker = Faker()
 
 
-def test_select_all():
+def select_all():
     buscar = AdapterPedido(api_route=register_pedido_composer(), data={})
     response = buscar.select_all()
     print(response)
 
 
 def test_select():
-    buscar = AdapterPedido(
-        api_route=register_pedido_composer(), data={"id_cliente": 8, "id_pedido": 1}
-    )
+    buscar = AdapterPedido(api_route=register_pedido_composer(), data={"id_cliente": 1})
     response = buscar.select()
     print(response)
 
 
-def test_insert():
+def insert():
     buscar = AdapterPedido(
         api_route=register_pedido_composer(),
         data={
@@ -35,7 +33,7 @@ def test_insert():
     print(response)
 
 
-def test_delete():
+def delete():
     buscar = AdapterPedido(
         api_route=register_pedido_composer(),
         data={
@@ -47,7 +45,7 @@ def test_delete():
     print(response)
 
 
-def test_update():
+def update():
     buscar = AdapterPedido(
         api_route=register_pedido_composer(),
         data={

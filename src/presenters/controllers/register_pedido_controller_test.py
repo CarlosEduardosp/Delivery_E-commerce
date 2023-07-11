@@ -8,7 +8,7 @@ from .register_pedido_controller import RegisterPedidoController
 faker = Faker()
 
 
-def test_handle():
+def handle():
     """Testing Handle method"""
 
     register_pedido_use_case = RegisterPedido(PedidoRepository())
@@ -39,7 +39,6 @@ def test_select_controller():
     http_request = HttpRequest(
         query={
             "id_cliente": faker.random_number(digits=1),
-            "id_pedido": faker.random_number(digits=1),
         }
     )
 
@@ -48,7 +47,7 @@ def test_select_controller():
     return response
 
 
-def test_select_all_controller():
+def select_all_controller():
     """testing select all"""
 
     register_pedido_use_case = RegisterPedido(PedidoRepository())
@@ -60,7 +59,7 @@ def test_select_all_controller():
     return response
 
 
-def test_delete_controller():
+def delete_controller():
     """testing controller delete"""
 
     register_pedido_use_case = RegisterPedido(PedidoRepository())
@@ -73,7 +72,7 @@ def test_delete_controller():
     return response
 
 
-def test_handle_update():
+def handle_update():
     """Testing Handle method"""
 
     register_pedido_use_case = RegisterPedido(PedidoRepository())

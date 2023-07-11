@@ -22,13 +22,13 @@ def insert_pedido():
     return response
 
 
-def select_pedido():
+def test_select_pedido():
     """testing select pedido"""
 
     user_repo = PedidoRepository()
     registerPedido = RegisterPedido(user_repo)
 
-    response = registerPedido.select_pedido(id_cliente=6, id_pedido=1)
+    response = registerPedido.select_pedido(id_cliente=1)
     for i in response["Data"]:
         print(i.valor)
 

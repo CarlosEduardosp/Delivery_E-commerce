@@ -48,14 +48,12 @@ class RegisterPedido(RegisterPedidoInterface):
 
         return {"Success": False, "Data": response}
 
-    def select_pedido(self, id_cliente: int, id_pedido: int) -> Dict[bool, Pedido]:
+    def select_pedido(self, id_cliente: int) -> Dict[bool, Pedido]:
         """use case select pedido"""
 
         response = None
         try:
-            response = self.pedido_repository.select_pedido(
-                id_pedido=id_pedido, id_cliente=id_cliente
-            )
+            response = self.pedido_repository.select_pedido(id_cliente=id_cliente)
             return {"Success": True, "Data": response}
         except:
             return {"Success": False, "Data": response}

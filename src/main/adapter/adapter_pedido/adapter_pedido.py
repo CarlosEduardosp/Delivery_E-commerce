@@ -37,7 +37,7 @@ class AdapterPedido:
         return self.__error()
 
     def select(self):
-        if "id_cliente" and "id_pedido" in self.query_data:
+        if "id_cliente" in self.query_data:
             http_request = HttpRequest(query=self.data)
             response = self.api_route.route_select(http_request)
 

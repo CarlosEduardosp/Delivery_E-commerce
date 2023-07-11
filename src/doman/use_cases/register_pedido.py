@@ -27,7 +27,7 @@ class RegisterPedido(ABC):
         raise Exception("Should implement method: select_all")
 
     @abstractmethod
-    def select_pedido(self, id_cliente: int, id_pedido: int) -> Dict[bool, Pedido]:
+    def select_pedido(self, id_cliente: int) -> Dict[bool, Pedido]:
         """Case"""
 
         raise Exception("Should implement method: select")

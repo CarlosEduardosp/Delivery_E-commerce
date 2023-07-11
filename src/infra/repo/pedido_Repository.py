@@ -62,9 +62,7 @@ class PedidoRepository(PedidoRepositoryInterface):
         return None
 
     @classmethod
-    def select_pedido(
-        self, id_pedido: int = None, id_cliente: int = None
-    ) -> Optional[Pedido]:
+    def select_pedido(self, id_cliente: int = None) -> Optional[Pedido]:
         """
         Select data in pedido entity by id_cliente and id_pedido
         :param - id_cliente: id of the registry
@@ -75,13 +73,11 @@ class PedidoRepository(PedidoRepositoryInterface):
             try:
                 engine = db_connection_handler.get_engine()
 
-                if id_pedido:
+                if id_cliente:
                     """select data of select in Pedido"""
                     with engine.connect() as connection:
                         data = connection.execute(
-                            text(
-                                f"SELECT * FROM pedido WHERE id_pedido={id_pedido} and id_cliente={id_cliente};"
-                            )
+                            text(f"SELECT * FROM pedido WHERE id_cliente={id_cliente};")
                         )
                         connection.commit()
 
@@ -89,15 +85,7 @@ class PedidoRepository(PedidoRepositoryInterface):
                         for i in data:
                             pedido.append(i)
 
-                        return Pedido(
-                            id_pedido=pedido[0].id_pedido,
-                            id_cliente=pedido[0].id_cliente,
-                            id_produto=pedido[0].id_produto,
-                            numero_pedido=pedido[0].numero_pedido,
-                            valor=pedido[0].valor,
-                            data_pedido=pedido[0].data_pedido,
-                            status=pedido[0].status,
-                        )
+                        return pedido
 
                 else:
                     data = None

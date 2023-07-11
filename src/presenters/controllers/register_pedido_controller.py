@@ -69,11 +69,10 @@ class RegisterPedidoController(RouteInterface):
         response = None
         data = http_request.query.keys()
 
-        if "id_cliente" in data and "id_pedido" in data:
+        if "id_cliente" in data:
             id_cliente = http_request.query["id_cliente"]
-            id_pedido = http_request.query["id_pedido"]
             response = self.register_pedido_use_case.select_pedido(
-                id_cliente=id_cliente, id_pedido=id_pedido
+                id_cliente=id_cliente
             )
 
         else:

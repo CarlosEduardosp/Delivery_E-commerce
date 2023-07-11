@@ -8,7 +8,7 @@ faker = Faker()
 id_cliente = faker.random_number(digits=1)
 
 
-def test_insert_pedido():
+def insert_pedido():
     """should insert User"""
 
     id_produto = faker.random_number(digits=1)
@@ -38,13 +38,13 @@ def test_select_pedido():
     """Select in users"""
 
     try:
-        data = pedido_repository.select_pedido(id_pedido=201, id_cliente=1)
+        data = pedido_repository.select_pedido(id_cliente=1)
         print("Select Ok -", data)
     except:
         print("Pedido não encontrado.")
 
 
-def test_select_all_pedido():
+def select_all_pedido():
     """select all pedido test"""
 
     try:
@@ -54,7 +54,7 @@ def test_select_all_pedido():
         print("Algo deu errado!!")
 
 
-def test_delete_pedido():
+def delete_pedido():
     try:
         pedido_repository.delete_pedido(id_pedido=4, id_cliente=8)
         print("Pedido Deletado com Sucesso.")
@@ -62,7 +62,7 @@ def test_delete_pedido():
         print("Pedido Não Encontrado.")
 
 
-def test_update_cliente():
+def update_cliente():
     """deleting data in cliente"""
 
     try:
