@@ -86,12 +86,12 @@
 
 <h1 class="titulo text-center ">Valor Total:</h1>
 
-  <div class="titulo container_pedido text-center">
+  <div class="titulo  text-center">
       <span class="badge text-bg-light border border-dark p-3 ">
         <h2 class=" text-danger ajustar">R$ {{valor}}</h2>
       </span>
     <br><br>
-    <a href="#" class="btn btn-outline-dark ajustar "><h1>Confirmar Pedido</h1></a>
+    <a href="{{url_for('api_routes.confirmar_pedido', apelido=apelido, quantidade_carrinho=quantidade_carrinho, valor=valor)}}" class="btn btn-outline-dark ajustar "><h1>Confirmar Pedido</h1></a>
 </div>
 
 

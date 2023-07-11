@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+
+
+<h1 class="titulo">{{apelido.title()}}, seu pedido foi realizado com sucesso:</h1>
+
+<h2 class="titulo ">Dados do Pedido:</h2>
+  <table class="table icone_carrinho centralizarcarrinho">
+    <thead>
+      <tr>
+        <th scope="col">Nº do Pedido</th>
+        <th scope="col">Valor do Pedido</th>
+        <th scope="col">Data do Pedido</th>
+        <th scope="col">Cliente</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{dados_do_pedido.numero_pedido}}</td>
+        <td>R$ {{dados_do_pedido.valor}}</td>
+        <td>{{dados_do_pedido.data_pedido}}</td>
+        <td>{{apelido.title()}}</td>
+        <td>{{dados_do_pedido.status.title()}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+<h2 class="titulo ajustar">Dados Pessoais:</h2>
+  <table class="table centralizarcarrinho ajustar ">
+    <thead>
+      <tr>
+        <th scope="col">Apelido</th>
+        <th scope="col">Email</th>
+        <th scope="col">Endereço</th>
+      </tr>
+    </thead>
+
+
+    <tbody>
+      <tr>
+        <td>{{cliente.apelido}}</td>
+        <td>{{cliente.email}}</td>
+
+
+
+
+            <td><details>
+              <summary>Ver o Endereço</summary>
+            Cep: {{endereco.cep_cliente}}<br>
+            Estado: {{endereco.estado}}<br>
+            Cidade: {{endereco.cidade}}<br>
+            Bairro: {{endereco.bairro}}<br>
+            Logradouro: {{endereco.logradouro}}<br>
+            Complemento: {{endereco.complemento}}<br> </td>
+            </details>
+
+
+
+      </tr>
+    </tbody>
+
+  </table>
+
+
+
+<h2 class="titulo ajustar">Produtos:</h2>
+  <table class="table centralizarcarrinho ajustar ">
+    <thead>
+      <tr>
+        <th scope="col">Produto</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Descrição</th>
+         <th scope="col">Preço</th>
+      </tr>
+    </thead>
+    {% for i in produtos_no_carrinho %}
+    <tbody>
+      <tr>
+        <th ><img class="icone_carrinho rounded-circle" width="80px" height="60px" src="\static\{{i.imagem}}" alt=""></a></th>
+        <td>{{i.nome}}</td>
+        <td>{{i.descricao}}</td>
+        <td>R$ {{i.preco}}</td>
+      </tr>
+    </tbody>
+    {% endfor %}
+  </table>
+
+<div class="ajustar text-center">
+  <a href="{{url_for('api_routes.home', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}" class="btn btn-outline-dark ajustar"> Voltar ao início</a>
+</div>
+<br>
+  {% endblock %}
