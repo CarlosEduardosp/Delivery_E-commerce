@@ -14,6 +14,7 @@ api_routes_bp_cad_cliente = Blueprint("cadastrar_cliente", __name__)
 def cadastrar_cliente(apelido: str):
     """tela de cadastro de cliente"""
 
+    cep_cliente = ""
     endereco = ["---", "---", "---", "---", "---"]
 
     email = ""
@@ -26,6 +27,11 @@ def cadastrar_cliente(apelido: str):
         apelido = request.form.get("apelido")
         cep_cliente = request.form.get("end")
         complemento = request.form.get("complemento")
+        estado = request.form.get("estado")
+        cidade = request.form.get("cidade")
+        bairro = request.form.get("bairro")
+        logradouro = request.form.get("logradouro")
+        complemento = request.form.get("complemento")
 
         # realizando a pesquisa do cep.
         if cep_cliente:
@@ -33,13 +39,19 @@ def cadastrar_cliente(apelido: str):
                 api_route=buscar_cep_composer(), data={"cep_cliente": cep_cliente}
             )
             endereco = endereco.adapter_buscar_cep()
-            endereco = endereco.body
+
+            if endereco["status_code"] == 200:
+                endereco = endereco.body
+            else:
+                flash(
+                    "Não foi possivel realizar a consulta do cep, por favor coloque os dados manualmente."
+                )
 
             # se o usuario digitar algum complemento.
             if complemento:
                 session["complemento"] = complemento
             else:
-                session["complemento"] = endereco.complemento
+                session["complemento"] = "complemente aqui..."
 
         # comparação das senhas e retorna um valor boolean
         if senha and confirmar_senha:
@@ -71,14 +83,33 @@ def cadastrar_cliente(apelido: str):
                     cep_cliente=cep_cliente,
                 )
 
+                dados_endereco = Endereco(
+                    id_endereco=0,
+                    cep_cliente=cep_cliente,
+                    estado=estado,
+                    cidade=cidade,
+                    bairro=bairro,
+                    logradouro=logradouro,
+                    complemento=complemento,
+                    id_cliente=0,
+                )
+
                 # guardando os dados do cliente
                 session["dados_cliente"] = dados_cliente
-                session["endereco_cliente"] = endereco
+                if endereco["status_code"] == 200:
+                    session["endereco_cliente"] = endereco
+                else:
+                    # salva os dados do endereço digitado no formulário pelo cliente
+                    session["dados_endereco"] = dados_endereco
 
                 return render_template(
                     "validacao_codigo.html", email=email, apelido=apelido
                 )
 
     return render_template(
-        "cadastrar_cliente.html", email=email, apelido=apelido, endereco=endereco
+        "cadastrar_cliente.html",
+        email=email,
+        apelido=apelido,
+        endereco=endereco,
+        cep_cliente=cep_cliente,
     )

@@ -20,6 +20,7 @@ from src.main.composer.register_carrinho_composer import register_carrinho_compo
 from src.main.composer.register_endereco_composer import register_endereco_composer
 from src.main.composer.register_pedido_composer import register_pedido_composer
 from src.doman.models.cliente import Cliente
+from src.doman.models.endereco import Endereco
 from src.main.adapter.adapter_cliente.adapter_cliente import AdapterCliente
 from src.main.adapter.adapter_buscar_cep.flask_adapter_buscar_cep import BuscarCep
 from src.main.adapter.adapter_produto.adapter_produto import AdapterProduto

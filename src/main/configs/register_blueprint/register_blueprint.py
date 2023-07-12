@@ -1,5 +1,3 @@
-from flask import Flask
-from flask_cors import CORS
 from src.main.routes.rotas.rotas_menu.route_home import api_routes_bp_home
 from src.main.routes.rotas.rotas_menu.route_login import api_routes_bp_login
 from src.main.routes.rotas.rotas_cliente.route_cadastrar_cliente import (
@@ -38,10 +36,7 @@ from src.main.routes.rotas.rotas_pedido.route_confirmar_pedido import (
     api_routes_bp_confirmar_pedido,
 )
 from src.main.routes.rotas.rotas_menu.route_sair import api_routes_bp_sair
-
-app = Flask(__name__)
-
-CORS(app)
+from src.main.configs.app import app
 
 app.register_blueprint(api_routes_bp_home)
 app.register_blueprint(api_routes_bp_login)
@@ -61,5 +56,3 @@ app.register_blueprint(api_routes_bp_perfil)
 app.register_blueprint(api_routes_bp_pedido)
 app.register_blueprint(api_routes_bp_confirmar_pedido)
 app.register_blueprint(api_routes_bp_sair)
-
-app.secret_key = "b'\x92O7\x1a\x0e\x94\xb2\xff\x04\xdaD\x98)\xc79-'"

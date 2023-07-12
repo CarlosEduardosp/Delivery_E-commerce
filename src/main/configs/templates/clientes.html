@@ -56,7 +56,7 @@
       <td>{{i.email}}</td>
       <td>
           <form class="ajustar">
-            <a href="{{url_for('api_routes.deletar_cliente', id_cliente=i.id_cliente, apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}" class="btn btn-outline-danger">Deletar</a>
+            <a href="{{url_for('deletar_cliente.deletar_cliente', id_cliente=i.id_cliente, apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}" class="btn btn-outline-danger">Deletar</a>
       </form>
       </td>
     </tr>

@@ -32,7 +32,7 @@
   <tbody>
     <tr>
 
-        <form action="{{url_for('api_routes.perfil', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}" class=" centralizar" method="POST">
+        <form action="{{url_for('rota_perfil.perfil', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}" class=" centralizar" method="POST">
   <div class="mb-1  ">
       <td width="300px"><input type="text" class="form-control text-center" name="email" aria-describedby="emailHelp" value="{{i.email}}"></td>
   </div>
@@ -63,7 +63,7 @@
 {% endfor %}
 
           </div></td>
-              <td> <a href="{{url_for('api_routes.perfil', apelido=apelido, quantidade_carrinho=quantidade_carrinho )}}" ><button type="submit" class="btn btn-outline-success" >Atualizar</button></a>
+              <td> <a href="{{url_for('rota_perfil.perfil', apelido=apelido, quantidade_carrinho=quantidade_carrinho )}}" ><button type="submit" class="btn btn-outline-success" >Atualizar</button></a>
               </td>
 </form>
     </tr>

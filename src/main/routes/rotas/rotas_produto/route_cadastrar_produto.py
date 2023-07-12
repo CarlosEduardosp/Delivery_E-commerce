@@ -37,7 +37,7 @@ def cadastrar_produto(apelido: str, quantidade_carrinho: int):
         if response.status_code == 200:
             return redirect(
                 url_for(
-                    "api_routes.cadastrar_produto",
+                    "rota_cadastrar_produto.cadastrar_produto",
                     apelido=apelido,
                     quantidade_carrinho=quantidade_carrinho,
                 )

@@ -32,19 +32,38 @@ def validar_email(email: str):
                 # salvando endereço no banco
                 complemento = session.get("complemento")
                 endereco = session.get("endereco_cliente")
-                insert_endereco = AdapterEndereco(
-                    api_route=register_endereco_composer(),
-                    data={
-                        "id_cliente": id_cliente,
-                        "cep_cliente": endereco[0],
-                        "estado": endereco[1],
-                        "cidade": endereco[2],
-                        "bairro": endereco[3],
-                        "logradouro": endereco[4],
-                        "complemento": complemento,
-                    },
-                )
-                insert_endereco.insert()
+
+                if endereco:
+                    insert_endereco = AdapterEndereco(
+                        api_route=register_endereco_composer(),
+                        data={
+                            "id_cliente": id_cliente,
+                            "cep_cliente": endereco[0],
+                            "estado": endereco[1],
+                            "cidade": endereco[2],
+                            "bairro": endereco[3],
+                            "logradouro": endereco[4],
+                            "complemento": complemento,
+                        },
+                    )
+                    insert_endereco.insert()
+
+                else:
+                    endereco = session.get("dados_endereco")
+                    print(endereco)
+                    insert_endereco = AdapterEndereco(
+                        api_route=register_endereco_composer(),
+                        data={
+                            "id_cliente": id_cliente,
+                            "cep_cliente": cliente[4],
+                            "estado": endereco[2],
+                            "cidade": endereco[3],
+                            "bairro": endereco[4],
+                            "logradouro": endereco[5],
+                            "complemento": endereco[6],
+                        },
+                    )
+                    insert_endereco.insert()
 
                 # deletando do banco o codigo validado pelo cliente
                 del_codigo = AdapterCodigo(

@@ -35,7 +35,7 @@
       <td>R$ {{i.preco}}</td>
       <td>
           <form class="">
-            <a href="{{url_for('api_routes.deletar_carrinho', apelido=apelido, quantidade_carrinho=quantidade_carrinho, id_produto=i.id_produto)}}" class="btn btn-outline-danger">Deletar</a>
+            <a href="{{url_for('rota_deletar_carrinho.deletar_carrinho', apelido=apelido, quantidade_carrinho=quantidade_carrinho, id_produto=i.id_produto)}}" class="btn btn-outline-danger">Deletar</a>
       </form>
       </td>
     </tr>
@@ -48,7 +48,7 @@
 
 </table>
 <div class="centralizar text-center">
-    <a href="{{url_for('api_routes.pedido', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}" class="btn btn-success ajustar "><h1>Realizar Pedido</h1></a>
+    <a href="{{url_for('rota_pedido.pedido', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}" class="btn btn-success ajustar "><h1>Realizar Pedido</h1></a>
 </div>
 </div>
 
