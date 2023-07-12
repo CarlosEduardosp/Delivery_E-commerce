@@ -12,7 +12,7 @@ from flask import (
 from src.main.composer.register_produto_composer import register_produto_composer
 from src.main.composer.buscar_cep_composer import buscar_cep_composer
 from src.presenters.helpers.http_models import HttpRequest
-from .functions import validador_senha, comparar_codigo
+from src.main.routes.functions.functions import validador_senha, comparar_codigo
 from src.data.enviar_codigo_email.enviar_codigo import EnviarCodigoEmail
 from src.main.composer.register_codigo_composer import register_codigo_composer
 from src.main.composer.register_cliente_composite import register_cliente_composer

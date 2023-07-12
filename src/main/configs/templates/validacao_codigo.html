@@ -10,7 +10,7 @@
 <h2 class="titulo ">Enviamos um código para o email <br><br><mark class="rounded bg bg-dark text-light">{{email}}</mark></h2>
 <h2 class="titulo">Digite aqui para verificação do email:</h2>
 
- <form action="{{url_for('api_routes.validar_email', email=email)}}" class="row g-3 text-center" method="POST">
+ <form action="{{url_for('validar_email.validar_email', email=email)}}" class="row g-3 text-center" method="POST">
 
 <div class="col-md-2 centrovalidar centro text-center">
     <input  type="text" class="form-control text-center " id="codigo" name="codigo"  value="">

@@ -29,7 +29,7 @@
     <p class="card-text acertartexto text-center">{{prod.descricao}}</p>
     <h5 class="card-title text-center ">R$ - {{prod.preco}}</h5>
       {% if id_cliente != 'Efetue o Login!' %}
-            <a href="{{url_for('api_routes.adicionar_carrinho', apelido=apelido, quantidade_carrinho=quantidade_carrinho, id_produto=prod.id_produto)}}"  class="btn btn-outline-dark">Adicionar ao Carrinho</a>
+            <a href="{{url_for('rota_adicionar_carrinho.adicionar_carrinho', apelido=apelido, quantidade_carrinho=quantidade_carrinho, id_produto=prod.id_produto)}}"  class="btn btn-outline-dark">Adicionar ao Carrinho</a>
         {% endif %}
       {% if apelido == 'Efetue o Login!' %}
           <a href="#" class="btn btn-outline-dark">Adicionar ao Carrinho</a>

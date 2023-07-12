@@ -137,17 +137,17 @@
        <nav class="rounded nav justify-content-center bg bg-dark menu padding" >
            <a class="nav-link active text-white" href="#"><h6>Olá, {{apelido.title()}} </h6></a>
 
-          <a class="nav-link active text-white" aria-current="page" href="{{url_for('api_routes.home', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Home</h6></a>
+          <a class="nav-link active text-white" aria-current="page" href="{{url_for('home.home', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Home</h6></a>
         </li>
 
 
 {% if apelido != 'Efetue_o_Login!' %}
 {% if apelido == 'adm' or apelido == 'Adm' or apelido == 'ADM' %}
           <li class="nav-item">
-              <a class="nav-link text-white" href="{{url_for('api_routes.clientes', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Clientes</h6></a>
+              <a class="nav-link text-white" href="{{url_for('rota_clientes.clientes', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Clientes</h6></a>
             </li>
           <li class="nav-item">
-              <a class="nav-link text-white" href="{{url_for('api_routes.produto', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Produtos</h6></a>
+              <a class="nav-link text-white" href="{{url_for('rota_produto.produto', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Produtos</h6></a>
             </li>
           <li class="nav-item">
               <a class="nav-link text-white" href="#"><h6>Controle_Pedidos</h6> </a>
@@ -158,7 +158,7 @@
 {% endif %}
 
           <li class="nav-item">
-          <a class="nav-link active text-white" aria-current="page" href="{{url_for('api_routes.pedidos_cliente', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Meus Pedidos</h6> </a>
+          <a class="nav-link active text-white" aria-current="page" href="{{url_for('rota_pedidos_cliente.pedidos_cliente', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Meus Pedidos</h6> </a>
         </li>
 
           <li class="nav-item">
@@ -169,7 +169,7 @@
 
 
       <button type="button"  class="btn btn-white position-relative paddingicone">
-        <a href="{{url_for('api_routes.carrinho', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}">
+        <a href="{{url_for('rota_carrinho.carrinho', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}">
 
   <img class="icone" width="30" src="\static\icones\carrinho.png" alt=""></a>
 
@@ -188,7 +188,7 @@
 {% endif %}
 
            <li class="nav-item">
-          <a class="nav-link text-white" href="{{url_for('api_routes.login', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Login</h6> </a>
+          <a class="nav-link text-white" href="{{url_for('rota_login.login', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Login</h6> </a>
            </li>
 
 

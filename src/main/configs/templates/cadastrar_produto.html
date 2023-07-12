@@ -5,7 +5,7 @@
         <h1 class="titulo text-center ">Cadastro de Produtos</h1>
 
   <div class="text-center">
-  <form action="{{url_for('api_routes.cadastrar_produto', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}" method="POST" enctype="multipart/form-data" class="centralizar">
+  <form action="{{url_for('rota_cadastrar_produto.cadastrar_produto', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}" method="POST" enctype="multipart/form-data" class="centralizar">
 		<div class="form-group ">
             <div class="mb-3 separar">
                   <label for="formFile" class="form-label separar"><strong>Faça o upload da imagem aqui:</strong> </label>
@@ -29,7 +29,7 @@
 		<p></p>
      <div class="btn-group" role="group" aria-label="Basic outlined example">
         <button type="submit" class="btn btn-outline-primary">Adicionar</button>
-         <a href="{{url_for('api_routes.produto', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}" class="btn btn-outline-primary" >Voltar</a>
+         <a href="{{url_for('rota_produto.produto', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}" class="btn btn-outline-primary" >Voltar</a>
 
      </div>
 	</form>

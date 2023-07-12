@@ -15,7 +15,7 @@
 <h1 class="titulo">Tela de Cadastro</h1>
 
 
- <form action="{{url_for('api_routes.cadastrar_cliente')}}" class="row g-3 centralizarcadastro" method="POST">
+ <form action="{{url_for('cadastrar_cliente.cadastrar_cliente')}}" class="row g-3 centralizarcadastro" method="POST">
   <div class="col-md-6">
       <h6><label for="email" class="form-label">Email</label></h6>
     <input type="email" class="form-control text-center" id="email"  value="{{email}}" name="email" required>
@@ -28,13 +28,13 @@
       <h6><label for="end" class="form-label text-center">Cep</label></h6>
     <input type="text" class="form-control text-center" id="end" name="end" required value="{{endereco.cep_cliente}}">
 
-    <a  href="{{url_for('api_routes.cadastrar_cliente')}}"><br><button class="btn btn-outline-success">Pesquisar Cep</button></a>
+    <a  href="{{url_for('cadastrar_cliente.cadastrar_cliente')}}"><br><button class="btn btn-outline-success">Pesquisar Cep</button></a>
 
   </div>
 
 
 <div class="">
-     <form action="{{url_for('api_routes.cadastrar_cliente')}}" class="row g-3 centralizarcadastro" method="POST">
+     <form action="{{url_for('cadastrar_cliente.cadastrar_cliente')}}" class="row g-3 centralizarcadastro" method="POST">
 
      <div class="row text-center">
   <div class="col-md-2 ">
@@ -78,7 +78,7 @@
   </div>
     </div>
          <div class="col-12">
-    <a  href="{{url_for('api_routes.cadastrar_cliente')}}"><br><button class="btn btn-primary">Cadastrar</button></a>
+    <a  href="{{url_for('cadastrar_cliente.cadastrar_cliente')}}"><br><button class="btn btn-primary">Cadastrar</button></a>
   </div>
 
 
