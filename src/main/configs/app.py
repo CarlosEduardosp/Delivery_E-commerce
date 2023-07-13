@@ -38,6 +38,9 @@ from src.main.routes.rotas.rotas_pedido.route_confirmar_pedido import (
     api_routes_bp_confirmar_pedido,
 )
 from src.main.routes.rotas.rotas_menu.route_sair import api_routes_bp_sair
+from src.main.routes.rotas.rotas_pedido.route_controle_pedido import (
+    api_routes_bp_controle_pedido,
+)
 
 app = Flask(__name__)
 
@@ -61,5 +64,6 @@ app.register_blueprint(api_routes_bp_perfil)
 app.register_blueprint(api_routes_bp_pedido)
 app.register_blueprint(api_routes_bp_confirmar_pedido)
 app.register_blueprint(api_routes_bp_sair)
+app.register_blueprint(api_routes_bp_controle_pedido)
 
 app.secret_key = "b'\x92O7\x1a\x0e\x94\xb2\xff\x04\xdaD\x98)\xc79-'"

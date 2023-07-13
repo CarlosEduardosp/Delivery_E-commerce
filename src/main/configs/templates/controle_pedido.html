@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+
+ <h1 class="titulo text-center">Controle de Pedidos</h1>
+<table class="table container_pedido">
+  <thead>
+    <tr>
+        <th scope="col" >N° Pedido</th>
+        <th scope="col"  >Produtos</th>
+        <th scope="col">Cliente</th>
+         <th scope="col">Endereço</th>
+        <th scope="col">Valor do Pedido</th>
+        <th scope="col">Data Pedido</th>
+        <th scope="col" width="100px">Status</th>
+        <th scope="col" width="200px" scope="col">Atualização do Status</th>
+    </tr>
+  </thead>
+
+     {% for i in lista_pedidos %}
+        {% if apelido == i.apelido %}
+
+  <tbody>
+    <tr>
+
+
+        <td>{{i.numero_pedido}}</td>
+        <td width="230px" ><details><summary>Ver Produtos</summary>
+                {% for x in pedidos %}
+                    {% if i.numero_pedido == x.numero_pedido %}
+                        {% for j in produtos %}
+                            {% if x.id_produto == j.id_produto %}
+
+
+
+                                <img class="icone_carrinho rounded-circle" width="40px" height="40px" src="\static\{{j.imagem}}" alt="">
+                                {{j.nome.title()}}
+                                <br>
+
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+
+        </details> </td>
+
+
+      <td>{{i.id_cliente}}</td>
+        <td width="230px" ><details><summary>Endereço</summary>
+               Cep: {{endereco.cep_cliente}},
+            Estado: {{endereco.estado}},
+            Cidade: {{endereco.cidade}},
+            Bairro: {{endereco.bairro}},
+            Logradouro: {{endereco.logradouro}},
+            Complemento: {{endereco.complemento}}
+
+        </details> </td>
+      <td>R$ {{i.valor}}</td>
+      <td>{{i.data_pedido}}</td>
+
+
+
+          {% if i.status == 'Preparando' %}
+        <td width="120px" ><mark class="rounded bg-primary text-light ">{{i.status}}</mark></td>
+      {% endif %}
+
+
+           {% if i.status == 'Saiu p/ Entrega' %}
+        <td width="120px" ><mark class="rounded bg-warning text-light ">{{i.status}}</mark></td>
+      {% endif %}
+
+
+       {% if i.status == 'Finalizado' %}
+        <td width="120px" ><mark class="rounded bg-success text-light ">{{i.status}}</mark></td>
+      {% endif %}
+
+      {% if i.status == 'Cancelado' %}
+        <td width="120px" ><mark class="rounded bg-danger text-light ">{{i.status}}</mark></td>
+      {% endif %}
+
+      <td>
+
+          <form action="#" class=" " method="POST">
+
+
+          <div class="mb form-check">
+            <input type="radio" class="form-check-input" name="radio1" id="checkbox1" value="option1">
+            <label class="form-check-label" >Preparando</label>
+          </div>
+          <div class="mb form-check">
+            <input type="radio" class="form-check-input" name="radio1" id="checkbox2" value="option2">
+            <label class="form-check-label" >Saiu p/ Entrega</label>
+          </div>
+          <div class="mb form-check">
+            <input type="radio" class="form-check-input" name="radio1" id="checkbox3" value="option3" >
+            <label class="form-check-label" >Finalizado</label>
+          </div>
+           <div class="mb form-check">
+            <input type="radio" class="form-check-input" name="radio1" id="checkbox4" value="option4" >
+            <label class="form-check-label" >Cancelar</label>
+          </div>
+
+                      <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                          <button  class="btn btn-outline-success" href="#">Atualizar</button>
+                      </div>
+
+</form>
+
+      </td>
+    </tr>
+
+  </tbody>
+{% endif %}
+
+
+    {% endfor %}
+
+</table>
+
+{% endblock%}

@@ -109,7 +109,7 @@
     }
 
     .container_meuspedidos {
-      width: 800px;
+      width: 1000px;
       margin: 0 auto;
       margin-top: 20px;
       background-color: #fff;
@@ -150,7 +150,7 @@
               <a class="nav-link text-white" href="{{url_for('rota_produto.produto', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Produtos</h6></a>
             </li>
           <li class="nav-item">
-              <a class="nav-link text-white" href="#"><h6>Controle_Pedidos</h6> </a>
+              <a class="nav-link text-white" href="{{url_for('rota_controle_pedido.controle_pedidos', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Controle_Pedidos</h6> </a>
             </li>
           <li class="nav-item">
               <a class="nav-link text-white" href="#"><h6>Editar Loja</h6> </a>

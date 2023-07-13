@@ -38,10 +38,10 @@ def cadastrar_cliente(apelido: str):
             endereco = BuscarCep(
                 api_route=buscar_cep_composer(), data={"cep_cliente": cep_cliente}
             )
-            endereco = endereco.adapter_buscar_cep()
+            response = endereco.adapter_buscar_cep()
 
-            if endereco["status_code"] == 200:
-                endereco = endereco.body
+            if response.status_code == 200:
+                endereco = response.body
             else:
                 flash(
                     "Não foi possivel realizar a consulta do cep, por favor coloque os dados manualmente."
@@ -96,7 +96,7 @@ def cadastrar_cliente(apelido: str):
 
                 # guardando os dados do cliente
                 session["dados_cliente"] = dados_cliente
-                if endereco["status_code"] == 200:
+                if response.status_code == 200:
                     session["endereco_cliente"] = endereco
                 else:
                     # salva os dados do endereço digitado no formulário pelo cliente
