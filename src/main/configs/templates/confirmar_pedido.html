@@ -4,10 +4,10 @@
 
 
 
-<h1 class="titulo">{{apelido.title()}}, seu pedido foi realizado com sucesso:</h1>
+<h1 class="titulo text-center">{{apelido.title()}}, seu pedido foi realizado com sucesso:</h1>
 
-<h2 class="titulo ">Dados do Pedido:</h2>
-  <table class="table icone_carrinho centralizarcarrinho">
+<h2 class="titulo text-center ">Dados do Pedido:</h2>
+  <table class="table icone_carrinho container_pedido">
     <thead>
       <tr>
         <th scope="col">Nº do Pedido</th>
@@ -27,9 +27,9 @@
       </tr>
     </tbody>
   </table>
-
-<h2 class="titulo ajustar">Dados Pessoais:</h2>
-  <table class="table centralizarcarrinho ajustar ">
+<br>
+<h2 class="titulo text-center">Dados Pessoais:</h2>
+  <table class="table container_pedido ajustar ">
     <thead>
       <tr>
         <th scope="col">Apelido</th>
@@ -65,9 +65,9 @@
   </table>
 
 
-
-<h2 class="titulo ajustar">Produtos:</h2>
-  <table class="table centralizarcarrinho ajustar ">
+<br>
+<h2 class="titulo ajustar text-center">Produtos:</h2>
+  <table class="table container_pedido ajustar ">
     <thead>
       <tr>
         <th scope="col">Produto</th>
@@ -87,7 +87,7 @@
     </tbody>
     {% endfor %}
   </table>
-
+<br>
 <div class="ajustar text-center">
   <a href="{{url_for('home.home', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}" class="btn btn-outline-dark ajustar"> Voltar ao início</a>
 </div>

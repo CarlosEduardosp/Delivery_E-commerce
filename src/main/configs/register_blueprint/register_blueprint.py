@@ -25,6 +25,7 @@ class RegisterBlueprint:
         api_routes_bp_sair,
         api_routes_bp_controle_pedido,
         api_routes_bp_atualizar_status_pedido,
+        api_routes_bp_contato,
     ]
 
     def __init__(self, app: None):

@@ -14,7 +14,8 @@ def confirmar_pedido(apelido: str, quantidade_carrinho: int, valor: float):
         api_route=register_cliente_composer(), data={"apelido": apelido}
     )
     cliente = cliente.select()
-    cliente = cliente.body[0]
+    if cliente.status_code == 200:
+        cliente = cliente.body[0]
 
     # selecionando o endereço do cliente
     endereco = AdapterEndereco(

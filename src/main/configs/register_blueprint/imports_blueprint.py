@@ -43,3 +43,4 @@ from src.main.routes.rotas.rotas_pedido.route_controle_pedido import (
 from src.main.routes.rotas.rotas_pedido.route_atualizar_status_pedido import (
     api_routes_bp_atualizar_status_pedido,
 )
+from src.main.routes.rotas.rotas_menu.route_contato import api_routes_bp_contato
