@@ -9,26 +9,32 @@ api_routes_bp_controle_pedido = Blueprint("rota_controle_pedido", __name__)
 def controle_pedidos(apelido: str, quantidade_carrinho: int):
     """endpoint para controle de pedidos pelo adm"""
 
-    cliente = AdapterCliente(
-        api_route=register_cliente_composer(), data={"apelido": apelido}
-    )
-    cliente = cliente.select()
-    if cliente.status_code == 200:
-        cliente = cliente.body[0]
-        endereco = AdapterEndereco(
-            api_route=register_endereco_composer(),
-            data={"id_cliente": cliente.id_cliente},
-        )
-        endereco = endereco.select()
-        endereco = endereco.body
+    cliente = AdapterCliente(api_route=register_cliente_composer(), data={})
+    clientes = cliente.select_all()
 
-        pedidos = AdapterPedido(
-            api_route=register_pedido_composer(),
-            data={"id_cliente": cliente.id_cliente},
-        )
-        pedidos = pedidos.select()
-        if pedidos.status_code == 200:
-            pedidos = pedidos.body
+    if clientes.status_code == 200:
+        clientes = clientes.body
+
+        lista_enderecos = []
+        for cliente in clientes:
+            endereco = AdapterEndereco(
+                api_route=register_endereco_composer(),
+                data={"id_cliente": cliente.id_cliente},
+            )
+            endereco = endereco.select()
+            endereco = endereco.body
+
+            dados = {"cliente": cliente, "endereco": endereco}
+
+            lista_enderecos.append(dados)
+
+            pedidos = AdapterPedido(
+                api_route=register_pedido_composer(),
+                data={},
+            )
+            pedidos = pedidos.select_all()
+            if pedidos.status_code == 200:
+                pedidos = pedidos.body
 
     produtos = AdapterProduto(api_route=register_produto_composer(), data={})
     produtos = produtos.select_all()
@@ -38,22 +44,21 @@ def controle_pedidos(apelido: str, quantidade_carrinho: int):
     lista_pedidos = []
     verificar = ""
     for pedido in pedidos:
-        if pedido.id_cliente == cliente.id_cliente:
-            if verificar != pedido.numero_pedido:
-                dados_pedido = {
-                    "numero_pedido": pedido.numero_pedido,
-                    "valor": pedido.valor,
-                    "id_cliente": pedido.id_cliente,
-                    "apelido": apelido,
-                    "status": pedido.status,
-                    "id_pedido": pedido.id_pedido,
-                    "data_pedido": pedido.data_pedido,
-                }
-                lista_pedidos.insert(0, dados_pedido)
-            for x in produtos:
-                if x.id_produto == pedido.id_produto:
-                    produtos_cliente.append(x)
-                verificar = pedido.numero_pedido
+        if verificar != pedido.numero_pedido:
+            dados_pedido = {
+                "numero_pedido": pedido.numero_pedido,
+                "valor": pedido.valor,
+                "id_cliente": pedido.id_cliente,
+                "apelido": apelido,
+                "status": pedido.status,
+                "id_pedido": pedido.id_pedido,
+                "data_pedido": pedido.data_pedido,
+            }
+            lista_pedidos.insert(0, dados_pedido)
+        for x in produtos:
+            if x.id_produto == pedido.id_produto:
+                produtos_cliente.append(x)
+            verificar = pedido.numero_pedido
 
     return render_template(
         "controle_pedido.html",
@@ -63,5 +68,5 @@ def controle_pedidos(apelido: str, quantidade_carrinho: int):
         pedidos=pedidos,
         lista_pedidos=lista_pedidos,
         produtos_cliente=produtos_cliente,
-        endereco=endereco,
+        lista_enderecos=lista_enderecos,
     )

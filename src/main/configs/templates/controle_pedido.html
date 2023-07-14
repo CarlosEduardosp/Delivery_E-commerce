@@ -45,14 +45,23 @@
         </details> </td>
 
 
-      <td>{{i.id_cliente}}</td>
-        <td width="230px" ><details><summary>Endereço</summary>
-               Cep: {{endereco.cep_cliente}},
-            Estado: {{endereco.estado}},
-            Cidade: {{endereco.cidade}},
-            Bairro: {{endereco.bairro}},
-            Logradouro: {{endereco.logradouro}},
-            Complemento: {{endereco.complemento}}
+
+
+            {%for x in lista_enderecos %}
+                {% if i.id_cliente == x["cliente"].id_cliente %}
+
+                    <td>{{x["cliente"].apelido}}</td>
+                    <td width="230px" ><details><summary>Endereço</summary>
+
+                    Cep: {{x["endereco"].cep_cliente}},
+                    Estado: {{x["endereco"].estado}},
+                    Cidade: {{x["endereco"].cidade}},
+                    Bairro: {{x["endereco"].bairro}},
+                    Logradouro: {{x["endereco"].logradouro}},
+                    Complemento: {{x["endereco"].complemento}}
+
+                {% endif %}
+            {% endfor %}
 
         </details> </td>
       <td>R$ {{i.valor}}</td>
@@ -65,8 +74,8 @@
       {% endif %}
 
 
-           {% if i.status == 'Saiu p/ Entrega' %}
-        <td width="120px" ><mark class="rounded bg-warning text-light ">{{i.status}}</mark></td>
+           {% if i.status == 'Pedido Saiu Para Entrega.' %}
+        <td class="text-center" width="120px" ><mark class="rounded bg-warning text-light  ">{{i.status}}</mark></td>
       {% endif %}
 
 
@@ -80,28 +89,28 @@
 
       <td>
 
-          <form action="#" class=" " method="POST">
+          <form action="{{url_for('rota_atualizar_status_pedido.atualizar_status_pedido', apelido=apelido, quantidade_carrinho=quantidade_carrinho, numero_pedido=i.numero_pedido, id_cliente=i.id_cliente)}}" class=" " method="POST">
 
 
           <div class="mb form-check">
-            <input type="radio" class="form-check-input" name="radio1" id="checkbox1" value="option1">
+            <input type="radio" class="form-check-input" name="radio1" id="checkbox1" value="Preparando">
             <label class="form-check-label" >Preparando</label>
           </div>
           <div class="mb form-check">
-            <input type="radio" class="form-check-input" name="radio1" id="checkbox2" value="option2">
+            <input type="radio" class="form-check-input text-center" name="radio1" id="checkbox2" value="Pedido Saiu Para Entrega.">
             <label class="form-check-label" >Saiu p/ Entrega</label>
           </div>
           <div class="mb form-check">
-            <input type="radio" class="form-check-input" name="radio1" id="checkbox3" value="option3" >
+            <input type="radio" class="form-check-input" name="radio1" id="checkbox3" value="Finalizado" >
             <label class="form-check-label" >Finalizado</label>
           </div>
            <div class="mb form-check">
-            <input type="radio" class="form-check-input" name="radio1" id="checkbox4" value="option4" >
+            <input type="radio" class="form-check-input" name="radio1" id="checkbox4" value="Cancelado" >
             <label class="form-check-label" >Cancelar</label>
           </div>
 
                       <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                          <button  class="btn btn-outline-success" href="#">Atualizar</button>
+                          <button  class="btn btn-outline-success" href="{{url_for('rota_atualizar_status_pedido.atualizar_status_pedido', apelido=apelido, quantidade_carrinho=quantidade_carrinho, numero_pedido=i.numero_pedido, id_cliente=i.id_cliente)}}">Atualizar</button>
                       </div>
 
 </form>
