@@ -53,7 +53,8 @@
             <div class="ajustar separar">
                 <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                     <a href="{{url_for('rota_editar_produto.editar_produtos', apelido=apelido, quantidade_carrinho=quantidade_carrinho, id_produto=prod.id_produto)}}" class="btn btn-outline-success">Editar</a>
-                    <a href="{{url_for('deletar_produto.deletar_produto',id_produto=prod.id_produto, apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}" class="btn btn-outline-danger">Deletar</a>
+
+                    <a href="{{url_for('deletar_produto.deletar_produto',id_produto=prod.id_produto, apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}" class="btn btn-outline-danger" onclick="confirmacao()">Deletar</a>
                 </div>
             </div>
         </td>
@@ -64,4 +65,5 @@
     {%endfor%}
 
 </table>
+
 {% endblock%}

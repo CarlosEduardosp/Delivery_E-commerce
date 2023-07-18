@@ -1,9 +1,11 @@
-from src.main.composer.buscar_cep_composer import buscar_cep_composer
-from src.presenters.helpers.http_models import HttpRequest
+from src.main.configs.app import app
+from src.infra.config import DBConnectionHandler, Base
 
 
-http_request = HttpRequest(query={"cep_cliente": "28984350"})
-response = buscar_cep_composer()
-response = response.route_buscar_cep(http_request)
+# criando o banco de dados.
+db_conn = DBConnectionHandler()
+engine = db_conn.get_engine()
+Base.metadata.create_all(engine)
 
-print(response)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
