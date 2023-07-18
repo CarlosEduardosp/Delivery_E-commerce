@@ -2,17 +2,17 @@
 
 {% block conteudo %}
 
- <h1 class="titulo text-center">Meus Pedidos</h1>
+ <h1 class="container_titulo text-center">Meus Pedidos</h1>
 <table class="table container_meuspedidos">
   <thead>
     <tr>
 
-      <th scope="col"  >Produtos</th>
-      <th scope="col" >N° Pedido</th>
-      <th scope="col">Cliente</th>
-      <th scope="col">Valor Total</th>
-      <th scope="col">Data do Pedido</th>
-        <th scope="col">Status</th>
+      <th scope="col" >Produtos</th>
+      <th scope="col" class="text-center" >N° Pedido</th>
+      <th scope="col" class="text-center">Cliente</th>
+      <th scope="col" class="text-center">Valor Total</th>
+      <th scope="col" class="text-center">Data do Pedido</th>
+        <th scope="col" class="text-center">Status</th>
     </tr>
   </thead>
 
@@ -42,29 +42,29 @@
 
         </details> </td>
 
-      <td>{{i.numero_pedido}}</td>
-      <td>{{i.apelido}}</td>
-      <td>R$ {{i.valor}}</td>
-      <td>{{i.data_pedido}}</td>
+      <td class="text-center">{{i.numero_pedido}}</td>
+      <td class="text-center">{{i.apelido}}</td>
+      <td class="text-center">R$ {{i.valor}}</td>
+      <td class="text-center">{{i.data_pedido}}</td>
 
 
 
           {% if i.status == 'Preparando' %}
-        <td width="230px" ><mark class="rounded bg-primary text-light ">{{i.status}}</mark></td>
+        <td width="230px" class="text-center" ><mark class="rounded bg-primary text-light ">{{i.status}}</mark></td>
       {% endif %}
 
 
            {% if i.status == 'Pedido Saiu Para Entrega.' %}
-        <td width="230px" ><mark class="rounded bg-warning text-light ">{{i.status}}</mark></td>
+        <td width="230px" class="text-center" ><mark class="rounded bg-warning text-light ">{{i.status}}</mark></td>
       {% endif %}
 
 
        {% if i.status == 'Finalizado' %}
-        <td width="230px" ><mark class="rounded bg-success text-light ">{{i.status}}</mark></td>
+        <td width="230px" class="text-center"><mark class="rounded bg-success text-light ">{{i.status}}</mark></td>
       {% endif %}
 
       {% if i.status == 'Cancelado' %}
-        <td width="230px" ><mark class="rounded bg-danger text-light ">{{i.status}}</mark></td>
+        <td width="230px" class="text-center"><mark class="rounded bg-danger text-light ">{{i.status}}</mark></td>
       {% endif %}
 
       <td>

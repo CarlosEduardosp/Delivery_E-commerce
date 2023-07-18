@@ -1,7 +1,7 @@
 {% extends "base.html"%}
 
 {% block conteudo %}
-    <h1 class="titulo text-center">Meu Carrinho de Compras</h1>
+    <h1 class="container_titulo text-center">Meu Carrinho de Compras</h1>
 
 {%- for mensagem in get_flashed_messages() %}
                 {% if 'existe' in mensagem  %}

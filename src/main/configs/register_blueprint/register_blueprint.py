@@ -26,6 +26,7 @@ class RegisterBlueprint:
         api_routes_bp_controle_pedido,
         api_routes_bp_atualizar_status_pedido,
         api_routes_bp_contato,
+        api_routes_bp_editar_tela_inicial,
     ]
 
     def __init__(self, app: None):

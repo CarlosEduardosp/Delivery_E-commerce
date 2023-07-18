@@ -2,67 +2,66 @@
 
 {% block conteudo %}
 
-<div class="text-center container">
+<div class="text-center container_titulo">
 
-<h1 class="titulo ">Cadastrar Produtos</h1>
+<h1 >Cadastrar Produtos</h1>
     <P>use o botão abaixo para cadastrar um produto.</P>
 
 <a href="{{url_for('rota_cadastrar_produto.cadastrar_produto', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}" class="btn btn-outline-success separar">Ir para Cadastro</a>
 </div>
 <br><br>
 
- <h1 class="titulo text-center">Todos os Produtos Cadastrados</h1>
-<div class="container_produtos text-center">
+ <h1 class="titulo text-center" >Todos os Produtos Cadastrados</h1>
 
 
 
 {%- for mensagem in get_flashed_messages() %}
-                {% if 'Editado' in mensagem  %}
-                    <div class="alert alert-success text-center">
-                        {{mensagem}}
-                    </div>
-                {% endif %}
-              {%- endfor %}
-
-<table class="table ">
-  <thead>
-    <tr>
-      <th scope="col">Imagem</th>
-      <th scope="col">Id_produto</th>
-      <th scope="col">Nome</th>
-      <th scope="col">Descrição</th>
-      <th scope="col">Preço</th>
-    </tr>
-  </thead>
-
-
-
-
-{% for prod in produtos%}
-    {% if prod.nome != 'imagem' %}
-  <tbody>
-    <tr>
-
-      <th ><img class="icone_carrinho rounded-circle" width="80px" height="60px" src="\static\{{prod.imagem}}" alt=""></a></th>
-
-      <td>{{prod.id_produto}}</td>
-
-      <td>{{prod.nome}}</td>
-      <td>{{prod.descricao}}</td>
-      <td>{{prod.preco}}</td>
-      <td>
-        <div class="ajustar separar">
-        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-            <a href="{{url_for('rota_editar_produto.editar_produtos', apelido=apelido, quantidade_carrinho=quantidade_carrinho, id_produto=prod.id_produto)}}" class="btn btn-outline-success">Editar</a>
-            <a href="{{url_for('deletar_produto.deletar_produto',id_produto=prod.id_produto, apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}" class="btn btn-outline-danger">Deletar</a>
-        </div>
-        </div>
-      </td>
-    </tr>
-
-  </tbody>
-{%endif%}
-{%endfor%}
+{% if 'Editado' in mensagem  %}
+<div class="alert alert-success text-center">
+    {{mensagem}}
 </div>
+{% endif %}
+{%- endfor %}
+
+<table class="table container_carrinho ">
+    <thead>
+    <tr>
+        <th scope="col">Imagem</th>
+        <th scope="col">Id_produto</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Descrição</th>
+        <th scope="col">Preço</th>
+    </tr>
+    </thead>
+
+
+
+
+    {% for prod in produtos%}
+    {% if prod.nome != 'imagem' %}
+    <tbody>
+    <tr>
+
+        <th ><img class="icone_carrinho rounded-circle" width="80px" height="60px" src="\static\{{prod.imagem}}" alt=""></a></th>
+
+        <td>{{prod.id_produto}}</td>
+
+        <td>{{prod.nome}}</td>
+        <td>{{prod.descricao}}</td>
+        <td>{{prod.preco}}</td>
+        <td>
+            <div class="ajustar separar">
+                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                    <a href="{{url_for('rota_editar_produto.editar_produtos', apelido=apelido, quantidade_carrinho=quantidade_carrinho, id_produto=prod.id_produto)}}" class="btn btn-outline-success">Editar</a>
+                    <a href="{{url_for('deletar_produto.deletar_produto',id_produto=prod.id_produto, apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}" class="btn btn-outline-danger">Deletar</a>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    </tbody>
+    {%endif%}
+    {%endfor%}
+
 </table>
 {% endblock%}

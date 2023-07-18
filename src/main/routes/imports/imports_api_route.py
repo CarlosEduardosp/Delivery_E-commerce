@@ -19,6 +19,7 @@ from src.main.composer.register_cliente_composite import register_cliente_compos
 from src.main.composer.register_carrinho_composer import register_carrinho_composer
 from src.main.composer.register_endereco_composer import register_endereco_composer
 from src.main.composer.register_pedido_composer import register_pedido_composer
+from src.main.composer.register_imagem_composer import register_imagem_composer
 from src.doman.models.cliente import Cliente
 from src.doman.models.endereco import Endereco
 from src.main.adapter.adapter_cliente.adapter_cliente import AdapterCliente
@@ -28,6 +29,7 @@ from src.main.adapter.adapter_carrinho.adapter_carrinho import AdapterCarrinho
 from src.main.adapter.adapter_codigo.adapter_codigo import AdapterCodigo
 from src.main.adapter.adapter_endereco.adapter_endereco import AdapterEndereco
 from src.main.adapter.adapter_pedido.adapter_pedido import AdapterPedido
+from src.main.adapter.adapter_imagem.adapter_imagem import AdapterImagem
 from faker import Faker
 import os
 import requests

@@ -1,0 +1,31 @@
+{% extends 'base.html'%}
+
+{% block conteudo %}
+<div class="container_edicao text-center">
+<form action="{{url_for('rota_editar_tela_inicial.editar_tela_inicial', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}" method="POST" enctype="multipart/form-data" class="bg  centralizar">
+		<div  class="form-group ">
+            <div  class="mb-3 separar">
+                <label for="formFile" class="form-label separar"><h1>Editar imagem Principal:</h1></label>
+                  <input class="form-control" type="file" id="formFile" name="upload">
+            </div>
+
+        </div>
+
+		<p></p>
+        <div class="btn-group" role="group" aria-label="Basic outlined example">
+            <button type="submit" class="btn btn-outline-primary">Adicionar</button>
+        </div>
+</form>
+</div>
+
+<div class="container_previa_imagem text-center">
+
+            {% if imagem %}
+                <h6>Nova Imagem adicionada com Sucesso !</h6>
+            {% endif %}
+
+         <img width="300px" height="200px" src="\static\imagem\{{imagem}}" alt="Nenhuma Imagem Carregada.">
+
+</div>
+
+{% endblock %}

@@ -21,7 +21,10 @@ class AdapterImagem:
 
             return response
 
-        return self.__error()
+        http_error = HttpErrors.error_422()
+        return HttpResponse(
+            status_code=http_error["status_code"], body=http_error["body"]
+        )
 
     def select(self):
         try:
@@ -31,7 +34,10 @@ class AdapterImagem:
             return response
 
         except:
-            return self.__error()
+            http_error = HttpErrors.error_422()
+            return HttpResponse(
+                status_code=http_error["status_code"], body=http_error["body"]
+            )
 
     def delete(self):
         try:

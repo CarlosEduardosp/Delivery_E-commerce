@@ -8,7 +8,7 @@
 
         <div class="padding "  >
 
-         <img class="rounded painel border border-5 border-dark container_imageminicial" src="\static\imagem\16590.jpg" alt="Imagem não disponível no momento.">
+         <img class="rounded painel border border-5 border-dark container_imageminicial" src="\static\imagem\{{imagem}}" alt="Imagem não disponível no momento.">
 
         </div>
 
@@ -28,9 +28,15 @@
     <h5 class="card-title text-center">{{prod.nome}}</h5>
     <p class="card-text acertartexto text-center">{{prod.descricao}}</p>
     <h5 class="card-title text-center ">R$ - {{prod.preco}}</h5>
-      {% if id_cliente != 'Efetue o Login!' %}
+
+      {% if apelido != 'Efetue_o_Login!' %}
             <a href="{{url_for('rota_adicionar_carrinho.adicionar_carrinho', apelido=apelido, quantidade_carrinho=quantidade_carrinho, id_produto=prod.id_produto)}}"  class="btn btn-outline-dark">Adicionar ao Carrinho</a>
         {% endif %}
+
+      {% if apelido == 'Efetue_o_Login!' %}
+            <a href="{{url_for('rota_login.login', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"  class="btn btn-outline-dark">Adicionar ao Carrinho</a>
+        {% endif %}
+
       {% if apelido == 'Efetue o Login!' %}
           <a href="#" class="btn btn-outline-dark">Adicionar ao Carrinho</a>
       {% endif %}
@@ -43,26 +49,7 @@
         {% endif %}
       {% endfor %}
 
-    <nav class="container">
-    <ul class="pagination justify-content-center">
-      <li class="page-item disabled">
-        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
-      </li>
-      <li class="page-item active" aria-current="page">
-        <a class="page-link" href="#">1 <span class="visually-hidden">(página atual)</span></a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">2</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">3</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">Próxima</a>
-      </li>
-    </ul>
-  </nav>
 
 </div>
-
+<br><br>
 {% endblock%}

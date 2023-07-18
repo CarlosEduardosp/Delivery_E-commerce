@@ -11,7 +11,7 @@ def test_select():
     print(response)
 
 
-def test_insert():
+def insert():
     buscar = AdapterImagem(
         api_route=register_imagem_composer(), data={"imagem": faker.name()}
     )
@@ -19,7 +19,7 @@ def test_insert():
     print(response)
 
 
-def test_delete():
+def delete():
     buscar = AdapterImagem(api_route=register_imagem_composer(), data={})
     response = buscar.delete()
     print(response)

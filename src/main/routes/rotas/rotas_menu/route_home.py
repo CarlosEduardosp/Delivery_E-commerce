@@ -38,9 +38,20 @@ def home(apelido: str, quantidade_carrinho: int):
     produtos = AdapterProduto(api_route=register_produto_composer(), data={})
     produtos = produtos.select_all()
 
+    # selecionar a imagem da tela principal no banco
+    imagem = AdapterImagem(api_route=register_imagem_composer(), data={})
+    imagem = imagem.select()
+
+    if imagem.status_code == 200:
+        imagem = imagem.body
+        imagem = imagem.imagem
+    else:
+        imagem = ""
+
     return render_template(
         "home.html",
         apelido=apelido,
         quantidade_carrinho=quantidade_carrinho,
         produtos=produtos,
+        imagem=imagem,
     )
