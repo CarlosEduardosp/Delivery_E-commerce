@@ -4,7 +4,7 @@ api_routes_bp_home = Blueprint("home", __name__)
 
 
 @api_routes_bp_home.route(
-    "/home/",
+    "/",
     methods=["GET", "POST"],
 )
 @api_routes_bp_home.route(
@@ -15,7 +15,7 @@ api_routes_bp_home = Blueprint("home", __name__)
     defaults={"apelido": "Efetue_o_Login!", "quantidade_carrinho": "Vazio"},
     methods=["GET", "POST"],
 )
-def home(apelido: str, quantidade_carrinho: int):
+def home(apelido: str = "Efetue_o_Login!", quantidade_carrinho: int = 0):
     """rota teste"""
 
     # buscando cliente pelo apelido
