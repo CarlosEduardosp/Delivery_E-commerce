@@ -65,6 +65,27 @@
       box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
     }
 
+    .container_navbar {
+      width: 1450px;
+      height: 80px;
+      margin: 20 auto;
+      margin-top: 10px;
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 20px;
+      box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    .container_produtos_home {
+      width: 1450px;
+      margin: 20 auto;
+      margin-top: 10px;
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 20px;
+      box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+    }
+
     .container_produtos {
       display: flex;
       justify-content: center;
@@ -172,15 +193,16 @@
 </head>
 
 <br>
-<body class="rounded bg bg-white" >
-
-       <nav class="rounded nav justify-content-center bg bg-dark menu padding" >
+<body class="rounded bg bg-white">
+   
+       <nav class="container_navbar nav justify-content-center bg bg-dark" width="100px">
            <a class="nav-link active text-white" href="#"><h6>Olá, {{apelido.title()}} </h6></a>
 
           <a class="nav-link active text-white" aria-current="page" href="{{url_for('home.home', apelido=apelido, quantidade_carrinho=quantidade_carrinho)}}"><h6>Home</h6></a>
         </li>
-
-
+      
+       
+        
 {% if apelido != 'Efetue_o_Login!' %}
 {% if apelido == 'adm' or apelido == 'Adm' or apelido == 'ADM' %}
           <li class="nav-item">
