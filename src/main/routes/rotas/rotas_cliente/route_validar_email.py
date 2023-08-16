@@ -7,6 +7,12 @@ api_routes_bp_validar = Blueprint("validar_email", __name__)
 def validar_email(email: str):
     """validar o codigo enviado para o email"""
 
+    confirmacao_codigo = session.get("codigo")
+    if confirmacao_codigo:
+        flash("Codigo Enviado com Sucesso!!")
+        session["codigo"] = False
+    print(confirmacao_codigo)
+
     # request do valor do codigo via form
     if request.method == "POST":
         codigo = request.form.get("codigo")
@@ -50,7 +56,6 @@ def validar_email(email: str):
 
                 else:
                     endereco = session.get("dados_endereco")
-                    print(endereco)
                     insert_endereco = AdapterEndereco(
                         api_route=register_endereco_composer(),
                         data={
@@ -78,6 +83,12 @@ def validar_email(email: str):
                     url_for("home.home", apelido=apelido, quantidade_carrinho=0)
                 )
 
+            else:
+                flash("Codigo não confere!!")
+
     return render_template(
-        "validacao_codigo.html", email=email, apelido="Efetue_o_Login!"
+        "validacao_codigo.html",
+        email=email,
+        apelido="Efetue_o_Login!",
+        quantidade_carrinho=0,
     )

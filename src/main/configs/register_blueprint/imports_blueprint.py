@@ -47,3 +47,4 @@ from src.main.routes.rotas.rotas_menu.route_contato import api_routes_bp_contato
 from src.main.routes.rotas.rotas_menu.route_editar_tela_inicial import (
     api_routes_bp_editar_tela_inicial,
 )
+from src.main.routes.rotas.rotas_cliente.route_codigo import api_routes_bp_codigo

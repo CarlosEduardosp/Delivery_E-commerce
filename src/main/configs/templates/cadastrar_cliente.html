@@ -4,7 +4,7 @@
 <div class="container_cadastro text-center">
 
     {%- for mensagem in get_flashed_messages() %}
-                {% if 'erro' in mensagem or 'Nenhum' in mensagem or 'manualmente' in mensagem%}
+                {% if 'Senhas' in mensagem or 'Nenhum' in mensagem or 'manualmente' in mensagem%}
                     <div class="alert alert-danger text-center ">
                         {{mensagem}}
                     </div>

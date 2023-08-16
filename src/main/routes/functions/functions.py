@@ -7,7 +7,10 @@ def validador_senha(senha: any, confirmar_senha: any) -> bool:
 
     if senha:
         if senha == confirmar_senha:
-            return True
+            if len(senha) > 4:
+                return True
+            else:
+                return False
     else:
         return False
 

@@ -58,23 +58,11 @@ def cadastrar_cliente(apelido: str):
             response_senha = validador_senha(senha, confirmar_senha)
 
             if not response_senha:
-                flash("erro -- senhas não conferem !!")
+                flash(
+                    "Senhas não conferem !! Precisam ser iguais, e ter no mínimo 5 dígitos."
+                )
 
             else:
-                # registrar codigo no banco
-                faker = Faker()
-                codigo = faker.random_number(digits=4)
-                enviar_codigobd = AdapterCodigo(
-                    api_route=register_codigo_composer(),
-                    data={"codigo": codigo, "id_cliente": 1},
-                )
-                enviar_codigobd.insert()
-
-                enviar_codigo = EnviarCodigoEmail()
-                enviar_codigo.enviar_email_codigo(
-                    codigo=codigo, email_destinatario=email
-                )
-
                 dados_cliente = Cliente(
                     id_cliente=0,
                     apelido=apelido,

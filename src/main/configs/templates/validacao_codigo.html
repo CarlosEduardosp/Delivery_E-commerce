@@ -2,18 +2,36 @@
 
 {% block conteudo %}
 <div class="container_validar">
-<h1 class="titulo">Validação de Email </h1>
+<h1 class="titulo text-center">Validação de Email </h1>
+
+
+    {%- for mensagem in get_flashed_messages() %}
+                {% if 'Codigo' in mensagem or 'não' in mensagem %}
+                    <div class="alert alert-danger text-center ">
+                        {{mensagem}}
+                    </div>
+                {% endif %}
+              {%- endfor %}
 
 
 
+<h4 class="titulo text-center">Clique no botão abaixo para receber o código de confirmação no email cadastrado.<br><br><mark class="rounded bg bg-dark text-light">{{email}}</mark></h4>
 
-<h2 class="titulo ">Enviamos um código para o email <br><br><mark class="rounded bg bg-dark text-light">{{email}}</mark></h2>
-<h2 class="titulo">Digite aqui para verificação do email:</h2>
+     <form action="{{url_for('codigo.codigo_validation', email=email)}}" class="row g-3 text-center">
+
+    <div  class="text-center centro paddingdiv">
+        <br>
+        <button type="submit" class="btn btn-outline-success" value="True">Enviar Código para o email acima</button>
+    </div>
+     </form>
+
+    <br>
+    <h2 class="titulo">Digite aqui para verificação do email:</h2>
 
  <form action="{{url_for('validar_email.validar_email', email=email)}}" class="row g-3 text-center" method="POST">
 
-<div class="col-md-2 centrovalidar centro text-center">
-    <input  type="text" class="form-control text-center " id="codigo" name="codigo"  value="">
+<div class="col-md-12 centrovalidar centro text-center">
+    <input  type="text" class="form-control text-center" id="codigo" name="codigo"  value="">
   </div >
 
 
