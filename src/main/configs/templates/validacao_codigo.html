@@ -17,13 +17,13 @@
 
 <h4 class="titulo text-center">Clique no botão abaixo para receber o código de confirmação no email cadastrado.<br><br><mark class="rounded bg bg-dark text-light">{{email}}</mark></h4>
 
-     <form action="{{url_for('codigo.codigo_validation', email=email)}}" class="row g-3 text-center">
+
 
     <div  class="text-center centro paddingdiv">
         <br>
-        <button type="submit" class="btn btn-outline-success" value="True">Enviar Código para o email acima</button>
+        <a href="{{url_for('codigo.codigo_validation', email=email)}}" type="submit" class="btn btn-outline-success" value="True">Enviar Código para o email acima</a>
     </div>
-     </form>
+
 
     <br>
     <h2 class="titulo">Digite aqui para verificação do email:</h2>

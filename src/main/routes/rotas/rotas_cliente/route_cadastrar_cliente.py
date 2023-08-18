@@ -90,9 +90,7 @@ def cadastrar_cliente(apelido: str):
                     # salva os dados do endereço digitado no formulário pelo cliente
                     session["dados_endereco"] = dados_endereco
 
-                return render_template(
-                    "validacao_codigo.html", email=email, apelido=apelido
-                )
+                return redirect(url_for("validar_email.validar_email", email=email))
 
     return render_template(
         "cadastrar_cliente.html",
