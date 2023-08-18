@@ -6,7 +6,7 @@
 
 
     {%- for mensagem in get_flashed_messages() %}
-                {% if 'Codigo' in mensagem or 'não' in mensagem %}
+                {% if 'Codigo' in mensagem or 'não' in mensagem or 'Aguardando' in mensagem %}
                     <div class="alert alert-danger text-center ">
                         {{mensagem}}
                     </div>

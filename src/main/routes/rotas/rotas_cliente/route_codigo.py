@@ -1,4 +1,5 @@
 from src.main.routes.imports.imports_api_route import *  # noqa
+import time
 
 api_routes_bp_codigo = Blueprint("codigo", __name__)
 
@@ -20,6 +21,8 @@ def codigo_validation(email: str):
     enviar_codigo.enviar_email_codigo(codigo=codigo, email_destinatario=email)
 
     session["codigo"] = True
+
+    time.sleep(5)
 
     return redirect(
         url_for(

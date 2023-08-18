@@ -11,7 +11,6 @@ def validar_email(email: str):
     if confirmacao_codigo:
         flash("Codigo Enviado com Sucesso!!")
         session["codigo"] = False
-    print(confirmacao_codigo)
 
     # request do valor do codigo via form
     if request.method == "POST":
