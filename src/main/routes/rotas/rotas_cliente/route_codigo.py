@@ -24,11 +24,4 @@ def codigo_validation(email: str):
 
     time.sleep(5)
 
-    return redirect(
-        url_for(
-            "validar_email.validar_email",
-            email=email,
-            apelido="Efetue_o_Login!",
-            quantidade_carrinho=0,
-        )
-    )
+    return redirect(url_for("validar_email.validar_email", email=email))
